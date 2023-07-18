@@ -13,13 +13,17 @@ ENV PATH="/opt/poetry/bin:$PATH"
 RUN poetry config virtualenvs.create false
 
 # Copy poetry.lock* in case it doesn't exist in the repo
-COPY ./app/pyproject.toml ./app/poetry.lock* /app/
+# COPY ./app/pyproject.toml ./app/poetry.lock* /app/
+COPY ./app/pyproject.toml ./app/poetry.lock /app/
 
 WORKDIR /app/
 
 # Allow installing dev dependencies to run tests
 ARG INSTALL_DEV=false
 RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi"
+
+# Dependencias de OPENCV
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
 
 # For development, Jupyter remote kernel, Hydrogen
 # Using inside the container:

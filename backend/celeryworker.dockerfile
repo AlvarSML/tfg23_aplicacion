@@ -7,6 +7,7 @@ RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python
 ENV PATH="/opt/poetry/bin:$PATH"
 RUN poetry config virtualenvs.create false
 
+
 # Copy poetry.lock* in case it doesn't exist in the repo
 COPY ./app/pyproject.toml ./app/poetry.lock* /app/
 
