@@ -6,13 +6,20 @@ from PIL import Image
 import io
 import pandas as pd
 import numpy as np
+import cv2
 
-def procesar_imagen(file: UploadFile):
-    """
-    Obtiene la segmentacion de una imagen en base a un objeto UploadFile de FastAPI
-    """
-    with Image.open(file.file) as img_org:
+from app.services.YOLOSeg import YOLOSeg
 
-def obtener_segmentos(
-        modelo: Modelo
-):
+modelo = None
+
+def cargar_modelo(path:str, confidence=.3, iou=.5) -> YOLOSeg:
+    """ Instancia un modelo de segmentacion ONNX
+    """
+    return YOLOSeg(path, conf_thres=confidence, iou_thres=iou)
+
+def cargar_imagen(file: UploadFile)-> Image:
+    """ Carga una imagen en formato PIL para introducir en el modelo
+    """
+    pil_img = Image.open(file.file).convert('RGB')
+    cv_img = np.array(pil_img) 
+    return cv_img[:, :, ::-1].copy() 
