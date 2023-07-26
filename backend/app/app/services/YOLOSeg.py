@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import onnxruntime
 
-from app.services. utils import xywh2xyxy, nms, draw_detections, sigmoid
+from app.services.utils import *
 
 
 class YOLOSeg:
@@ -157,8 +157,30 @@ class YOLOSeg:
                                self.class_ids, mask_alpha)
 
     def draw_masks(self, image, draw_scores=True, mask_alpha=0.5):
-        return draw_detections(image, self.boxes, self.scores,
-                               self.class_ids, mask_alpha, mask_maps=self.mask_maps)
+        return draw_detections(
+            image, 
+            self.boxes, 
+            self.scores,
+            self.class_ids, 
+            mask_alpha, 
+            mask_maps=self.mask_maps)
+
+    def print_masks(self, image, draw_scores=True, mask_alpha=0.5):
+        return mascaras(
+            image=image, 
+            boxes=self.boxes, 
+            scores=self.scores,
+            class_ids=self.class_ids, 
+            mask_alpha=mask_alpha, 
+            masks=self.mask_maps)
+
+
+    def crop_teeth(self,image):
+        return recortar_bbox(
+            image,
+            self.boxes,
+            self.scores,
+            self.class_ids)
 
     def get_input_details(self):
         model_inputs = self.session.get_inputs()
@@ -180,25 +202,3 @@ class YOLOSeg:
         boxes *= np.array([image_shape[1], image_shape[0], image_shape[1], image_shape[0]])
 
         return boxes
-
-"""
-if __name__ == '__main__':
-    from imread_from_url import imread_from_url
-
-    model_path = "../models/yolov8m-seg.onnx"
-
-    # Initialize YOLOv8 Instance Segmentator
-    yoloseg = YOLOSeg(model_path, conf_thres=0.3, iou_thres=0.5)
-
-    img_url = "https://live.staticflickr.com/13/19041780_d6fd803de0_3k.jpg"
-    img = imread_from_url(img_url)
-
-    # Detect Objects
-    yoloseg(img)
-
-    # Draw detections
-    combined_img = yoloseg.draw_masks(img)
-    cv2.namedWindow("Output", cv2.WINDOW_NORMAL)
-    cv2.imshow("Output", combined_img)
-    cv2.waitKey(0)
-"""

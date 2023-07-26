@@ -29,8 +29,9 @@ async def create_upload_file(file: UploadFile) -> Image:
     img = cargar_imagen(file)
     res = modelo(img)
     combined_img = modelo.draw_masks(img)
-    del modelo
     res, im_png = cv2.imencode(".jpg", combined_img)
+    im2 = modelo(img)
+    im_png = modelo.crop_teeth(im2)
     return StreamingResponse(io.BytesIO(im_png.tobytes()), media_type="image/jpg")
 
 @router.post("/dir/")

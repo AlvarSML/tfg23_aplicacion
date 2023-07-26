@@ -1,15 +1,8 @@
 import numpy as np
 import cv2
 
-class_names = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
-               'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow',
-               'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee',
-               'skis', 'snowboard', 'sports ball', 'kite', 'baseball bat', 'baseball glove', 'skateboard', 'surfboard',
-               'tennis racket', 'bottle', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple',
-               'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake', 'chair', 'couch',
-               'potted plant', 'bed', 'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote', 'keyboard',
-               'cell phone', 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase',
-               'scissors', 'teddy bear', 'hair drier', 'toothbrush']
+# TODO: Mover a la clase
+class_names = ['diente', 'muela', 'raiz']
 
 # Create a list of colors for each class where each color is a tuple of 3 integer values
 rng = np.random.default_rng(3)
@@ -156,3 +149,23 @@ def draw_comparison(img1, img2, name1, name2, fontsize=2.6, text_thickness=3):
         combined_img = cv2.resize(combined_img, (3840, 2160))
 
     return combined_img
+
+def recortar_bbox(image, boxes, scores, class_ids):
+    dientes = []
+    for box, score, class_id in zip(boxes, scores, class_ids):
+        if class_id == 0: # TODO: La id esta hardcodeada habria que revisarlo
+            # Coordenadas de las esquinas de las cajas
+            x1, y1, x2, y2 = box.astype(int)
+            recortada = image[y1:y2,x1:x2]
+            dientes.append(recortada)
+    return dientes
+    
+def mascaras(image, boxes, scores, class_ids, masks ,mask_alpha=0.3):
+    dientes = []
+    for box, score, class_id, mask in zip(boxes, scores, class_ids, masks):
+        if class_id == 0: # TODO: La id esta hardcodeada habria que revisarlo
+            # Coordenadas de las esquinas de las cajas
+            x1, y1, x2, y2 = box.astype(int)
+            recortada = mask[y1:y2,x1:x2]
+            dientes.append(recortada)
+    return dientes

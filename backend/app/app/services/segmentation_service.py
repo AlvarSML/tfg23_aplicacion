@@ -10,6 +10,7 @@ import cv2
 
 from app.services.YOLOSeg import YOLOSeg
 
+# Instancia global?
 modelo = None
 
 def cargar_modelo(path:str, confidence=.3, iou=.5) -> YOLOSeg:
@@ -17,9 +18,10 @@ def cargar_modelo(path:str, confidence=.3, iou=.5) -> YOLOSeg:
     """
     return YOLOSeg(path, conf_thres=confidence, iou_thres=iou)
 
-def cargar_imagen(file: UploadFile)-> Image:
+def cargar_imagen(file: UploadFile):
     """ Carga una imagen en formato PIL para introducir en el modelo
     """
     pil_img = Image.open(file.file).convert('RGB')
     cv_img = np.array(pil_img) 
-    return cv_img[:, :, ::-1].copy() 
+    return cv_img[:, :, ::-1].copy()
+
