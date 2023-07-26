@@ -170,4 +170,6 @@ def mascaras(image, boxes, scores, class_ids, masks ,mask_alpha=0.3):
             recortada = mask[y1:y2,x1:x2]
             recortada = Image.fromarray((recortada * 255).astype('uint8'))
             dientes.append(np.array(recortada))
+            print(dientes)
+            print(dientes[0])
     return dientes

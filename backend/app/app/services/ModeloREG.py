@@ -4,11 +4,14 @@ import cv2
 import numpy as np
 import onnxruntime
 
+import torchvision.transforms as transforms
+from app.services.Padding import Padding
+
 class ModeloReg:
     def __init__(self, path:str) -> None:
         self.initialize_model(path)
 
-    def initialize_model(self, path):
+    def initialize_model(self, path) -> None:
         """ Instancia una sesion de onnx
         """
         self.session = onnxruntime.InferenceSession(path,
@@ -50,6 +53,13 @@ class ModeloReg:
         self.img_height, self.img_width = image.shape[:2]
 
         input_img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+        # Aplicar el padding
+        transform_test = transforms.Compose([
+            Padding(),
+            transforms.ToTensor(),
+            transforms.Grayscale(num_output_channels=1)
+        ])
 
         # Resize input image
         input_img = cv2.resize(input_img, (self.input_width, self.input_height))
