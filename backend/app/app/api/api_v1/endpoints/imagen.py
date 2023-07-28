@@ -19,6 +19,8 @@ from ultralytics import YOLO
 from ultralytics.utils.plotting import Annotator, colors
 
 from app.services.segmentation_service import cargar_imagen, cargar_modelo
+from app.services.regression_service import cargar_modelo_regresion
+
 router = APIRouter()
 
 @router.post("/subir/")
@@ -30,7 +32,11 @@ async def create_upload_file(file: UploadFile):
     res = modelo(img)
     combined_img = modelo.draw_masks(img)
     im_png = modelo.print_masks(img)[0]
+    reg = cargar_modelo_regresion("./modelos_regresion/resnet34.onnx")
+    print("estimacion",reg(im_png))
     res, im_png = cv2.imencode(".jpg", im_png)
+
+    del modelo
     return StreamingResponse(io.BytesIO(im_png.tobytes()), media_type="image/jpg")
 
 
