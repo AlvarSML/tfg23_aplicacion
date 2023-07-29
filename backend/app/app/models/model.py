@@ -17,4 +17,4 @@ class Model(Base):
     short_desc: str = Column(String, index=False) # Descripcion corta para los menus
     description: str = Column(String, index=False) # Descripcion completa
     root_dir: str = Column(String, index=False) # Establece el directorio base, por lo general no se modifica
-    file_path = Column(String, index=True)
+    file_path: str = Column(String, index=True)
