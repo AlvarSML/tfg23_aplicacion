@@ -23,7 +23,8 @@ if [ -f $PRE_START_PATH ] ; then
     . "$PRE_START_PATH"
 else 
     echo "There is no script $PRE_START_PATH"
-fi
+fi 
 
 # Start Uvicorn with live reload
-exec uvicorn --reload --host $HOST --port $PORT --log-level $LOG_LEVEL "$APP_MODULE"
+# exec uvicorn --reload --host $HOST --port $PORT --log-level $LOG_LEVEL "$APP_MODULE"
+exec python -m uvicorn --reload --host $HOST --port $PORT --log-level $LOG_LEVEL "$APP_MODULE"
