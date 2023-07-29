@@ -18,7 +18,7 @@ association_seg_reg = Table(
 class RegressionModel(Model):
     id = Column(Integer, ForeignKey("model.id") ,primary_key=True)
     accuracy: int = Column(Integer) # Precision de la segmentacion
-    segmentation_models: Mapped[List["segmentationmodel"]] = relationship(
+    segmentation_models: Mapped[List["SegmentationModel"]] = relationship(
         "SegmentationModel",
         secondary=association_seg_reg, 
         back_populates="regression_models")
@@ -27,10 +27,13 @@ class RegressionModel(Model):
         "polymorphic_identity": "regressionmodel",
     }
 
+    def __init__(self):
+        self.root_dir = "./modelos_onnx/"
+
 class SegmentationModel(Model):
     id = Column(Integer, ForeignKey("model.id") ,primary_key=True)
     accuracy: int = Column(Integer) # Precision de la segmentacion
-    regression_models: Mapped[List["regressionmodel"]] = relationship(
+    regression_models: Mapped[List["RegressionModel"]] = relationship(
         "RegressionModel",
         secondary=association_seg_reg, 
         back_populates="segmentation_models")
@@ -38,3 +41,6 @@ class SegmentationModel(Model):
     __mapper_args__ = {
         "polymorphic_identity": "segmentationmodel",
     }
+
+    def __init__(self):
+        self.root_dir = "./modelos_regresion/"
