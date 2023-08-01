@@ -8,6 +8,7 @@ import { store } from "@/store";
 import { dispatchCheckLoggedIn } from "@/store/main/actions";
 import { readIsLoggedIn } from "@/store/main/getters";
 
+// ! Redireccion?
 const startRouteGuard = async (to, from, next) => {
   await dispatchCheckLoggedIn(store);
   if (readIsLoggedIn(store)) {

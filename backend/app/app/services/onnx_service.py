@@ -46,7 +46,7 @@ class ONNX_service:
 
 
     def inference(self, image: np.array):
-        pass
+        raise NotImplementedError
 
     def prepare_input(self, image: np.array):
         """ Crea un tensor a partir de una imagen bidimensional

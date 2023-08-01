@@ -6,6 +6,8 @@ import onnxruntime
 
 from app.services.utils import *
 
+""" TODO: Implementar ONNX_service
+"""
 
 class YOLOSeg:
 

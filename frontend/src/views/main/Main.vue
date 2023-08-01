@@ -1,3 +1,4 @@
+/* tslint:disable */
 <template>
   <div>
     <v-navigation-drawer
@@ -87,6 +88,7 @@
         </v-list>
       </v-layout>
     </v-navigation-drawer>
+
     <v-app-bar dark color="primary" app>
       <v-app-bar-nav-icon @click.stop="switchShowDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title>{{ appName }}</v-toolbar-title>
@@ -117,16 +119,18 @@
         </v-list>
       </v-menu>
     </v-app-bar>
+
     <v-main>
       <router-view></router-view>
     </v-main>
+
     <v-footer class="pa-3" fixed app>
       <v-spacer></v-spacer>
       <span>&copy; {{ appName }}</span>
     </v-footer>
   </div>
 </template>
-
+/* tslint:enable */
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 

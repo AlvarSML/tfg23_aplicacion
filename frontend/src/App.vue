@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div id="app">
     <v-app>
@@ -29,6 +30,7 @@ import NotificationsManager from "@/components/NotificationsManager.vue";
 import { readIsLoggedIn } from "@/store/main/getters";
 import { dispatchCheckLoggedIn } from "@/store/main/actions";
 
+/* Creacion del componente principal */
 @Component({
   components: {
     NotificationsManager,
