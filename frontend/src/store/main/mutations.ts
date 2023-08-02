@@ -27,9 +27,9 @@ export const mutations = {
   },
   removeNotification(state: MainState, payload: AppNotification) {
     state.notifications = state.notifications.filter(
-      (notification) => notification !== payload,
+      (notification) => notification !== payload
     );
-  },
+  }
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

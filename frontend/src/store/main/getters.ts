@@ -15,7 +15,7 @@ export const getters = {
   token: (state: MainState) => state.token,
   isLoggedIn: (state: MainState) => state.isLoggedIn,
   firstNotification: (state: MainState) =>
-    state.notifications.length > 0 && state.notifications[0],
+    state.notifications.length > 0 && state.notifications[0]
 };
 
 const { read } = getStoreAccessors<MainState, State>("");

@@ -4,24 +4,24 @@ const OFF = 0,
 module.exports = {
   root: true,
   env: {
-    node: true,
+    node: true
   },
   ignorePatterns: [
     "!.eslintrc.js",
     "!.prettierrc.js",
     "node_modules/",
     "shims-tsx.d.ts",
-    "shims-vue.d.ts",
+    "shims-vue.d.ts"
   ],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:vue/recommended",
     "@vue/eslint-config-typescript/recommended",
-    "plugin:prettier/recommended",
+    "plugin:prettier/recommended"
   ],
   parserOptions: {
-    ecmaVersion: 2020,
+    ecmaVersion: 2020
   },
   rules: {
     "no-console":
@@ -32,22 +32,22 @@ module.exports = {
       ERROR,
       {
         argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-      },
-    ],
+        varsIgnorePattern: "^_"
+      }
+    ]
   },
   overrides: [
     {
       files: ["**/__tests__/*.{j,t}s?(x)", "**/tests/unit/**/*.spec.{j,t}s?(x)"],
       env: {
-        jest: true,
-      },
+        jest: true
+      }
     },
     {
       files: ["**/registerServiceWorker.ts"],
       rules: {
-        "no-console": OFF,
-      },
-    },
-  ],
+        "no-console": OFF
+      }
+    }
+  ]
 };

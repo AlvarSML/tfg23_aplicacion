@@ -27,12 +27,12 @@ describe("Login.vue", () => {
     getters = {};
 
     actions = {
-      actionLogIn: jest.fn(),
+      actionLogIn: jest.fn()
     };
 
     store = new Vuex.Store({
       getters,
-      actions,
+      actions
     });
   });
 
@@ -46,13 +46,13 @@ describe("Login.vue", () => {
 
     const loginBtn = componentWithText(
       wrapper.findAllComponents({ name: "v-btn" }),
-      "Login",
+      "Login"
     );
     loginBtn.trigger("click");
 
     expect(actions.actionLogIn).toHaveBeenCalledWith(expect.anything(), {
       username: "yo@da.com",
-      password: "secretpass",
+      password: "secretpass"
     });
   });
 });

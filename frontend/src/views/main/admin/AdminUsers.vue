@@ -40,37 +40,37 @@ export default class AdminUsers extends Vue {
       text: "Name",
       sortable: true,
       value: "full_name",
-      align: "left",
+      align: "left"
     },
     {
       text: "Email",
       sortable: true,
       value: "email",
-      align: "left",
+      align: "left"
     },
     {
       text: "Full Name",
       sortable: true,
       value: "full_name",
-      align: "left",
+      align: "left"
     },
     {
       text: "Is Active",
       sortable: true,
       value: "is_active",
-      align: "left",
+      align: "left"
     },
     {
       text: "Is Superuser",
       sortable: true,
       value: "is_superuser",
-      align: "left",
+      align: "left"
     },
     {
       text: "Actions",
       value: "actions",
-      sortable: false,
-    },
+      sortable: false
+    }
   ];
   get users() {
     return readAdminUsers(this.$store);

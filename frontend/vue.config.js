@@ -10,11 +10,11 @@ module.exports = {
             "v-img": ["src", "lazy-src"],
             "v-card": "src",
             "v-card-media": "src",
-            "v-responsive": "src",
-          },
-        }),
+            "v-responsive": "src"
+          }
+        })
       );
   },
 
-  transpileDependencies: ["vuetify"],
+  transpileDependencies: ["vuetify"]
 };

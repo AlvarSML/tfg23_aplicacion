@@ -23,7 +23,7 @@ export const actions = {
   },
   async actionUpdateUser(
     context: MainContext,
-    payload: { id: number; user: IUserProfileUpdate },
+    payload: { id: number; user: IUserProfileUpdate }
   ) {
     try {
       const loadingNotification = { content: "saving", showProgress: true };
@@ -31,14 +31,14 @@ export const actions = {
       const response = (
         await Promise.all([
           api.updateUser(context.rootState.main.token, payload.id, payload.user),
-          await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500)),
+          await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500))
         ])
       )[0];
       commitSetUser(context, response.data);
       commitRemoveNotification(context, loadingNotification);
       commitAddNotification(context, {
         content: "User successfully updated",
-        color: "success",
+        color: "success"
       });
     } catch (error) {
       await dispatchCheckApiError(context, error);
@@ -51,19 +51,19 @@ export const actions = {
       const response = (
         await Promise.all([
           api.createUser(context.rootState.main.token, payload),
-          await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500)),
+          await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500))
         ])
       )[0];
       commitSetUser(context, response.data);
       commitRemoveNotification(context, loadingNotification);
       commitAddNotification(context, {
         content: "User successfully created",
-        color: "success",
+        color: "success"
       });
     } catch (error) {
       await dispatchCheckApiError(context, error);
     }
-  },
+  }
 };
 
 const { dispatch } = getStoreAccessors<AdminState, State>("");

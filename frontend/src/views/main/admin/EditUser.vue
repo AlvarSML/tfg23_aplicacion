@@ -74,7 +74,7 @@
                   vid="password2"
                   :rules="{
                     required: setPassword,
-                    confirmed: setPassword ? 'password1' : false,
+                    confirmed: setPassword ? 'password1' : false
                   }"
                 >
                   <v-text-field
@@ -116,8 +116,8 @@ extend("email", { ...email, message: "Invalid email address" });
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider,
-  },
+    ValidationProvider
+  }
 })
 export default class EditUser extends Vue {
   $refs!: {
@@ -176,7 +176,7 @@ export default class EditUser extends Vue {
     if (this.user) {
       await dispatchUpdateUser(this.$store, {
         id: this.user.id,
-        user: updatedProfile,
+        user: updatedProfile
       });
     }
     this.$router.push("/main/admin/users");

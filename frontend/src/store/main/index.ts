@@ -10,12 +10,12 @@ const defaultState: MainState = {
   userProfile: null,
   dashboardMiniDrawer: false,
   dashboardShowDrawer: true,
-  notifications: [],
+  notifications: []
 };
 
 export const mainModule = {
   state: defaultState,
   mutations,
   actions,
-  getters,
+  getters
 };

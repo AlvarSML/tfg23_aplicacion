@@ -5,8 +5,8 @@ import { IUserProfile, IUserProfileUpdate, IUserProfileCreate } from "./interfac
 function authHeaders(token: string) {
   return {
     headers: {
-      Authorization: `Bearer ${token}`,
-    },
+      Authorization: `Bearer ${token}`
+    }
   };
 }
 
@@ -25,7 +25,7 @@ export const api = {
     return axios.put<IUserProfile>(
       `${apiUrl}/api/v1/users/me`,
       data,
-      authHeaders(token),
+      authHeaders(token)
     );
   },
   async getUsers(token: string) {
@@ -43,7 +43,7 @@ export const api = {
   async resetPassword(password: string, token: string) {
     return axios.post(`${apiUrl}/api/v1/reset-password/`, {
       new_password: password,
-      token,
+      token
     });
-  },
+  }
 };

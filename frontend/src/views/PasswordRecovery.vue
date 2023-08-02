@@ -57,8 +57,8 @@ extend("required", { ...required, message: "{_field_} can not be empty" });
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider,
-  },
+    ValidationProvider
+  }
 })
 export default class Login extends Vue {
   $refs!: {

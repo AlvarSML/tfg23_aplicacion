@@ -99,8 +99,8 @@ extend("email", { ...email, message: "Invalid email address" });
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider,
-  },
+    ValidationProvider
+  }
 })
 export default class CreateUser extends Vue {
   $refs!: {
@@ -142,7 +142,7 @@ export default class CreateUser extends Vue {
     }
 
     const updatedProfile: IUserProfileCreate = {
-      email: this.email,
+      email: this.email
     };
     if (this.fullName) {
       updatedProfile.full_name = this.fullName;

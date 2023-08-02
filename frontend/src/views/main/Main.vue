@@ -132,17 +132,18 @@
 </template>
 /* tslint:enable */
 <script lang="ts">
+/** Imports/ */
 import { Vue, Component } from "vue-property-decorator";
 
 import { appName } from "@/env";
 import {
   readDashboardMiniDrawer,
   readDashboardShowDrawer,
-  readHasAdminAccess,
+  readHasAdminAccess
 } from "@/store/main/getters";
 import {
   commitSetDashboardShowDrawer,
-  commitSetDashboardMiniDrawer,
+  commitSetDashboardMiniDrawer
 } from "@/store/main/mutations";
 import { dispatchUserLogOut } from "@/store/main/actions";
 
@@ -154,6 +155,7 @@ const routeGuardMain = async (to, from, next) => {
   }
 };
 
+/** Componentes */
 @Component
 export default class Main extends Vue {
   public appName = appName;

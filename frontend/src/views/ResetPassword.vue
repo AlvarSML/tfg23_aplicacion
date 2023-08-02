@@ -72,8 +72,8 @@ extend("confirmed", { ...confirmed, message: "Passwords do not match" });
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider,
-  },
+    ValidationProvider
+  }
 })
 export default class UserProfileEdit extends Vue {
   $refs!: {
@@ -104,7 +104,7 @@ export default class UserProfileEdit extends Vue {
     if (!token) {
       commitAddNotification(this.$store, {
         content: "No token provided in the URL, start a new password recovery",
-        color: "error",
+        color: "error"
       });
       this.$router.push("/recover-password");
     } else {

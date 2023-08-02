@@ -10,7 +10,7 @@ export function flushPromises() {
 
 export function componentWithText(
   wrapperArray: WrapperArray<Vue>,
-  text: string,
+  text: string
 ): Wrapper<Vue> {
   return wrapperArray.filter((c) => c.text().includes(text)).at(0);
 }

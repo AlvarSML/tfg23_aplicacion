@@ -18,21 +18,19 @@ export default new Router({
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "login" */ "./views/Login.vue"),
+          component: () => import(/* webpackChunkName: "login" */ "./views/Login.vue")
         },
         {
           path: "recover-password",
           component: () =>
             import(
               /* webpackChunkName: "recover-password" */ "./views/PasswordRecovery.vue"
-            ),
+            )
         },
         {
           path: "reset-password",
           component: () =>
-            import(
-              /* webpackChunkName: "reset-password" */ "./views/ResetPassword.vue"
-            ),
+            import(/* webpackChunkName: "reset-password" */ "./views/ResetPassword.vue")
         },
         {
           path: "main",
@@ -44,7 +42,7 @@ export default new Router({
               component: () =>
                 import(
                   /* webpackChunkName: "main-dashboard" */ "./views/main/Dashboard.vue"
-                ),
+                )
             },
             {
               path: "profile",
@@ -56,23 +54,23 @@ export default new Router({
                   component: () =>
                     import(
                       /* webpackChunkName: "main-profile" */ "./views/main/profile/UserProfile.vue"
-                    ),
+                    )
                 },
                 {
                   path: "edit",
                   component: () =>
                     import(
                       /* webpackChunkName: "main-profile-edit" */ "./views/main/profile/UserProfileEdit.vue"
-                    ),
+                    )
                 },
                 {
                   path: "password",
                   component: () =>
                     import(
                       /* webpackChunkName: "main-profile-password" */ "./views/main/profile/UserProfileEditPassword.vue"
-                    ),
-                },
-              ],
+                    )
+                }
+              ]
             },
             {
               path: "admin",
@@ -84,14 +82,14 @@ export default new Router({
               children: [
                 {
                   path: "users",
-                  redirect: "users/all",
+                  redirect: "users/all"
                 },
                 {
                   path: "users/all",
                   component: () =>
                     import(
                       /* webpackChunkName: "main-admin-users" */ "./views/main/admin/AdminUsers.vue"
-                    ),
+                    )
                 },
                 {
                   path: "users/edit/:id",
@@ -99,7 +97,7 @@ export default new Router({
                   component: () =>
                     import(
                       /* webpackChunkName: "main-admin-users-edit" */ "./views/main/admin/EditUser.vue"
-                    ),
+                    )
                 },
                 {
                   path: "users/create",
@@ -107,17 +105,17 @@ export default new Router({
                   component: () =>
                     import(
                       /* webpackChunkName: "main-admin-users-create" */ "./views/main/admin/CreateUser.vue"
-                    ),
-                },
-              ],
-            },
-          ],
-        },
-      ],
+                    )
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       path: "/*",
-      redirect: "/",
-    },
-  ],
+      redirect: "/"
+    }
+  ]
 });

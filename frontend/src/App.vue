@@ -33,8 +33,8 @@ import { dispatchCheckLoggedIn } from "@/store/main/actions";
 /* Creacion del componente principal */
 @Component({
   components: {
-    NotificationsManager,
-  },
+    NotificationsManager
+  }
 })
 export default class App extends Vue {
   get loggedIn() {

@@ -76,8 +76,8 @@ extend("confirmed", { ...confirmed, message: "Passwords do not match" });
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider,
-  },
+    ValidationProvider
+  }
 })
 export default class UserProfileEdit extends Vue {
   $refs!: {

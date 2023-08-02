@@ -10,8 +10,8 @@ Vue.use(Vuex);
 const storeOptions: StoreOptions<State> = {
   modules: {
     main: mainModule,
-    admin: adminModule,
-  },
+    admin: adminModule
+  }
 };
 
 export const store = new Vuex.Store<State>(storeOptions);

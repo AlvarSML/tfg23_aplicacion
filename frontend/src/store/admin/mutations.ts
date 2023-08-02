@@ -11,7 +11,7 @@ export const mutations = {
     const users = state.users.filter((user: IUserProfile) => user.id !== payload.id);
     users.push(payload);
     state.users = users;
-  },
+  }
 };
 
 const { commit } = getStoreAccessors<AdminState, State>("");

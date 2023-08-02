@@ -9,7 +9,7 @@ export const getters = {
     if (filteredUsers.length > 0) {
       return { ...filteredUsers[0] };
     }
-  },
+  }
 };
 
 const { read } = getStoreAccessors<AdminState, State>("");

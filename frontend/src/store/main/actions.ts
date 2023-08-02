@@ -11,7 +11,7 @@ import {
   commitSetLoggedIn,
   commitSetLogInError,
   commitSetToken,
-  commitSetUserProfile,
+  commitSetUserProfile
 } from "./mutations";
 import { AppNotification, MainState } from "./state";
 
@@ -20,7 +20,7 @@ type MainContext = ActionContext<MainState, State>;
 export const actions = {
   async actionLogIn(
     context: MainContext,
-    payload: { username: string; password: string },
+    payload: { username: string; password: string }
   ) {
     try {
       const response = await api.logInGetToken(payload.username, payload.password);
@@ -58,14 +58,14 @@ export const actions = {
       const response = (
         await Promise.all([
           api.updateMe(context.state.token, payload),
-          await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500)),
+          await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500))
         ])
       )[0];
       commitSetUserProfile(context, response.data);
       commitRemoveNotification(context, loadingNotification);
       commitAddNotification(context, {
         content: "Profile successfully updated",
-        color: "success",
+        color: "success"
       });
     } catch (error) {
       await dispatchCheckApiError(context, error);
@@ -126,7 +126,7 @@ export const actions = {
   },
   async removeNotification(
     context: MainContext,
-    payload: { notification: AppNotification; timeout: number },
+    payload: { notification: AppNotification; timeout: number }
   ) {
     return new Promise((resolve, _) => {
       setTimeout(() => {
@@ -138,18 +138,18 @@ export const actions = {
   async passwordRecovery(context: MainContext, payload: { username: string }) {
     const loadingNotification = {
       content: "Sending password recovery email",
-      showProgress: true,
+      showProgress: true
     };
     try {
       commitAddNotification(context, loadingNotification);
       await Promise.all([
         api.passwordRecovery(payload.username),
-        await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500)),
+        await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500))
       ]);
       commitRemoveNotification(context, loadingNotification);
       commitAddNotification(context, {
         content: "Password recovery email sent",
-        color: "success",
+        color: "success"
       });
       await dispatchLogOut(context);
     } catch (error) {
@@ -159,29 +159,29 @@ export const actions = {
   },
   async resetPassword(
     context: MainContext,
-    payload: { password: string; token: string },
+    payload: { password: string; token: string }
   ) {
     const loadingNotification = { content: "Resetting password", showProgress: true };
     try {
       commitAddNotification(context, loadingNotification);
       await Promise.all([
         api.resetPassword(payload.password, payload.token),
-        await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500)),
+        await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500))
       ]);
       commitRemoveNotification(context, loadingNotification);
       commitAddNotification(context, {
         content: "Password successfully reset",
-        color: "success",
+        color: "success"
       });
       await dispatchLogOut(context);
     } catch (error) {
       commitRemoveNotification(context, loadingNotification);
       commitAddNotification(context, {
         color: "error",
-        content: "Error resetting password",
+        content: "Error resetting password"
       });
     }
-  },
+  }
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

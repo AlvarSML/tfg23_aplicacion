@@ -49,8 +49,8 @@ extend("email", { ...email, message: "Invalid email address" });
 @Component({
   components: {
     ValidationObserver,
-    ValidationProvider,
-  },
+    ValidationProvider
+  }
 })
 export default class UserProfileEdit extends Vue {
   $refs!: {
