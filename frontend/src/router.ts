@@ -15,7 +15,8 @@ export default new Router({
       children: [
         {
           path: "pruebas",
-          component: () => import(/* webpackChunkName: "Pruebas" */ "./views/Pruebas.vue")
+          component: () =>
+            import(/* webpackChunkName: "Pruebas" */ "./views/Pruebas.vue")
         },
         {
           path: "login",
