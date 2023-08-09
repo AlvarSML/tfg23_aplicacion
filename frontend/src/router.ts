@@ -14,6 +14,10 @@ export default new Router({
       component: () => import(/* webpackChunkName: "start" */ "./views/main/Start.vue"),
       children: [
         {
+          path: "pruebas",
+          component: () => import(/* webpackChunkName: "Pruebas" */ "./views/Pruebas.vue")
+        },
+        {
           path: "login",
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
