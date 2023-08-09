@@ -11,7 +11,7 @@ import { readIsLoggedIn } from "@/store/main/getters";
 // ! Redireccion?
 const startRouteGuard = async (to, from, next) => {
   await dispatchCheckLoggedIn(store);
-  console.log(to, from, next);
+  //console.log(to, from, next);
   if (readIsLoggedIn(store)) {
     if (to.path === "/login" || to.path === "/") {
       next("/main");
@@ -20,7 +20,7 @@ const startRouteGuard = async (to, from, next) => {
     }
   } else if (readIsLoggedIn(store) === false) {
     if (to.path === "/" || (to.path as string).startsWith("/main")) {
-      next("/login");
+      next("/pruebas");
     } else {
       next();
     }
