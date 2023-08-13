@@ -24,19 +24,21 @@ from app.services.regression_service import cargar_modelo_regresion
 router = APIRouter()
 
 @router.post("/subir/")
-async def create_upload_file(file: UploadFile):
-    destination_file_path = "/tmp/"+file.filename
-    print(file)
+async def create_upload_file(image: UploadFile):
+    destination_file_path = "/tmp/"+image.filename
     modelo = cargar_modelo("./modelos_onnx/segmentacino_15.onnx")
-    img = cargar_imagen(file)
+    img = cargar_imagen(image)
     res = modelo(img)
     combined_img = modelo.draw_masks(img)
+    # Recorte de la mascara
     im_png = modelo.print_masks(img)[0]
     reg = cargar_modelo_regresion("./modelos_regresion/resnet34.onnx")
     print("estimacion",reg(im_png))
-    res, im_png = cv2.imencode(".jpg", im_png)
+    res, im_png = cv2.imencode(".jpg", combined_img)
+    
 
-    del modelo
+
+    #del modelo
     return StreamingResponse(io.BytesIO(im_png.tobytes()), media_type="image/jpg")
 
 

@@ -23,7 +23,7 @@
                   v-model="password"
                   prepend-icon="mdi-lock"
                   name="password"
-                  label="Password"
+                  label="Contaseña"
                   type="password"
                   @keyup.enter="submit"
                 ></v-text-field>
@@ -35,7 +35,7 @@
               </div>
               <v-col class="caption text-xs-right"
                 ><router-link to="/recover-password"
-                  >Forgot your password?</router-link
+                  >Contraseña olvidada?</router-link
                 ></v-col
               >
             </v-card-text>

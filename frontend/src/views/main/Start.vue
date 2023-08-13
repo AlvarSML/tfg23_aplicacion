@@ -12,9 +12,10 @@ import { readIsLoggedIn } from "@/store/main/getters";
 const startRouteGuard = async (to, from, next) => {
   await dispatchCheckLoggedIn(store);
   //console.log(to, from, next);
+  // TODO: Modificar para que no entre a pruebas directo
   if (readIsLoggedIn(store)) {
     if (to.path === "/login" || to.path === "/") {
-      next("/main");
+      next("/pruebas");
     } else {
       next();
     }

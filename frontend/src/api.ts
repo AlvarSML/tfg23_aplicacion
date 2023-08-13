@@ -45,5 +45,11 @@ export const api = {
       new_password: password,
       token
     });
+  },
+  // Obtener la segmentacion y las medidas de cada diente
+  async getInference(image: File) {
+    return axios.post(`${apiUrl}/api/v1/radiogrfias/subir/`, {
+      image: image
+    });
   }
 };
