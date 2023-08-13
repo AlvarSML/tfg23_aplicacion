@@ -12,6 +12,8 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "noUnusedLocals": false,        /* Report errors on unused locals. */
+    "noUnusedParameters": false,
     "types": [
       "webpack-env",
       "jest",

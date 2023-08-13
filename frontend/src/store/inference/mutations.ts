@@ -1,3 +1,8 @@
+/* eslint-disable */
+/*
+  Para permitir cambios de estado
+  Solo deberia de hacer falta para los cambios de imagen
+*/
 import { IUserProfile } from "@/interfaces";
 import { InferenceState } from "./state";
 import { getStoreAccessors } from "typesafe-vuex";
