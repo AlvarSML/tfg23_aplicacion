@@ -34,12 +34,12 @@ async def create_upload_file(image: UploadFile):
     im_png = modelo.print_masks(img)[0]
     reg = cargar_modelo_regresion("./modelos_regresion/resnet34.onnx")
     print("estimacion",reg(im_png))
-    res, im_png = cv2.imencode(".jpg", combined_img)
+    res, im_png = cv2.imencode(".jpeg", combined_img)
     
 
 
     #del modelo
-    return StreamingResponse(io.BytesIO(im_png.tobytes()), media_type="image/jpg")
+    return StreamingResponse(io.BytesIO(im_png.tobytes()), media_type="image/jpeg")
 
 
 @router.post("/dir/")

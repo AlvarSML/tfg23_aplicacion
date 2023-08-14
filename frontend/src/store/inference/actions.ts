@@ -16,12 +16,35 @@ import { ActionContext } from "vuex";
 import { State } from "../state";
 import {} from "./mutations";
 import { InferenceState } from "./state";
+import { api } from "@/api";
 
-//type MainContext = ActionContext<InferenceState, State>;
+type InferenceContext = ActionContext<InferenceState, State>;
 
-export const actions = {};
+export const actions = {
+  async actionInference(
+    context: InferenceContext,
+    payload: {image: File}
+  ) {
+
+    try {
+      const response = await api.getInference(payload.image).then((response)=>{
+        //context.state.imageUrl = URL.createObjectURL(blob);
+        context.state.imageUrl = URL.createObjectURL(response.data) ;
+    })
+      
+      console.log(context.state.imageUrl)
+    } catch (err) {
+      console.error(err)
+    } finally {
+
+    }
+
+    
+  }
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//const { dispatch } = getStoreAccessors<InferenceState | any, State>("");
+const { dispatch } = getStoreAccessors<InferenceState | any, State>("");
 
 //export const dispatchCheckApiError = dispatch(actions.actionCheckApiError);
+export const dispatchInference = dispatch(actions.actionInference)

@@ -48,8 +48,18 @@ export const api = {
   },
   // Obtener la segmentacion y las medidas de cada diente
   async getInference(image: File) {
-    return axios.post(`${apiUrl}/api/v1/radiogrfias/subir/`, {
-      image: image
-    });
+    // eslint-disable-next-line
+    console.log("Imagen",image)
+    const post = axios.post(
+      // eslint-disable-next-line
+      `${apiUrl}/api/v1/radiogrfias/subir/`
+      // eslint-disable-next-line
+      ,{image: image}
+      // eslint-disable-next-line
+      ,{ headers: { 'Content-Type': 'multipart/form-data' }, responseType: "blob" }
+
+    );
+    console.log(post);
+    return post;
   }
 };

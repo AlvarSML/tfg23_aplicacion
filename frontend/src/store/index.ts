@@ -12,7 +12,7 @@ const storeOptions: StoreOptions<State> = {
   modules: {
     main: mainModule,
     admin: adminModule,
-    infeernce: inferenceModule
+    inference: inferenceModule
   }
 };
 

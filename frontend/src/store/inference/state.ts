@@ -6,5 +6,7 @@
 
 export interface InferenceState {
   image: File | null,
-  model: string
+  imageUrl: string,
+  modelSegmentation: string,
+  modelRegression: string
 }

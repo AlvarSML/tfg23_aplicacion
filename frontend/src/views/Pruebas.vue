@@ -12,8 +12,10 @@
                 prepend-icon="mdi-camera"
                 accept="image/png, image/jpeg "
                 @change="onFileChange"
-              ></v-file-input>
+              >
+              </v-file-input>
               <v-img :src="imageUrl" />
+              <v-img :src="imgInference" />
             </v-form>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -29,24 +31,38 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { appName } from "@/env";
-//import { readLoginError } from "@/store/main/getters";
-//import { dispatchLogIn } from "@/store/main/actions";
+import { dispatchInference } from "@/store/inference/actions";
 
 @Component
 export default class Pruebas extends Vue {
-  public imagen = "";
+  public imagen: File | null = null;
   public appName = appName;
-  public imageUrl: string | ArrayBuffer | null = null;
-  public submit() {
-    //dispatchLogIn(this.$store, { username: this.email, password: this.password });
-    // Funcion de api
+  public imageUrl: string | null = null;
+  public imgInference: string | null = null;
+
+  mounted() {
+    //console.log(this.$store.state.inference);
   }
 
-  public onFileChange(file) {
+  public async submit() {
+    // Se ejecuta al mandar el formualrio
+    if (this.imagen) {
+      await dispatchInference(this.$store, { image: this.imagen }).then(() => {
+        this.imgInference = this.$store.state.inference.imageUrl;
+        console.log(this.$store.state.imageUrl);
+      });
+      console.log("aa", this.$store.state.inference.imageUrl);
+    }
+  }
+
+  public onFileChange(file: File) {
+    console.log(file);
     if (file) {
+      this.imagen = file;
       this.imageUrl = URL.createObjectURL(file);
     } else {
       this.imageUrl = null;
+      this.imagen = null;
     }
   }
 }

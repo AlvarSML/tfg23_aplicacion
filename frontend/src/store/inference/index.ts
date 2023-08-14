@@ -10,7 +10,9 @@ import { InferenceState } from "./state";
 
 const defaultState: InferenceState = {
   image: null,
-  model: ""
+  imageUrl: "",
+  modelSegmentation: "seg.onnx",
+  modelRegression: "reg.onnx"
 };
 
 export const inferenceModule = {
