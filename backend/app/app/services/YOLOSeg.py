@@ -10,17 +10,42 @@ from app.services.utils import *
 """
 
 class YOLOSeg:
-
-    def __init__(self, path, conf_thres=0.7, iou_thres=0.5, num_masks=32):
+    """ Clase que gestiona las operaciones sobre una imagen
+    """
+    def __init__(
+            self, 
+            path,
+            conf_thres = 0.7, 
+            iou_thres = 0.5, 
+            num_masks = 32, 
+            func_medicion = lambda x: 10,
+            class_names = ['diente', 'muela', 'raiz']
+            ):
         self.conf_threshold = conf_thres
         self.iou_threshold = iou_thres
         self.num_masks = num_masks
 
+        # Funcion de medicion por inyecccion de dependencias
+        # Debe ser un modelo oxxn
+        self.func_medicion = func_medicion
+
+        # Por defecto onnx numera las labels
+        self.class_names = class_names
+
+        # Colores de dibujo
+        rng = np.random.default_rng(3)
+        self.colors = rng.uniform(0, 255, size=(len(class_names), 3))
+
         # Initialize model
         self.initialize_model(path)
 
+
     def __call__(self, image):
-        return self.segment_objects(image)
+        self.segment_objects(image)
+        self.measure_elements(
+            self.mask_maps,
+            self.class_ids,
+            [0])
 
     def initialize_model(self, path):
         self.session = onnxruntime.InferenceSession(path,
@@ -31,6 +56,8 @@ class YOLOSeg:
         self.get_output_details()
 
     def segment_objects(self, image):
+        """ Operacion de inferencia de segmentacion sobre la imagen
+        """
         input_tensor = self.prepare_input(image)
 
         # Perform inference on the image
@@ -40,6 +67,36 @@ class YOLOSeg:
         self.mask_maps = self.process_mask_output(mask_pred, outputs[1])
 
         return self.boxes, self.scores, self.class_ids, self.mask_maps
+
+    def measure_elements(self, parts_crops, class_ids, class_obj):
+        """ Aplica las mediciones si la clase que se encuentra esta en class_obj
+            Introducir todas las mascaras par mantener el orden de las mediciones
+        Parameters
+        ----------
+        parts_crops: img
+            recortes de la imagen original que van a ser procesados por la funcion de medicion
+
+        class_ids: arr[int]
+            ids de las clases de la segmetnacion previa
+        
+        class_obj: arr[int]
+            ids objetivo de las clases que van a ser medidasd
+        
+        Returns
+        -------
+        list
+            lista de mediciones de todos los recortes, los no objetivo se encontraran a -1
+
+        """
+        measures = []
+        for part, clas in zip(parts_crops, class_ids):
+            if clas in class_obj:
+                measures.append(self.func_medicion(part))
+            else:
+                measures.append(-1)
+        self.measures = measures
+        return self.measures
+
 
     def prepare_input(self, image):
         self.img_height, self.img_width = image.shape[:2]
@@ -91,7 +148,8 @@ class YOLOSeg:
         return boxes[indices], scores[indices], class_ids[indices], mask_predictions[indices]
 
     def process_mask_output(self, mask_predictions, mask_output):
-
+        """ Escala las mascaras para mostrarlas sobre el tamaño original y no el escalado
+        """
         if mask_predictions.shape[0] == 0:
             return []
 
@@ -155,17 +213,69 @@ class YOLOSeg:
         return boxes
 
     def draw_detections(self, image, draw_scores=True, mask_alpha=0.4):
-        return draw_detections(image, self.boxes, self.scores,
-                               self.class_ids, mask_alpha)
+        """ Dibujado sobre las imagenes, las mascaras deben ser escaladas previamente
+            las mascaras se dibujan antes
+            TODO: eliminar dibujado previo de mascaras
+        """
+        img_height, img_width = image.shape[:2]
+        size = min([img_height, img_width]) * 0.0006
+
+        text_thickness = int(min([img_height, img_width]) * 0.001)
+
+        # Las mascaras son dibujadas con color
+        mask_img = self.draw_masks(
+            image,
+            mask_alpha
+            )
+
+        # Dibujado de las BB        
+        for box, score, class_id, measure in zip(self.boxes, self.scores, self.class_ids, self.measures):
+            color = self.colors[class_id]
+
+            x1, y1, x2, y2 = box.astype(int)
+
+            # BB
+            cv2.rectangle(mask_img, (x1, y1), (x2, y2), color, 2)
+
+            # Descripcion de cada deteccion TODO: Añadir mediciones?
+            label = class_names[class_id]
+            caption = f'{label} {int(score * 100)}%'
+
+
+            if measure != -1:
+                caption += f' {float(measure[0]):10.4f}mm'
+
+            (tw, th), _ = cv2.getTextSize(text=caption, fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                                        fontScale=size, thickness=text_thickness)
+            th = int(th * 1.2)
+
+            cv2.rectangle(mask_img, (x1, y1),
+                        (x1 + tw, y1 - th), color, -1)
+
+            cv2.putText(mask_img, caption, (x1, y1),
+                        cv2.FONT_HERSHEY_SIMPLEX, size, (255, 255, 255), text_thickness, cv2.LINE_AA)
+
+        return mask_img
 
     def draw_masks(self, image, draw_scores=True, mask_alpha=0.5):
-        return draw_detections(
-            image, 
-            self.boxes, 
-            self.scores,
-            self.class_ids, 
-            mask_alpha, 
-            mask_maps=self.mask_maps)
+        mask_img = image.copy()
+
+        # Draw bounding boxes and labels of detectionsl
+        for i, (box, class_id) in enumerate(zip(self.boxes, self.class_ids)):
+            color = self.colors[class_id]
+
+            x1, y1, x2, y2 = box.astype(int)
+
+            # Draw fill mask image
+            if self.mask_maps is None:
+                cv2.rectangle(mask_img, (x1, y1), (x2, y2), color, -1)
+            else:
+                crop_mask =self.mask_maps[i][y1:y2, x1:x2, np.newaxis]
+                crop_mask_img = mask_img[y1:y2, x1:x2]
+                crop_mask_img = crop_mask_img * (1 - crop_mask) + crop_mask * color
+                mask_img[y1:y2, x1:x2] = crop_mask_img
+
+        return cv2.addWeighted(mask_img, mask_alpha, image, 1 - mask_alpha, 0)
 
     def print_masks(self, image, draw_scores=True, mask_alpha=0.5):
         return mascaras(

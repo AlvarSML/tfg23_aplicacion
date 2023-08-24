@@ -26,15 +26,19 @@ router = APIRouter()
 @router.post("/subir/")
 async def create_upload_file(image: UploadFile):
     destination_file_path = "/tmp/"+image.filename
-    modelo = cargar_modelo("./modelos_onnx/segmentacino_15.onnx")
+
+    reg = cargar_modelo_regresion("./modelos_regresion/resnet34.onnx")
+    modelo = cargar_modelo(
+        path="./modelos_onnx/segmentacino_15.onnx",
+        confidence=.30,
+        iou=.50,
+        func_medicion=reg)    
+
     img = cargar_imagen(image)
     res = modelo(img)
-    combined_img = modelo.draw_masks(img)
-    # Recorte de la mascara
-    im_png = modelo.print_masks(img)[0]
-    reg = cargar_modelo_regresion("./modelos_regresion/resnet34.onnx")
-    print("estimacion",reg(im_png))
-    res, im_png = cv2.imencode(".jpeg", combined_img)
+    anotada = modelo.draw_detections(img)
+   
+    res, im_png = cv2.imencode(".jpeg", anotada)
     
 
 
