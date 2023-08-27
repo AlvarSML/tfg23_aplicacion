@@ -18,7 +18,7 @@ from PIL import Image
 from ultralytics import YOLO
 from ultralytics.utils.plotting import Annotator, colors
 
-from app.services.segmentation_service import cargar_imagen, cargar_modelo
+from app.services.segmentation_service import cargar_imagen, cargar_modelo, procesar_salida
 from app.services.regression_service import cargar_modelo_regresion
 
 router = APIRouter()
@@ -37,13 +37,10 @@ async def create_upload_file(image: UploadFile):
     img = cargar_imagen(image)
     res = modelo(img)
     anotada = modelo.draw_detections(img)
-   
-    res, im_png = cv2.imencode(".jpeg", anotada)
-    
-
+    imagen_api = procesar_salida(anotada)
 
     #del modelo
-    return StreamingResponse(io.BytesIO(im_png.tobytes()), media_type="image/jpeg")
+    return StreamingResponse(io.BytesIO(imagen_api.tobytes()), media_type="image/jpeg")
 
 
 @router.post("/dir/")

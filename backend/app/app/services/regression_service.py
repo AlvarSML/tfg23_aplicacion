@@ -15,3 +15,6 @@ def cargar_modelo_regresion(path:str, confidence=.3, iou=.5) -> ModeloReg:
     """ Instancia un modelo de segmentacion ONNX
     """
     return ModeloReg(path)
+
+
+

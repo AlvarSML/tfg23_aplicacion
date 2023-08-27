@@ -99,6 +99,10 @@ class YOLOSeg:
 
 
     def prepare_input(self, image):
+        """ Transforma la imagen de entrada en un tensor
+            Se debe modificar en caso de usar otras dimensiones
+            Usa la libreria CV2
+        """
         self.img_height, self.img_width = image.shape[:2]
 
         input_img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)

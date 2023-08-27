@@ -9,6 +9,8 @@ import torchvision.transforms as transforms
 from app.services.Padding import Padding
 
 class ModeloReg:
+    """ Representa un modelo de regresion bajo el formato onnx
+    """
     def __init__(self, path:str) -> None:
         self.initialize_model(path)
 
