@@ -13,10 +13,6 @@ from sqlalchemy.orm import Session
 from app import crud, models, schemas
 from app.api import deps
 
-from PIL import Image
-
-from ultralytics import YOLO
-from ultralytics.utils.plotting import Annotator, colors
 
 from app.services.segmentation_service import cargar_imagen, cargar_modelo, procesar_salida
 from app.services.regression_service import cargar_modelo_regresion

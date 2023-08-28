@@ -30,7 +30,7 @@ def cargar_imagen(file: UploadFile):
     cv_img = np.array(pil_img) 
     return cv_img[:, :, ::-1].copy()
 
-def procesar_salida(file: cv2.image):
+def procesar_salida(file):
     """ Convierte una imagen de opencv a una enviable por la api
     """
     res, im_png = cv2.imencode(".jpeg", file)
