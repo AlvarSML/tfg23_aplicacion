@@ -1,6 +1,6 @@
-from typing import Optional, FilePath, DirectoryPath
-from pydantic import BaseModel, EmailStr
-
+from typing import Optional
+from pydantic import BaseModel, EmailStr,  FilePath, DirectoryPath
+import os
 
 # Propiedades comunes
 # TODO: Concretar filepath y dirpath
@@ -11,9 +11,10 @@ class ModelBase(BaseModel):
 
 
 # Datos para la creacion de un modelo, nunca se modifican
+# TODO: Subir archivo
 class ModelCreate(ModelBase):
     root_dir: DirectoryPath # Establece el directorio base, por lo general no se modifica
-    file_path: FilePath # Establece el archivp especifico
+    file_path: FilePath # Establece el archivo especifico
 
 
 # Properties to receive via API on update
