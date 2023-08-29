@@ -1,6 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel, EmailStr,  FilePath, DirectoryPath
-import os
+
 
 # Propiedades comunes
 # TODO: Concretar filepath y dirpath
@@ -8,6 +8,7 @@ class ModelBase(BaseModel):
     name: str
     short_desc: str  # Descripcion corta para los menus
     description: Optional[str]  # Descripcion completa
+    file_path: FilePath
 
 
 # Datos para la creacion de un modelo, nunca se modifican

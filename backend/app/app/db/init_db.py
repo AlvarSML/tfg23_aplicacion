@@ -31,4 +31,4 @@ def init_db(db: Session) -> None:
         root_dir="./modelos_regresion",
         file_path="./modelos_regresion/resnet34.onnx"
     )
-    #model = crud.model.create(db=db, obj_in=model_in)
+    model = crud.model.create(db=db, obj_in=model_in)
