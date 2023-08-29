@@ -1,6 +1,8 @@
 from .crud_item import item
 from .crud_user import user
 from .crud_model import model
+from .crud_reg_model import reg_model
+
 # For a new basic set of CRUD operations you could just do
 
 # from .base import CRUDBase

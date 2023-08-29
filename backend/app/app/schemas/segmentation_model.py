@@ -1,16 +1,15 @@
 from typing import Optional
 from pydantic import BaseModel, EmailStr,  FilePath, DirectoryPath
-from schemas.model import ModelBase
+from .model import ModelBase
 
 class SegModelBase(ModelBase):
-    iou_score: Optional(int)
-    root_dir: str = "./modelos_regresion/"
+    iou_score: int
 
 class SegModelCreate(SegModelBase):
-    pass
+    iou_score: int
 
-class SegModelCreate(SegModelBase):
-    pass
+class SegModelUpdate(SegModelBase):
+    iou_score: int
 
 class SegModelInDBBase(SegModelBase):
     id: Optional[int] = None

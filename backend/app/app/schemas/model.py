@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Any
 from pydantic import BaseModel, EmailStr,  FilePath, DirectoryPath
 
 
@@ -16,7 +16,7 @@ class ModelBase(BaseModel):
 class ModelCreate(ModelBase):
     root_dir: DirectoryPath # Establece el directorio base, por lo general no se modifica
     file_path: FilePath # Establece el archivo especifico
-
+    model_file: Any # No se puede establecer el tipo de archivo
 
 # Properties to receive via API on update
 class ModelUpdate(ModelBase):

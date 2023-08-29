@@ -20,3 +20,23 @@ def get_models(
     else:
         models = []
     return models
+
+@router.post("/nuevo_modelo_reg", response_model=schemas.RegModel)
+def post_reg_model(
+    *,
+    db: Session = Depends(deps.get_db),
+    reg_model_in: schemas.RegModelCreate,
+    current_user: models.User = Depends(deps.get_current_active_user),
+):
+    # TODO
+    pass
+
+@router.post("/nuevo_modelo_seg", response_model=schemas.SegModel)
+def post_reg_model(
+    *,
+    db: Session = Depends(deps.get_db),
+    reg_model_in: schemas.SegModelCreate,
+    current_user: models.User = Depends(deps.get_current_active_user),
+):
+    # TODO
+    pass
