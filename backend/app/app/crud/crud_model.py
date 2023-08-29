@@ -10,7 +10,11 @@ from app.schemas.model import ModelCreate, ModelUpdate
 class CRUDModel(CRUDBase[Model, ModelCreate, ModelUpdate]):
 
     def create_with_owner(
-        self, db: Session, *, obj_in: ModelCreate, owner_id: int
+        self, 
+        db: Session,
+        *, 
+        obj_in: ModelCreate, 
+        owner_id: int
     ) -> Model:
         """ Crea un modelo en la BDD
         """

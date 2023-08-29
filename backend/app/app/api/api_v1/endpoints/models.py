@@ -1,7 +1,7 @@
 
 from typing import Any, List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
@@ -27,6 +27,7 @@ def post_reg_model(
     db: Session = Depends(deps.get_db),
     reg_model_in: schemas.RegModelCreate,
     current_user: models.User = Depends(deps.get_current_active_user),
+    model_file: UploadFile
 ):
     # TODO
     pass
