@@ -16,5 +16,5 @@ class ModelSelection(Base):
     id: int = Column(Integer, primary_key=True)
     created_date: DateTime = Column(DateTime(timezone=True), server_default=func.now())
     reg_model: Mapped["RegressionModel"] = mapped_column(ForeignKey("regressionmodel.id"))
-    seg_model: Mapped["SegmentationModel"] = mapped_column(ForeignKey("segmentationnmodel.id"))
+    seg_model: Mapped["SegmentationModel"] = mapped_column(ForeignKey("segmentationmodel.id"))
     changed_by: Mapped["User"] = mapped_column(ForeignKey("user.id"))
