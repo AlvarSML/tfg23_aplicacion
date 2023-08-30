@@ -14,9 +14,9 @@ class Model(Base):
     """ Representa cualquier modelo almacenado
     """
     __tablename__="model"
-    
+
     id: int = Column(Integer, primary_key=True, index=True)
-    created_date: Column(DateTime, default=func.now())
+    created_date = Column(DateTime(timezone=True), server_default=func.now())
     name = Column(String, index=True) # Nombre del modelo (Ej.: YOLOm, resnet30)
     short_desc: str = Column(String, index=False) # Descripcion corta para los menus
     model_description: str = Column(String, index=False) # Descripcion completa

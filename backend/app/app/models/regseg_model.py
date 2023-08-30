@@ -6,7 +6,6 @@ from sqlalchemy.orm import relationship, Mapped
 from app.db.base_class import Base
 
 from app.models.model import Model
-from app.models.state import ModelSelection
 
 # tabla para asociar los modelos compatibles de segmetnacion y regresion
 association_seg_reg = Table(
