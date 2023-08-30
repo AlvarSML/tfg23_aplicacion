@@ -7,3 +7,4 @@ from app.models.model import Model  # noqa
 #from app.models.regression_model import RegressionModel  # noqa
 #from app.models.segmentation_model import SegmentationModel  # noqa
 from app.models.regseg_model import RegressionModel, SegmentationModel
+from app.models.state import ModelSelection

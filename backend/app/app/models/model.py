@@ -13,10 +13,12 @@ from app.db.base_class import Base
 class Model(Base):
     """ Representa cualquier modelo almacenado
     """
+    __tablename__="model"
+    
     id: int = Column(Integer, primary_key=True, index=True)
     created_date: Column(DateTime, default=func.now())
     name = Column(String, index=True) # Nombre del modelo (Ej.: YOLOm, resnet30)
     short_desc: str = Column(String, index=False) # Descripcion corta para los menus
-    description: str = Column(String, index=False) # Descripcion completa
+    model_description: str = Column(String, index=False) # Descripcion completa
     root_dir: str = Column(String, index=False) # Establece el directorio base, por lo general no se modifica
     file_path: str = Column(String, index=True) # Nombre del modelo desde el dir raiz

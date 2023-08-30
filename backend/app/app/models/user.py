@@ -10,6 +10,8 @@ if TYPE_CHECKING:
 
 
 class User(Base):
+    __tablename__="user"
+    
     id: int = Column(Integer, primary_key=True, index=True)
     full_name = Column(String, index=True)
     email: str = Column(String, unique=True, index=True, nullable=False)
