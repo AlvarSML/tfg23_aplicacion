@@ -14,6 +14,6 @@ class ModelSelection(Base):
     __tablename__="modelselection"
     id: int = Column(Integer, primary_key=True)
     created_date: Column(DateTime, default=func.now())
-    reg_model =Column(Integer, ForeignKey("regressionmodel.id"))
-    #seg_model: "SegmentationModel" = relationship("Model")
-    changed_by: Mapped["User"] = relationship("User")
+    reg_model = Column(Integer, ForeignKey("regressionmodel.id"))
+    seg_model = Column(Integer, ForeignKey("segmentationnmodel.id"))
+    changed_by = Column(Integer, ForeignKey("user.id"))
