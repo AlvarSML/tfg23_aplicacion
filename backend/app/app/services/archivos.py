@@ -11,7 +11,7 @@ class archivos:
         try:
             # Guardado del modelo por parttes (Puede ser grande)
             async with aiofiles.open(path, 'wb') as out_file:
-                while content := await upload_file.read(1024):  # async read chunk
+                while content := await upload_file.read(1024 * 1000):  # lee por bloques de 1MB para evitar colapsar con archivos grandes
                     await out_file.write(content)  # async write chunk
         except:
             return False

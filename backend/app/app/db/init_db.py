@@ -6,9 +6,11 @@ from app.db import base  # noqa: F401
 
 from app.models.model import Model
 from app.models.regseg_model import RegressionModel, SegmentationModel
+from app.models.state import ModelSelection
 
 from app.crud.crud_reg_model import reg_model
 from app.crud.crud_seg_model import seg_model
+from app.crud.crud_state import state
 
 # make sure all SQL Alchemy models are imported (app.db.base) before initializing DB
 # otherwise, SQL Alchemy might fail to initialize relationships properly
@@ -30,7 +32,10 @@ def init_db(db: Session) -> None:
         )
         user = crud.user.create(db, obj_in=user_in)  # noqa: F841
     
+    # Eliminar en orden
+    db.query(ModelSelection).delete()
     db.query(RegressionModel).delete()
+    db.query(SegmentationModel).delete()
     db.query(Model).delete()
 
     model_in1 = schemas.RegModelCreate(
@@ -49,8 +54,8 @@ def init_db(db: Session) -> None:
         rmse=15.0
     )
     
-    model1 = reg_model.create_with_owner(db=db, obj_in=model_in1, owner_id=user)
-    model2 = reg_model.create_with_owner(db=db, obj_in=model_in2, owner_id=user)
+    modelr1 = reg_model.create_with_owner(db=db, obj_in=model_in1, owner_id=user)
+    modelr2 = reg_model.create_with_owner(db=db, obj_in=model_in2, owner_id=user)
 
     model_in1 = schemas.SegModelCreate(
         name="Yolo",
@@ -68,5 +73,13 @@ def init_db(db: Session) -> None:
         iou=.9
     )    
 
-    model1 = seg_model.create_with_owner(db=db, obj_in=model_in1, owner_id=user)
-    model2 = seg_model.create_with_owner(db=db, obj_in=model_in2, owner_id=user)
+    models1 = seg_model.create_with_owner(db=db, obj_in=model_in1, owner_id=user)
+    models2 = seg_model.create_with_owner(db=db, obj_in=model_in2, owner_id=user)
+
+    st = schemas.StateCreate(
+        seg_model=models1.id,
+        reg_model=modelr1.id
+    )
+
+    statec = state.create_with_owner(db=db, obj_in=st, owner_id=user.id)
+    print(statec)

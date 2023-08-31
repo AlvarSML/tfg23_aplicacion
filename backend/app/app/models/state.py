@@ -18,3 +18,13 @@ class ModelSelection(Base):
     reg_model: Mapped["RegressionModel"] = mapped_column(ForeignKey("regressionmodel.id"))
     seg_model: Mapped["SegmentationModel"] = mapped_column(ForeignKey("segmentationmodel.id"))
     changed_by: Mapped["User"] = mapped_column(ForeignKey("user.id"))
+
+    def __init__(
+            self,
+            reg_model,
+            seg_model,
+            owner_id
+    ):
+        self.reg_model = reg_model
+        self.seg_model = seg_model
+        self.changed_by = owner_id

@@ -3,7 +3,7 @@ from .crud_user import user
 from .crud_model import model
 from .crud_reg_model import reg_model
 from .crud_seg_model import seg_model
-
+from .crud_state import state
 # For a new basic set of CRUD operations you could just do
 
 # from .base import CRUDBase
