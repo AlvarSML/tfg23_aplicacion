@@ -7,15 +7,15 @@ from app.crud.base import CRUDBase
 from app.models.regseg_model import SegmentationModel
 from app.schemas.segmentation_model import SegModelCreate, SegModelUpdate
 
-class CRUDRegModel(CRUDBase[SegmentationModel, RegModelCreate, RegModelUpdate]):
+class CRUDSegModel(CRUDBase[SegmentationModel, SegModelCreate, SegModelUpdate]):
 
     def create_with_owner(
-        self, db: Session, *, obj_in: RegModelCreate, owner_id: int
+        self, db: Session, *, obj_in: SegModelCreate, owner_id: int
     ) -> SegmentationModel:
         """ Crea un modelo en la BDD
         """
         obj_in_data = jsonable_encoder(obj_in)
-        db_obj = self.model(**obj_in_data, owner_id=owner_id)
+        db_obj = self.model(**obj_in_data)
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
@@ -33,4 +33,4 @@ class CRUDRegModel(CRUDBase[SegmentationModel, RegModelCreate, RegModelUpdate]):
             .all()
         )
 
-reg_model = CRUDRegModel(RegressionModel)
+seg_model = CRUDSegModel(SegmentationModel)

@@ -36,7 +36,7 @@ async def post_reg_model(
     current_user: models.User = Depends(deps.get_current_active_user),
     model_file: UploadFile  
 ):
-    res = archivos.write_file(dir_reg, model_file)
+    res = await archivos.write_file(dir_reg, model_file)
     if res:
         
         model = crud.reg_model.create_with_owner(
@@ -61,5 +61,18 @@ async def post_reg_model(
     current_user: models.User = Depends(deps.get_current_active_user),
     model_file: UploadFile = File(...)
 ):
-    archivos.write_file(dir_seg, model_file)
-    return {"Result": "OK"}
+    res = archivos.write_file(dir_reg, model_file)
+    if res:
+        
+        model = crud.seg_model.create_with_owner(
+            db=db,
+            obj_in=reg_model_in,
+            owner_id=current_user
+        )
+        return model
+    else:
+        raise HTTPException(
+            status_code=502,
+            detail="Error de escritura",
+            headers={"X-Error": "There goes my error"},
+        )

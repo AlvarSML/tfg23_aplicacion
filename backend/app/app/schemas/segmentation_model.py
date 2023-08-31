@@ -3,13 +3,13 @@ from pydantic import BaseModel, EmailStr,  FilePath, DirectoryPath
 from .model import ModelBase
 
 class SegModelBase(ModelBase):
-    iou_score: float
+    iou: float
 
 class SegModelCreate(SegModelBase):
-    iou_score: float
+    iou: float
 
 class SegModelUpdate(SegModelBase):
-    iou_score: float
+    iou: float
 
 class SegModelInDBBase(SegModelBase):
     id: Optional[int] = None

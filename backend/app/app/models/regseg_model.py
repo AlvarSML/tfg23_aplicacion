@@ -34,5 +34,11 @@ class SegmentationModel(Model):
         "polymorphic_identity": "segmentationmodel"
     }
 
-    def __init__(self):
+    def __init__(
+            self,
+            iou,
+            **kwargs,            
+            ):
+        super().__init__(**kwargs)
+        self.iou = iou
         self.root_dir = "./modelos_regresion/"

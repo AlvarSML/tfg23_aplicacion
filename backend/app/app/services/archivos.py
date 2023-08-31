@@ -9,6 +9,7 @@ class archivos:
         """
         timestr = time.strftime("%Y%m%d_%H%M%S")
         ubicacion = f"{path}{timestr}.onnx"
+        print(f"Escribiendo en ubicacion: {ubicacion}")
         try:
             # Guardado del modelo por parttes (Puede ser grande)
             async with aiofiles.open(ubicacion, 'wb') as out_file:
