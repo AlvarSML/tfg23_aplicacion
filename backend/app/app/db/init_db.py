@@ -47,5 +47,5 @@ def init_db(db: Session) -> None:
         rmse=15.0
     )
 
-    model1 = reg_model.create_with_owner(db=db, obj_in=model_in1, owner_id=user)
-    model2 = reg_model.create_with_owner(db=db, obj_in=model_in2, owner_id=user)
+    #model1 = reg_model.create_with_owner(db=db, obj_in=model_in1, owner_id=user)
+    #model2 = reg_model.create_with_owner(db=db, obj_in=model_in2, owner_id=user)
