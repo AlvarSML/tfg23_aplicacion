@@ -32,12 +32,26 @@ def get_models(
 async def post_reg_model(
     *,
     db: Session = Depends(deps.get_db),
-    reg_model_in: schemas.RegModelCreate,
+    reg_model_in: schemas.RegModelCreate = Depends(),
     current_user: models.User = Depends(deps.get_current_active_user),
-    model_file: UploadFile
+    model_file: UploadFile  
 ):
-    archivos.write_file(dir_reg, model_file)
-    pass
+    res = archivos.write_file(dir_reg, model_file)
+    if res:
+        
+        model = crud.reg_model.create_with_owner(
+            db=db,
+            obj_in=reg_model_in,
+            owner_id=current_user
+        )
+        return model
+    else:
+        raise HTTPException(
+            status_code=502,
+            detail="Error de escritura",
+            headers={"X-Error": "There goes my error"},
+        )
+
 
 @router.post("/nuevo_modelo_seg", response_model=schemas.SegModel)
 async def post_reg_model(

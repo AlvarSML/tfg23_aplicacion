@@ -23,13 +23,11 @@ def init_db(db: Session) -> None:
             is_superuser=True,
         )
         user = crud.user.create(db, obj_in=user_in)  # noqa: F841
-"""
+
     model_in = schemas.ModelCreate(
         name="Resnet18",
         short_desc="Modelo de regresion",
         description="Modelo de regresion basado en resnet con 18 capas",
-        root_dir="./modelos_regresion",
         file_path="./modelos_regresion/resnet34.onnx"
     )
     model = crud.model.create(db=db, obj_in=model_in)
-    """

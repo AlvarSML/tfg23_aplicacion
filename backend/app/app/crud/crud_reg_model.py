@@ -12,12 +12,17 @@ from app.schemas.regression_model import RegModelCreate, RegModelUpdate
 class CRUDRegModel(CRUDBase[RegressionModel, RegModelCreate, RegModelUpdate]):
 
     def create_with_owner(
-        self, db: Session, *, obj_in: RegModelCreate, owner_id: int
+        self, 
+        db: Session, 
+        *, 
+        obj_in: RegModelCreate, 
+        owner_id: int
     ) -> RegressionModel:
         """ Crea un modelo en la BDD
         """
         obj_in_data = jsonable_encoder(obj_in)
-        db_obj = self.model(**obj_in_data, owner_id=owner_id)
+        print(obj_in)
+        db_obj = self.model(**dict(obj_in_data))
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)

@@ -17,3 +17,4 @@ class Item(Base):
     description = Column(String, index=True)
     owner_id = Column(Integer, ForeignKey("user.id"))
     owner: Mapped["User"] = relationship(back_populates="items")
+
