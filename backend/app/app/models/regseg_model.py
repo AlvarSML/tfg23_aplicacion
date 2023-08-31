@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, List
 
-from sqlalchemy import Column, ForeignKey, Integer, String, Table
+from sqlalchemy import Column, ForeignKey, Integer, String, Table, Float
 from sqlalchemy.orm import relationship, Mapped
 
 from app.db.base_class import Base
@@ -10,7 +10,7 @@ from app.models.model import Model
 class RegressionModel(Model):
     id = Column(Integer, ForeignKey("model.id") ,primary_key=True)
     __tablename__="regressionmodel"
-    accuracy: int = Column(Integer) # Precision de la segmentacion
+    rmse: float = Column(Float) 
 
     __mapper_args__ = {
         "polymorphic_identity": "regressionmodel"
@@ -28,7 +28,7 @@ class RegressionModel(Model):
 class SegmentationModel(Model):
     __tablename__="segmentationmodel"
     id = Column(Integer, ForeignKey("model.id") ,primary_key=True)
-    iou: int = Column(Integer) # Precision de la segmentacion
+    iou: float = Column(Float) # Precision de la segmentacion
     
     __mapper_args__ = {
         "polymorphic_identity": "segmentationmodel"
