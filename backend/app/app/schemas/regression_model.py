@@ -3,13 +3,13 @@ from pydantic import BaseModel, EmailStr,  FilePath, DirectoryPath
 from .model import ModelBase
 
 class RegModelBase(ModelBase):
-    rmse: int
+    rmse: float
 
 class RegModelCreate(RegModelBase):
-    rmse: int
+    rmse: float
 
 class RegModelUpdate(RegModelBase):
-    rmse: int
+    rmse: float
 
 class RegModelInDBBase(RegModelBase):
     id: Optional[int] = None

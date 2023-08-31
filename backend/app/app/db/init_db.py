@@ -4,6 +4,8 @@ from app import crud, schemas
 from app.core.config import settings
 from app.db import base  # noqa: F401
 
+from app.models.model import Model
+from app.models.regseg_model import RegressionModel, SegmentationModel
 # make sure all SQL Alchemy models are imported (app.db.base) before initializing DB
 # otherwise, SQL Alchemy might fail to initialize relationships properly
 # for more details: https://github.com/tiangolo/full-stack-fastapi-postgresql/issues/28
@@ -23,11 +25,15 @@ def init_db(db: Session) -> None:
             is_superuser=True,
         )
         user = crud.user.create(db, obj_in=user_in)  # noqa: F841
+    
+    db.session.query(RegressionModel).delete()
+    db.session.query(Model).delete()
 
-    model_in = schemas.ModelCreate(
-        name="Resnet18",
+    model_in = schemas.RegModelCreate(
+        name="Resnet18_init",
         short_desc="Modelo de regresion",
         description="Modelo de regresion basado en resnet con 18 capas",
-        file_path="./modelos_regresion/resnet34.onnx"
+        file_path="./modelos_regresion/resnet34.onnx",
+        rmse=12.0
     )
     model = crud.model.create(db=db, obj_in=model_in)

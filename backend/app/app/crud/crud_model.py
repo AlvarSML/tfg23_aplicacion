@@ -30,11 +30,14 @@ class CRUDModel(CRUDBase[Model, ModelCreate, ModelUpdate]):
     ) -> List[Model]:
         """ Lista todos los modelos disponibles
         """
+        query = db.query(self.model)\
+        .offset(skip)\
+        .limit(limit)\
+        .all()
+
+        print("*****Query",query)
         return (
-            db.query(self.model)
-            .offset(skip)
-            .limit(limit)
-            .all()
+            query
         )
 
 model = CRUDModel(Model)

@@ -2,6 +2,8 @@ from typing import Optional, Any
 from pydantic import BaseModel, EmailStr,  FilePath, DirectoryPath
 from fastapi import Form, File, UploadFile
 
+
+
 # Propiedades comunes
 # TODO: Concretar filepath y dirpath
 class ModelBase(BaseModel):

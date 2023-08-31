@@ -22,3 +22,20 @@ class Model(Base):
     model_description: str = Column(String, index=False) # Descripcion completa
     root_dir: str = Column(String, index=False) # Establece el directorio base, por lo general no se modifica
     file_path: str = Column(String, index=True) # Nombre del modelo desde el dir raiz
+
+    def __init__(
+            self,
+            name,
+            short_desc,
+            model_description,
+            root_dir,
+            file_path,
+            ):
+        self.name = name
+        self.short_desc = short_desc
+        self.model_description = model_description
+        self.root_dir = root_dir
+        self.file_path = file_path
+    
+    def __repr__(self):
+        return f"<Modelo: {self.name}>"

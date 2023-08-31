@@ -9,6 +9,7 @@ from app.crud.base import CRUDBase
 from app.models.regseg_model import RegressionModel
 from app.schemas.regression_model import RegModelCreate, RegModelUpdate
 
+
 class CRUDRegModel(CRUDBase[RegressionModel, RegModelCreate, RegModelUpdate]):
 
     def create_with_owner(

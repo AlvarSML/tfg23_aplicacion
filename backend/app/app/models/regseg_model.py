@@ -16,7 +16,13 @@ class RegressionModel(Model):
         "polymorphic_identity": "regressionmodel"
     }
 
-    def __init__(self):
+    def __init__(
+            self,
+            rmse,
+            **kwargs,            
+            ):
+        super().__init__(**kwargs)
+        self.rmse = rmse
         self.root_dir = "./modelos_onnx/"
 
 class SegmentationModel(Model):
