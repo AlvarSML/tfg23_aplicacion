@@ -10,7 +10,6 @@ class ModelBase(BaseModel):
     name: str
     short_desc: str  # Descripcion corta para los menus
     model_description: Optional[str]  # Descripcion completa
-    root_dir: Optional[str]
     file_path: str
 
 

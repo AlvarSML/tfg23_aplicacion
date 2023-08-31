@@ -28,13 +28,11 @@ class Model(Base):
             name,
             short_desc,
             model_description,
-            root_dir,
             file_path,
             ):
         self.name = name
         self.short_desc = short_desc
         self.model_description = model_description
-        self.root_dir = root_dir
         self.file_path = file_path
     
     def __repr__(self):
