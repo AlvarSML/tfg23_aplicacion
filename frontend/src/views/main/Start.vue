@@ -15,7 +15,7 @@ const startRouteGuard = async (to, from, next) => {
   // TODO: Modificar para que no entre a pruebas directo
   if (readIsLoggedIn(store)) {
     if (to.path === "/login" || to.path === "/") {
-      next("/pruebas");
+      next("/main");
     } else {
       next();
     }
