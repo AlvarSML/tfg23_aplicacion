@@ -61,7 +61,7 @@ def init_db(db: Session) -> None:
         name="Yolo",
         short_desc="Modelo de regresion",
         description="Modelo de regresion basado en resnet con 18 capas",
-        file_path="./modelos_regresion/resnet34.onnx",
+        file_path="./modelos_onnx/segmentacino_15.onnx",
         iou=.8
     )
 
@@ -69,14 +69,14 @@ def init_db(db: Session) -> None:
         name="Detectron",
         short_desc="Modelo de regresion2",
         description="Modelo de regresion basado en resnet con 18 capas",
-        file_path="./modelos_regresion/resnet34.onnx",
+        file_path="./modelos_onnx/segmentacino_15.onnx",
         iou=.9
     )    
 
     models1 = seg_model.create_with_owner(db=db, obj_in=model_in1, owner_id=user)
     models2 = seg_model.create_with_owner(db=db, obj_in=model_in2, owner_id=user)
 
-    print("Model1",type(models1))
+    
 
     st = schemas.StateCreate(
         seg_model=models1,

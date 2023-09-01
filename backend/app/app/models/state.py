@@ -39,8 +39,8 @@ class ModelSelection(Base):
             seg_model,
             owner_id
     ):
-        self.reg_model = reg_model
-        self.seg_model = seg_model
+        self.reg_id= reg_model
+        self.seg_id = seg_model
         self.changed_by = owner_id
     
     def __repr__(self):

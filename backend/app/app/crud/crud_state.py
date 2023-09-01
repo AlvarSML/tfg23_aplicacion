@@ -6,9 +6,9 @@ from sqlalchemy import select
 
 from app.crud.base import CRUDBase
 from app.models.state import ModelSelection
-from app.schemas.state import StateCreate, StateBase, StatePaths
+from app.schemas.state import State, StateCreate, StateBase, StatePaths
 
-class CRUDState(CRUDBase[ModelSelection, StateCreate, StateBase]):
+class CRUDState(CRUDBase[State, StateCreate, StateBase]):
 
     def create_with_owner(
         self, 
@@ -19,10 +19,11 @@ class CRUDState(CRUDBase[ModelSelection, StateCreate, StateBase]):
     ) -> ModelSelection:
         """ Crea un modelo en la BDD
         """
-        obj_in_data = jsonable_encoder(obj_in)
+        print("ModelS",type(obj_in.seg_model))
+        print("ModelR",type(obj_in.reg_model))
         db_obj = self.model(
-            seg_model=obj_in.seg_model,
-            reg_model=obj_in.reg_model, 
+            seg_model=obj_in.seg_model.id,
+            reg_model=obj_in.reg_model.id, 
             owner_id=owner_id)
         db.add(db_obj)
         db.commit()
@@ -46,14 +47,25 @@ class CRUDState(CRUDBase[ModelSelection, StateCreate, StateBase]):
 
     def get_last(
         self, db: Session
-    ) -> ModelSelection:
+    ) -> State:
         """ Lista todos los modelos disponibles
         """
-        query = db.query(self.model)\
-            .order_by(self.model.created_date.desc())\
-            .first()
+        stmt = select(self.model)\
+            .join(self.model.seg_model)\
+            .join(self.model.reg_model)\
+            .order_by(self.model.created_date.desc())
+        curr_state = db.execute(stmt).first()
 
-        return query
+        print("LAST",curr_state)
+
+        base = State(
+            seg_model= curr_state.ModelSelection.seg_model,
+            reg_model= curr_state.ModelSelection.reg_model,
+            changed_by= curr_state.ModelSelection.changed_by,
+            created_date= curr_state.ModelSelection.created_date,
+        )
+
+        return base
     
     def get_current_paths(self, db:Session)-> StatePaths:
         stmt = select(self.model)\

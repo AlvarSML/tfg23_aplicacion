@@ -19,8 +19,8 @@ class StatePaths(StateBase):
 
 # Como se devuelven los datos de la bdd
 class StateInDBBase(StateBase):
-    seg_model: int
-    reg_model: int
+    seg_model: schemas.SegModel
+    reg_model: schemas.RegModel
     changed_by: int
     created_date: datetime
 

@@ -20,12 +20,16 @@ from app.services.regression_service import cargar_modelo_regresion
 router = APIRouter()
 
 @router.post("/subir/")
-async def create_upload_file(image: UploadFile):
-    destination_file_path = "/tmp/"+image.filename
+async def create_upload_file(
+    image: UploadFile,
+    db: Session = Depends(deps.get_db)):
 
-    reg = cargar_modelo_regresion("./modelos_regresion/resnet34.onnx")
+    estado = crud.crud_state.state.get_last(db=db)
+    print(estado)
+
+    reg = cargar_modelo_regresion(estado.reg_model.file_path)
     modelo = cargar_modelo(
-        path="./modelos_onnx/segmentacino_15.onnx",
+        path=estado.seg_model.file_path,
         confidence=.30,
         iou=.50,
         func_medicion=reg)    
