@@ -76,10 +76,12 @@ def init_db(db: Session) -> None:
     models1 = seg_model.create_with_owner(db=db, obj_in=model_in1, owner_id=user)
     models2 = seg_model.create_with_owner(db=db, obj_in=model_in2, owner_id=user)
 
-    st = schemas.StateCreate(
-        seg_model=models1.id,
-        reg_model=modelr1.id
-    )
+    print("Model1",type(models1))
 
-    statec = state.create_with_owner(db=db, obj_in=st, owner_id=user.id)
-    print(statec)
+    st = schemas.StateCreate(
+        seg_model=models1,
+        reg_model=modelr1
+    )
+    print("Schema",type(st.seg_model))
+    #statec = state.create_with_owner(db=db, obj_in=st, owner_id=user.id)
+    #print(statec)

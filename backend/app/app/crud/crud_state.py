@@ -2,10 +2,11 @@ from typing import List
 
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
+from sqlalchemy import select
 
 from app.crud.base import CRUDBase
 from app.models.state import ModelSelection
-from app.schemas.state import StateCreate, StateBase
+from app.schemas.state import StateCreate, StateBase, StatePaths
 
 class CRUDState(CRUDBase[ModelSelection, StateCreate, StateBase]):
 
@@ -19,7 +20,10 @@ class CRUDState(CRUDBase[ModelSelection, StateCreate, StateBase]):
         """ Crea un modelo en la BDD
         """
         obj_in_data = jsonable_encoder(obj_in)
-        db_obj = self.model(**obj_in_data, owner_id=owner_id)
+        db_obj = self.model(
+            seg_model=obj_in.seg_model,
+            reg_model=obj_in.reg_model, 
+            owner_id=owner_id)
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
@@ -51,4 +55,25 @@ class CRUDState(CRUDBase[ModelSelection, StateCreate, StateBase]):
 
         return query
     
+    def get_current_paths(self, db:Session)-> StatePaths:
+        stmt = select(self.model)\
+            .join(self.model.seg_model)\
+            .join(self.model.reg_model)\
+            .order_by(self.model.created_date.desc())
+        curr_state = db.execute(stmt).first()
+        print("PATHS:",type(curr_state.ModelSelection.seg_model))
+        """
+        curr_state = db.query(self.model)\
+            .order_by(self.model.created_date.desc())\
+            .first()
+        """
+        paths = StatePaths(
+            seg_model=curr_state.seg_model.id,
+            reg_model=curr_state.reg_model.id,
+            seg_path=curr_state.reg_model.file_path,
+            reg_path=curr_state.seg_model.file_path,
+        )
+        print("PATHS:",paths)
+        return paths
+
 state = CRUDState(ModelSelection)

@@ -44,3 +44,14 @@ async def post_state(
 ):
     statec = crud.state.create_with_owner(db=db, obj_in=state_in, owner_id=current_user.id)
     return statec
+
+@router.get("/paths", response_model=schemas.StatePaths)
+def get_last(
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_active_user),
+) -> Any:
+    if crud.user.is_superuser(current_user):
+        models = crud.state.get_current_paths(db)
+    else:
+        models = None
+    return models

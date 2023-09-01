@@ -15,9 +15,23 @@ class ModelSelection(Base):
     __tablename__="modelselection"
     id: int = Column(Integer, primary_key=True)
     created_date: DateTime = Column(DateTime(timezone=True), server_default=func.now())
-    reg_model: Mapped["RegressionModel"] = mapped_column(ForeignKey("regressionmodel.id"))
-    seg_model: Mapped["SegmentationModel"] = mapped_column(ForeignKey("segmentationmodel.id"))
+    
     changed_by: Mapped["User"] = mapped_column(ForeignKey("user.id"))
+
+    reg_id: Mapped["RegressionModel"] = mapped_column(ForeignKey("regressionmodel.id"))
+    seg_id: Mapped["SegmentationModel"] = mapped_column(ForeignKey("segmentationmodel.id"))
+
+    reg_model: Mapped["RegressionModel"] = relationship(
+        "RegressionModel", 
+        back_populates="states",
+        foreign_keys=[reg_id]
+        )
+    
+    seg_model: Mapped["SegmentationModel"] = relationship(
+        "SegmentationModel", 
+        back_populates="states",
+        foreign_keys=[seg_id]
+        )
 
     def __init__(
             self,
@@ -28,3 +42,6 @@ class ModelSelection(Base):
         self.reg_model = reg_model
         self.seg_model = seg_model
         self.changed_by = owner_id
+    
+    def __repr__(self):
+        return f"State({self.reg_model},{self.seg_model})"

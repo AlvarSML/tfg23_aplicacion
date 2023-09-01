@@ -2,16 +2,23 @@ from typing import Optional
 from pydantic import BaseModel
 
 from datetime import datetime
-
+from app import models
 
 # Propiedades comunes
 # TODO: Concretar filepath y dirpath
 class StateBase(BaseModel):
-    seg_model: int
-    reg_model: int
+    seg_model: models.SegmentationModel
+    reg_model: models.RegressionModel
+
+    class Config:
+        arbitrary_types_allowed = True
 
 class StateCreate(StateBase):
     pass
+
+class StatePaths(StateBase):
+    seg_path: str
+    reg_path: str
 
 # Como se devuelven los datos de la bdd
 class StateInDBBase(StateBase):

@@ -7,11 +7,15 @@ from app.db.base_class import Base
 
 from app.models.model import Model
 
+
 class RegressionModel(Model):
     id = Column(Integer, ForeignKey("model.id") ,primary_key=True)
     __tablename__="regressionmodel"
     rmse: float = Column(Float) 
-
+    states = relationship(
+        "ModelSelection",
+       back_populates="reg_model"
+    )
     __mapper_args__ = {
         "polymorphic_identity": "regressionmodel"
     }
@@ -30,6 +34,10 @@ class SegmentationModel(Model):
     id = Column(Integer, ForeignKey("model.id") ,primary_key=True)
     iou: float = Column(Float) # Precision de la segmentacion
     
+    states: Mapped[List["ModelSelection"]] = relationship(
+        "ModelSelection",
+        back_populates="seg_model"
+    )
     __mapper_args__ = {
         "polymorphic_identity": "segmentationmodel"
     }
