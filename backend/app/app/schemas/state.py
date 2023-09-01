@@ -2,16 +2,13 @@ from typing import Optional
 from pydantic import BaseModel
 
 from datetime import datetime
-from app import models
+from app import models, schemas
 
 # Propiedades comunes
 # TODO: Concretar filepath y dirpath
 class StateBase(BaseModel):
-    seg_model: models.SegmentationModel
-    reg_model: models.RegressionModel
-
-    class Config:
-        arbitrary_types_allowed = True
+    seg_model: schemas.SegModel
+    reg_model: schemas.RegModel
 
 class StateCreate(StateBase):
     pass

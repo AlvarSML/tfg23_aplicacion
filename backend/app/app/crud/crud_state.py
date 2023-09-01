@@ -61,17 +61,17 @@ class CRUDState(CRUDBase[ModelSelection, StateCreate, StateBase]):
             .join(self.model.reg_model)\
             .order_by(self.model.created_date.desc())
         curr_state = db.execute(stmt).first()
-        print("PATHS:",type(curr_state.ModelSelection.seg_model))
+        print("PATHS:",curr_state.ModelSelection.seg_model)
         """
         curr_state = db.query(self.model)\
             .order_by(self.model.created_date.desc())\
             .first()
         """
         paths = StatePaths(
-            seg_model=curr_state.seg_model.id,
-            reg_model=curr_state.reg_model.id,
-            seg_path=curr_state.reg_model.file_path,
-            reg_path=curr_state.seg_model.file_path,
+            seg_model=curr_state.ModelSelection.seg_model,
+            reg_model=curr_state.ModelSelection.reg_model,
+            seg_path=curr_state.ModelSelection.reg_model.file_path,
+            reg_path=curr_state.ModelSelection.seg_model.file_path,
         )
         print("PATHS:",paths)
         return paths

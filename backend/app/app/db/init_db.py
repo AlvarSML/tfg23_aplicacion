@@ -83,5 +83,5 @@ def init_db(db: Session) -> None:
         reg_model=modelr1
     )
     print("Schema",type(st.seg_model))
-    #statec = state.create_with_owner(db=db, obj_in=st, owner_id=user.id)
-    #print(statec)
+    statec = state.create_with_owner(db=db, obj_in=st, owner_id=user.id)
+    print(statec)
