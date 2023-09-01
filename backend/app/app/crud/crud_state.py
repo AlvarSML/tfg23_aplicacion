@@ -7,7 +7,7 @@ from app.crud.base import CRUDBase
 from app.models.state import ModelSelection
 from app.schemas.state import StateCreate, StateBase
 
-class CRUDModel(CRUDBase[ModelSelection, StateCreate, StateBase]):
+class CRUDState(CRUDBase[ModelSelection, StateCreate, StateBase]):
 
     def create_with_owner(
         self, 
@@ -40,4 +40,15 @@ class CRUDModel(CRUDBase[ModelSelection, StateCreate, StateBase]):
             query
         )
 
-state = CRUDModel(ModelSelection)
+    def get_last(
+        self, db: Session
+    ) -> ModelSelection:
+        """ Lista todos los modelos disponibles
+        """
+        query = db.query(self.model)\
+            .order_by(self.model.created_date.desc())\
+            .first()
+
+        return query
+    
+state = CRUDState(ModelSelection)

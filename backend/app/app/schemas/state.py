@@ -1,6 +1,8 @@
 from typing import Optional
 from pydantic import BaseModel
 
+from datetime import datetime
+
 
 # Propiedades comunes
 # TODO: Concretar filepath y dirpath
@@ -11,10 +13,12 @@ class StateBase(BaseModel):
 class StateCreate(StateBase):
     pass
 
+# Como se devuelven los datos de la bdd
 class StateInDBBase(StateBase):
     seg_model: int
     reg_model: int
     changed_by: int
+    created_date: datetime
 
     class Config:
         orm_mode = True
