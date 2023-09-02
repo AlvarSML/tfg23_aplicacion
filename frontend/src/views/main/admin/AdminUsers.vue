@@ -5,6 +5,7 @@
       <v-spacer></v-spacer>
       <v-btn color="primary" to="/main/admin/users/create">Create User</v-btn>
     </v-toolbar>
+    <ModelList>dd</ModelList>
     <v-data-table :headers="headers" :items="users">
       <!-- eslint-disable-next-line vue/valid-v-slot -->
       <template #item.is_active="{ item }">
@@ -32,7 +33,13 @@
 import { Component, Vue } from "vue-property-decorator";
 import { readAdminUsers } from "@/store/admin/getters";
 import { dispatchGetUsers } from "@/store/admin/actions";
+import ModelList from "../../../components/ModelList.vue";
 
+@Component({
+  components: {
+    ModelList
+  }
+})
 @Component
 export default class AdminUsers extends Vue {
   public headers = [

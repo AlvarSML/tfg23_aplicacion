@@ -1,27 +1,33 @@
 <template>
   <v-main>
-    <v-container fluid fill-height>
-      <v-row align="center" justify="center">
-        <v-col cols="12" sm="8" md="6" l="5" xl="4">
-          <v-card class="elevation-12">
-            <v-form @keyup.enter="submit">
-              <v-card-text>Pruebas</v-card-text>
-              <v-file-input
-                label="File input"
-                variant="filled"
-                prepend-icon="mdi-camera"
-                accept="image/png, image/jpeg "
-                @change="onFileChange"
-              >
-              </v-file-input>
-              <v-img :src="imageUrl" />
-              <v-img :src="imgInference" />
-            </v-form>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn @click.prevent="submit">Medir</v-btn>
-            </v-card-actions>
-          </v-card>
+    <v-container fluid>
+      <v-row dense>
+        <v-col cols="card.flex">
+          <v-form @keyup.enter="submit">
+            <v-card-text>Pruebas</v-card-text>
+            <v-file-input
+              label="File input"
+              variant="filled"
+              prepend-icon="mdi-camera"
+              accept="image/png, image/jpeg "
+              @change="onFileChange"
+            >
+            </v-file-input>
+            <v-container fluid>
+              <v-col cols="card.flex">
+                <v-card width="auto">
+                  <v-img height="400px" width="400px" :src="imageUrl" contain />
+                </v-card>
+                <v-card width="auto">
+                  <v-img height="400px" width="400px" :src="imgInference" contain />
+                </v-card>
+              </v-col>
+            </v-container>
+          </v-form>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn @click.prevent="submit">Medir</v-btn>
+          </v-card-actions>
         </v-col>
       </v-row>
     </v-container>
