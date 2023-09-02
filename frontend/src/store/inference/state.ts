@@ -5,8 +5,8 @@
 //import { IUserProfile } from "@/interfaces";
 
 export interface InferenceState {
-  image: File | null,
-  imageUrl: string,
-  modelSegmentation: string,
-  modelRegression: string
+  image: File | null;
+  imageUrl: string;
+  modelSegmentation: string;
+  modelRegression: string;
 }

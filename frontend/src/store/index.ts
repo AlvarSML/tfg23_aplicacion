@@ -1,3 +1,5 @@
+/* Creacion de la store */
+
 import Vue from "vue";
 import Vuex, { StoreOptions } from "vuex";
 
@@ -16,6 +18,4 @@ const storeOptions: StoreOptions<State> = {
   }
 };
 
-export const store = new Vuex.Store<State>(storeOptions);
-
-export default store;
+export default new Vuex.Store<State>(storeOptions);

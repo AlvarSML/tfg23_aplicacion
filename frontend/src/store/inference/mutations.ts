@@ -5,7 +5,7 @@
 */
 import { IUserProfile } from "@/interfaces";
 import { InferenceState } from "./state";
-import { getStoreAccessors } from "typesafe-vuex";
+import { getStoreAccessors } from "vuex-typescript";
 import { State } from "../state";
 
 export const mutations = {

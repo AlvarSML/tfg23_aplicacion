@@ -2,7 +2,7 @@ import { api } from "@/api";
 import router from "@/router";
 import { getLocalToken, removeLocalToken, saveLocalToken } from "@/utils";
 import axios from "axios";
-import { getStoreAccessors } from "typesafe-vuex";
+import { getStoreAccessors } from "vuex-typescript";
 import { ActionContext } from "vuex";
 import { State } from "../state";
 import {

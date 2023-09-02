@@ -1,5 +1,5 @@
 import { MainState } from "./state";
-import { getStoreAccessors } from "typesafe-vuex";
+import { getStoreAccessors } from "vuex-typescript";
 import { State } from "../state";
 
 export const getters = {

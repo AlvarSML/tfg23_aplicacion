@@ -1,7 +1,7 @@
-import Model from "./Model"
+import Model from "./Model";
 
-interface SegModel extends Model{
-  iou:number
+interface SegModel extends Model {
+  iou: number;
 }
 
-export default SegModel
+export default SegModel;

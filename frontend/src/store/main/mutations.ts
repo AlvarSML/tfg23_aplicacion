@@ -1,6 +1,6 @@
 import { IUserProfile } from "@/interfaces";
 import { MainState, AppNotification } from "./state";
-import { getStoreAccessors } from "typesafe-vuex";
+import { getStoreAccessors } from "vuex-typescript";
 import { State } from "../state";
 
 export const mutations = {

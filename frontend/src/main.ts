@@ -1,17 +1,9 @@
-// Import Component hooks before component definitions
-import "./component-hooks";
-import Vue from "vue";
-import vuetify from "./plugins/vuetify";
+import { createApp } from "vue";
 import App from "./App.vue";
-import router from "./router";
-import store from "@/store";
-import "./registerServiceWorker";
+import store from "./store";
+import vuetify from "./plugins/vuetify";
+import { loadFonts } from "./plugins/webfontloader";
 
-Vue.config.productionTip = false;
+loadFonts();
 
-new Vue({
-  router,
-  store,
-  vuetify,
-  render: (h) => h(App)
-}).$mount("#app");
+createApp(App).use(store).use(vuetify).mount("#app");

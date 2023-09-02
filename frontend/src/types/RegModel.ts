@@ -1,7 +1,7 @@
-import Model from "./Model"
+import Model from "./Model";
 
-interface RegModel extends Model{
-  rmse:number
+interface RegModel extends Model {
+  rmse: number;
 }
 
-export default RegModel
+export default RegModel;

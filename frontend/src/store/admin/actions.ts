@@ -3,7 +3,7 @@ import { ActionContext } from "vuex";
 import { IUserProfileCreate, IUserProfileUpdate } from "@/interfaces";
 import { State } from "../state";
 import { AdminState } from "./state";
-import { getStoreAccessors } from "typesafe-vuex";
+import { getStoreAccessors } from "vuex-typescript";
 import { commitSetUsers, commitSetUser } from "./mutations";
 import { dispatchCheckApiError } from "../main/actions";
 import { commitAddNotification, commitRemoveNotification } from "../main/mutations";
