@@ -45,6 +45,7 @@
 </template>
 
 <script lang="ts">
+/*
 import { Component, Vue } from "vue-property-decorator";
 import { appName } from "@/env";
 import { dispatchPasswordRecovery } from "@/store/main/actions";
@@ -82,6 +83,76 @@ export default class Login extends Vue {
     dispatchPasswordRecovery(this.$store, { username: this.username });
   }
 }
+*/
+</script>
+<script lang="ts">
+import { defineComponent, ref } from "vue";
+import { appName } from "@/env";
+import { commitAddNotification } from "@/store/main/mutations";
+import { dispatchResetPassword } from "@/store/main/actions";
+import { required, confirmed } from "vee-validate/dist/rules";
+import { ValidationProvider, ValidationObserver } from "vee-validate";
+
+// register validation rules
+const extend = (rule) => ({
+  ...rule,
+  message: "{_field_} can not be empty"
+});
+extend("required", extend(required));
+extend("confirmed", extend(confirmed));
+
+export default defineComponent({
+  name: "Password-Recovery",
+  methods() {
+    checkToken() {
+      const token = this.$route.query.token as string;
+      if (!token) {
+        commitAddNotification(this.$store, {
+          content: "No token provided in the URL, start a new password recovery",
+          color: "error"
+        });
+        this.$router.push("/recover-password");
+      } else {
+        return token;
+      }
+    },
+    onSubmit = async () => {
+      const success = await observer.value.validate();
+      if (!success) {
+        return;
+      }
+    }
+  },
+  setup() {
+  
+
+    const onSubmit = async () => {
+      const success = await observer.value.validate();
+      if (!success) {
+        return;
+      }
+
+      const token = await checkToken();
+      if (token) {
+        await dispatchResetPassword(this.$store, { token, password: password1.value });
+        this.$router.push("/");
+      }
+    };
+
+    const cancel() {
+      this.$router.back();
+    }
+
+    return {
+      appName,
+      observer,
+      password1,
+      password2,
+      checkToken,
+      onSubmit
+    };
+  }
+});
 </script>
 
 <style></style>

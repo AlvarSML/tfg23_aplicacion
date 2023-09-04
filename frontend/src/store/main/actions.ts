@@ -2,9 +2,10 @@ import { api } from "@/api";
 import router from "@/router";
 import { getLocalToken, removeLocalToken, saveLocalToken } from "@/utils";
 import axios from "axios";
-import { getStoreAccessors } from "vuex-typescript";
+//import { getStoreAccessors } from "vuex-typescript";
 import { ActionContext } from "vuex";
 import { State } from "../state";
+/*
 import {
   commitAddNotification,
   commitRemoveNotification,
@@ -13,11 +14,13 @@ import {
   commitSetToken,
   commitSetUserProfile
 } from "./mutations";
+*/
+import mutations from "./mutations";
 import { AppNotification, MainState } from "./state";
 
 type MainContext = ActionContext<MainState, State>;
 
-export const actions = {
+const actions = {
   async actionLogIn(
     context: MainContext,
     payload: { username: string; password: string }
@@ -27,18 +30,18 @@ export const actions = {
       const token = response.data.access_token;
       if (token) {
         saveLocalToken(token);
-        commitSetToken(context, token);
+        mutations.setToken(context, token);
         commitSetLoggedIn(context, true);
         commitSetLogInError(context, false);
-        await dispatchGetUserProfile(context);
-        await dispatchRouteLoggedIn(context);
+        await this.actionGetUserProfile(context);
+        await this.actionRouteLoggedIn();
         commitAddNotification(context, { content: "Logged in", color: "success" });
       } else {
-        await dispatchLogOut(context);
+        await this.actionLogOut(context);
       }
     } catch (err) {
       commitSetLogInError(context, true);
-      await dispatchLogOut(context);
+      await this.actionLogOut(context);
     }
   },
   async actionGetUserProfile(context: MainContext) {
@@ -48,7 +51,7 @@ export const actions = {
         commitSetUserProfile(context, response.data);
       }
     } catch (error) {
-      await dispatchCheckApiError(context, error);
+      await this.actionCheckApiError(context, error);
     }
   },
   async actionUpdateUserProfile(context: MainContext, payload) {
@@ -68,7 +71,7 @@ export const actions = {
         color: "success"
       });
     } catch (error) {
-      await dispatchCheckApiError(context, error);
+      await this.actionCheckApiError(context, error);
     }
   },
   async actionCheckLoggedIn(context: MainContext) {
@@ -87,10 +90,10 @@ export const actions = {
           commitSetLoggedIn(context, true);
           commitSetUserProfile(context, response.data);
         } catch (error) {
-          await dispatchRemoveLogIn(context);
+          await this.actionRemoveLogIn(context);
         }
       } else {
-        await dispatchRemoveLogIn(context);
+        await this.actionRemoveLogIn(context);
       }
     }
   },
@@ -100,11 +103,11 @@ export const actions = {
     commitSetLoggedIn(context, false);
   },
   async actionLogOut(context: MainContext) {
-    await dispatchRemoveLogIn(context);
-    await dispatchRouteLogOut(context);
+    await this.actionRemoveLogIn(context);
+    await this.actionRouteLogOut();
   },
   async actionUserLogOut(context: MainContext) {
-    await dispatchLogOut(context);
+    await this.actionLogOut(context);
     commitAddNotification(context, { content: "Logged out", color: "success" });
   },
   actionRouteLogOut() {
@@ -115,7 +118,7 @@ export const actions = {
   async actionCheckApiError(context: MainContext, payload: unknown) {
     if (axios.isAxiosError(payload)) {
       if (payload.response?.status === 401) {
-        await dispatchLogOut(context);
+        await this.actionLogOut(context);
       }
     }
   },
@@ -151,7 +154,7 @@ export const actions = {
         content: "Password recovery email sent",
         color: "success"
       });
-      await dispatchLogOut(context);
+      await this.actionLogOut(context);
     } catch (error) {
       commitRemoveNotification(context, loadingNotification);
       commitAddNotification(context, { color: "error", content: "Incorrect username" });
@@ -173,7 +176,7 @@ export const actions = {
         content: "Password successfully reset",
         color: "success"
       });
-      await dispatchLogOut(context);
+      await this.actionLogOut(context);
     } catch (error) {
       commitRemoveNotification(context, loadingNotification);
       commitAddNotification(context, {
@@ -185,8 +188,8 @@ export const actions = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const { dispatch } = getStoreAccessors<MainState | any, State>("");
-
+// const { this.action } = getStoreAccessors<MainState | any, State>("");
+/*
 export const dispatchCheckApiError = dispatch(actions.actionCheckApiError);
 export const dispatchCheckLoggedIn = dispatch(actions.actionCheckLoggedIn);
 export const dispatchGetUserProfile = dispatch(actions.actionGetUserProfile);
@@ -200,3 +203,5 @@ export const dispatchUpdateUserProfile = dispatch(actions.actionUpdateUserProfil
 export const dispatchRemoveNotification = dispatch(actions.removeNotification);
 export const dispatchPasswordRecovery = dispatch(actions.passwordRecovery);
 export const dispatchResetPassword = dispatch(actions.resetPassword);
+*/
+export default actions
