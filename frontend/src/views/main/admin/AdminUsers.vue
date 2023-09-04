@@ -4,11 +4,10 @@
 import ModelList from "../../../components/ModelList.vue";
 import { computed } from "vue";
 import { useStore } from "vuex";
-import { readAdminUsers } from "@/store/admin/getters";
 const store = useStore();
 
 const users = computed(() => {
-  return [readAdminUsers(store)];
+  return [store.getters.readAdminUsers];
 });
 
 const headers = [
@@ -72,7 +71,6 @@ const headers = [
       <!-- eslint-disable-next-line vue/valid-v-slot -->
       <template #item.actions="{ item }">
         <v-btn
-          slot="activator"
           icon
           :to="{ name: 'main-admin-users-edit', params: { id: item.id } }"
         >

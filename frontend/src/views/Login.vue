@@ -51,26 +51,35 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+
 import { appName } from "@/env";
-import { readLoginError } from "@/store/main/getters";
-import { dispatchLogIn } from "@/store/main/actions";
+import { defineComponent } from "vue";
 
-@Component
-export default class Login extends Vue {
-  // Estados locales
-  public email = "";
-  public password = "";
-  public appName = appName;
 
-  public get loginError() {
-    return readLoginError(this.$store);
+export default defineComponent ({
+  name: "Login-app",
+  components: {},
+  data() {
+    return {
+      // Estados locales
+      email: "",
+      password: "",
+      appName: appName,
+    }
+  },
+  computed: {
+    loginError() {
+      //return readLoginError(this.$store);
+      return this.$store.getters.loginError
+    }
+  },
+  methods: {    
+    submit() {
+      //dispatchLogIn(this.$store, { username: this.email, password: this.password });
+      this.$store.dispatch("actionLogIn",{ username: this.email, password: this.password })
+    }
   }
-
-  public submit() {
-    dispatchLogIn(this.$store, { username: this.email, password: this.password });
-  }
-}
+})
 </script>
 
 <style></style>

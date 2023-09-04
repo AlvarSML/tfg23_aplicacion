@@ -1,21 +1,25 @@
-/* Creacion de la store */
-import { createStore } from 'vuex'
-
-/* legacy */
-import Vue from "vue";
+import { createStore, useStore as baseUseStore, Store } from 'vuex'
+import { State } from './state'
+import { InjectionKey } from 'vue'
 
 import { mainModule } from "./main";
-import { State } from "./state";
 import { adminModule } from "./admin";
-import { inferenceModule } from "./inference";
+import { radiografias } from "./radiografias"
 
 
-export const store = createStore ({
+// define injection key
+export const key: InjectionKey<Store<State>> = Symbol()
+
+// Store en modulos
+export const store = createStore<State>({
   modules: {
     main: mainModule,
     admin: adminModule,
-    inference: inferenceModule
+    radiografias: radiografias
   }
 })
 
-
+// define your own `useStore` composition function
+export function useStore () {
+  return baseUseStore(key)
+}

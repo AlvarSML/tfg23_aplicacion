@@ -58,71 +58,59 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { defineComponent, ref } from "vue";
 import { appName } from "@/env";
-import { commitAddNotification } from "@/store/main/mutations";
-import { dispatchResetPassword } from "@/store/main/actions";
-import { required, confirmed } from "vee-validate/dist/rules";
-import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 
-// register validation rules
-extend("required", { ...required, message: "{_field_} can not be empty" });
-extend("confirmed", { ...confirmed, message: "Passwords do not match" });
 
-@Component({
-  components: {
-    ValidationObserver,
-    ValidationProvider
+export default defineComponent({
+  name: "Reset-Passwd",
+  data() {
+    return {
+      appName: appName,
+      valid: true,
+      password1: "",
+      password2: "",
+    }
+  },
+  mounted() {
+    this.checkToken();
+  },
+  methods: {
+    onReset() {
+      this.password1 = "";
+      this.password2 = "";
+    },
+    cancel() {
+      this.$router.push("/");
+    },
+    checkToken() {
+      //const token = this.$router.currentRoute.query.token as string;
+      console.warn("TODO")
+      const token = "asd"
+      if (!token) {
+        this.$store.commit("addNotification", {
+          content: "No token provided in the URL, start a new password recovery",
+          color: "error"
+        });
+        this.$router.push("/recover-password");
+      } else {
+        return token;
+      }
+    },
+    async onSubmit() {
+      //const success = await this.$refs.observer.validate();
+      const success = true;
+      if (!success) {
+        return;
+      }
+
+      const token = this.checkToken();
+      if (token) {
+        await this.$store.dispatch("resetPassword", { token, password: this.password1 })
+        //await dispatchResetPassword(this.$store, { token, password: this.password1 });
+        this.$router.push("/");
+      }
+    }
   }
 })
-export default class UserProfileEdit extends Vue {
-  $refs!: {
-    observer: InstanceType<typeof ValidationObserver>;
-  };
-
-  public appName = appName;
-  public valid = true;
-  public password1 = "";
-  public password2 = "";
-
-  public mounted() {
-    this.checkToken();
-  }
-
-  public onReset() {
-    this.password1 = "";
-    this.password2 = "";
-    this.$refs.observer.reset();
-  }
-
-  public cancel() {
-    this.$router.push("/");
-  }
-
-  public checkToken() {
-    const token = this.$router.currentRoute.query.token as string;
-    if (!token) {
-      commitAddNotification(this.$store, {
-        content: "No token provided in the URL, start a new password recovery",
-        color: "error"
-      });
-      this.$router.push("/recover-password");
-    } else {
-      return token;
-    }
-  }
-
-  public async onSubmit() {
-    const success = await this.$refs.observer.validate();
-    if (!success) {
-      return;
-    }
-
-    const token = this.checkToken();
-    if (token) {
-      await dispatchResetPassword(this.$store, { token, password: this.password1 });
-      this.$router.push("/");
-    }
-  }
-}
 </script>

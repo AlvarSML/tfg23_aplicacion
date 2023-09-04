@@ -1,23 +1,19 @@
 {
   "compilerOptions": {
-    "noImplicitAny": false,
     "target": "esnext",
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
-    "importHelpers": true,
     "moduleResolution": "node",
-    "experimentalDecorators": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "noUnusedLocals": false,        /* Report errors on unused locals. */
-    "noUnusedParameters": false,
     "types": [
-      "webpack-env",
-      "jest",
-      "vuetify"
+      "webpack-env"
     ],
     "paths": {
       "@/*": [
@@ -32,7 +28,6 @@
     ]
   },
   "include": [
-    "src/**/*.js",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",

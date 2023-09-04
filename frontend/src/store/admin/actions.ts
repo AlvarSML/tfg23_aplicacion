@@ -1,12 +1,11 @@
+// 
 import { api } from "@/api";
+
 import { ActionContext } from "vuex";
 import { IUserProfileCreate, IUserProfileUpdate } from "@/interfaces";
 import { State } from "../state";
 import { AdminState } from "./state";
-import { getStoreAccessors } from "vuex-typescript";
-import { commitSetUsers, commitSetUser } from "./mutations";
-import { dispatchCheckApiError } from "../main/actions";
-import { commitAddNotification, commitRemoveNotification } from "../main/mutations";
+
 
 type MainContext = ActionContext<AdminState, State>;
 
@@ -15,10 +14,13 @@ export const actions = {
     try {
       const response = await api.getUsers(context.rootState.main.token);
       if (response) {
-        commitSetUsers(context, response.data);
+        //commitSetUsers(context, response.data);
+        context.commit("setUser", response.data);
+
       }
     } catch (error) {
-      await dispatchCheckApiError(context, error);
+      await context.dispatch("checkApiError",error); 
+      //dispatchCheckApiError(context, error);
     }
   },
   async actionUpdateUser(
@@ -27,47 +29,60 @@ export const actions = {
   ) {
     try {
       const loadingNotification = { content: "saving", showProgress: true };
-      commitAddNotification(context, loadingNotification);
+      //commitAddNotification(context, loadingNotification);
+      context.commit("addNotification",loadingNotification)
       const response = (
         await Promise.all([
           api.updateUser(context.rootState.main.token, payload.id, payload.user),
           await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500))
         ])
       )[0];
-      commitSetUser(context, response.data);
-      commitRemoveNotification(context, loadingNotification);
+      //commitSetUsers(context, response.data);
+      context.commit("setUser", response.data)
+
+      //commitRemoveNotification(context, loadingNotification);
+      context.commit("removeNotification",loadingNotification)
+
+      /*
       commitAddNotification(context, {
         content: "User successfully updated",
         color: "success"
       });
+      */
+      context.commit("AddNotification",{
+        content: "User successfully updated",
+        color: "success"
+      })
+
+
     } catch (error) {
-      await dispatchCheckApiError(context, error);
+      //await dispatchCheckApiError(context, error);
+      await context.dispatch("checkApiError",error); 
     }
   },
   async actionCreateUser(context: MainContext, payload: IUserProfileCreate) {
     try {
       const loadingNotification = { content: "saving", showProgress: true };
-      commitAddNotification(context, loadingNotification);
+      context.commit("addNotification",loadingNotification);
+      //commitAddNotification(context, loadingNotification);
       const response = (
         await Promise.all([
           api.createUser(context.rootState.main.token, payload),
           await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 500))
         ])
       )[0];
-      commitSetUser(context, response.data);
-      commitRemoveNotification(context, loadingNotification);
-      commitAddNotification(context, {
+      context.commit("setUser", response.data)
+      context.commit("removeNotification",loadingNotification)
+      context.commit("AddNotification",{
         content: "User successfully created",
         color: "success"
-      });
+      })
+
     } catch (error) {
-      await dispatchCheckApiError(context, error);
+      //await dispatchCheckApiError(context, error);
+      await context.dispatch("checkApiError",error); 
     }
   }
 };
 
-const { dispatch } = getStoreAccessors<AdminState, State>("");
-
-export const dispatchCreateUser = dispatch(actions.actionCreateUser);
-export const dispatchGetUsers = dispatch(actions.actionGetUsers);
-export const dispatchUpdateUser = dispatch(actions.actionUpdateUser);
+export default actions;

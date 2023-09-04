@@ -1,6 +1,5 @@
 import { IUserProfile } from "@/interfaces";
 import { AdminState } from "./state";
-import { getStoreAccessors } from "vuex-typescript";
 import { State } from "../state";
 
 export const mutations = {
@@ -14,7 +13,4 @@ export const mutations = {
   }
 };
 
-const { commit } = getStoreAccessors<AdminState, State>("");
-
-export const commitSetUser = commit(mutations.setUser);
-export const commitSetUsers = commit(mutations.setUsers);
+export default mutations;

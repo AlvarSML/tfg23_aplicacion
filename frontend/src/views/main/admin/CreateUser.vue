@@ -85,76 +85,66 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+
 import { IUserProfileCreate } from "@/interfaces";
-import { dispatchGetUsers, dispatchCreateUser } from "@/store/admin/actions";
-import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
-import { required, confirmed, email } from "vee-validate/dist/rules";
+import { defineComponent } from "vue";
+import { appName } from "@/env";
 
-// register validation rules
-extend("required", { ...required, message: "{_field_} can not be empty" });
-extend("confirmed", { ...confirmed, message: "Passwords do not match" });
-extend("email", { ...email, message: "Invalid email address" });
+export default defineComponent ({
+  name: "Create-User",
+  data() {
+    return {
+      appName: appName,
+      valid: false,
+      fullName: "",
+      email: "",
+      isActive: true,
+      isSuperuser: false,
+      setPassword: false,
+      password1: "",
+      password2: ""
+    }
+  },
+  async mounted() {
+    await this.$store.dispatch("actionGetUsers")
+    //dispatchGetUsers(this.$store);
+    this.onReset();
+  },
+  methods: {
+    onReset() {
+      this.password1 = "";
+      this.password2 = "";
+      this.fullName = "";
+      this.email = "";
+      this.isActive = true;
+      this.isSuperuser = false;
+    },
+    cancel() {
+      this.$router.back();
+    },
+    async onSubmit() {
+      const success = true;
+      if (!success) {
+        return;
+      }
 
-@Component({
-  components: {
-    ValidationObserver,
-    ValidationProvider
+      const updatedProfile: IUserProfileCreate = {
+        email: this.email
+      };
+      if (this.fullName) {
+        updatedProfile.full_name = this.fullName;
+      }
+      if (this.email) {
+        updatedProfile.email = this.email;
+      }
+      updatedProfile.is_active = this.isActive;
+      updatedProfile.is_superuser = this.isSuperuser;
+      updatedProfile.password = this.password1;
+      await this.$store.dispatch("actionCreateUser")
+      //await dispatchCreateUser(this.$store, updatedProfile);
+      this.$router.push("/main/admin/users");
+    }
   }
 })
-export default class CreateUser extends Vue {
-  $refs!: {
-    observer: InstanceType<typeof ValidationObserver>;
-  };
 
-  public valid = false;
-  public fullName = "";
-  public email = "";
-  public isActive = true;
-  public isSuperuser = false;
-  public setPassword = false;
-  public password1 = "";
-  public password2 = "";
-
-  public async mounted() {
-    await dispatchGetUsers(this.$store);
-    this.onReset();
-  }
-
-  public onReset() {
-    this.password1 = "";
-    this.password2 = "";
-    this.fullName = "";
-    this.email = "";
-    this.isActive = true;
-    this.isSuperuser = false;
-    this.$refs.observer.reset();
-  }
-
-  public cancel() {
-    this.$router.back();
-  }
-
-  public async onSubmit() {
-    const success = await this.$refs.observer.validate();
-    if (!success) {
-      return;
-    }
-
-    const updatedProfile: IUserProfileCreate = {
-      email: this.email
-    };
-    if (this.fullName) {
-      updatedProfile.full_name = this.fullName;
-    }
-    if (this.email) {
-      updatedProfile.email = this.email;
-    }
-    updatedProfile.is_active = this.isActive;
-    updatedProfile.is_superuser = this.isSuperuser;
-    updatedProfile.password = this.password1;
-    await dispatchCreateUser(this.$store, updatedProfile);
-    this.$router.push("/main/admin/users");
-  }
-}
 </script>
