@@ -8,6 +8,8 @@ import { store } from "@/store";
 import { dispatchCheckLoggedIn } from "@/store/main/actions";
 import { readIsLoggedIn } from "@/store/main/getters";
 
+import { defineComponent } from "vue";
+
 // ! Redireccion?
 const startRouteGuard = async (to, from, next) => {
   await dispatchCheckLoggedIn(store);

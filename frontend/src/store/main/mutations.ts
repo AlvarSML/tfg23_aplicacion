@@ -1,9 +1,9 @@
 import { IUserProfile } from "@/interfaces";
 import { MainState, AppNotification } from "./state";
-import { getStoreAccessors } from "vuex-typescript";
+//import { getStoreAccessors } from "vuex-typescript";
 import { State } from "../state";
 
-export const mutations = {
+const mutations = {
   setToken(state: MainState, payload: string) {
     state.token = payload;
   },
@@ -33,8 +33,8 @@ export const mutations = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const { commit } = getStoreAccessors<MainState | any, State>("");
-
+// const { commit } = getStoreAccessors<MainState | any, State>("");
+/*
 export const commitSetDashboardMiniDrawer = commit(mutations.setDashboardMiniDrawer);
 export const commitSetDashboardShowDrawer = commit(mutations.setDashboardShowDrawer);
 export const commitSetLoggedIn = commit(mutations.setLoggedIn);
@@ -43,3 +43,5 @@ export const commitSetToken = commit(mutations.setToken);
 export const commitSetUserProfile = commit(mutations.setUserProfile);
 export const commitAddNotification = commit(mutations.addNotification);
 export const commitRemoveNotification = commit(mutations.removeNotification);
+*/
+export default mutations
