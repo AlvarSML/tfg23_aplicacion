@@ -1,7 +1,4 @@
 <script setup lang="ts">
-//import { readAdminUsers } from "@/store/admin/getters";
-//import { dispatchGetUsers } from "@/store/admin/actions";
-import ModelList from "../../../components/ModelList.vue";
 import { computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
@@ -56,8 +53,6 @@ const headers = [
       <v-spacer></v-spacer>
       <v-btn color="primary" to="/main/admin/users/create">Create User</v-btn>
     </v-toolbar>
-
-    <ModelList />
 
     <v-data-table :headers="headers" :items="users">
       <!-- eslint-disable-next-line vue/valid-v-slot -->

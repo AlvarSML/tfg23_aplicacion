@@ -46,6 +46,5 @@ const headers = [
 <template>
   <div>
     <h1>Modelos</h1>
-    <v-data-table :headers="headers" :items="models"></v-data-table>
   </div>
 </template>

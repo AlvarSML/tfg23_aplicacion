@@ -61,5 +61,8 @@ export const api = {
     );
     console.log(post);
     return post;
+  },
+  async getModels(token: string) {
+    return axios.get<IUserProfile[]>(`${apiUrl}/api/v1/models/`, authHeaders(token));
   }
 };

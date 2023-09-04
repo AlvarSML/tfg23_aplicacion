@@ -21,3 +21,9 @@ export interface IUserProfileCreate {
   is_active?: boolean;
   is_superuser?: boolean;
 }
+
+export interface IModel{
+  id: number;
+  name: string;
+  short_description: string;
+}

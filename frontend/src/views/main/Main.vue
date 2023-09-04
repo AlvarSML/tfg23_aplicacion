@@ -6,9 +6,7 @@
       :mini-variant="miniDrawer"
       fixed
       app
-    >
-
-        
+    >        
       <v-list nav density="compact">
         <v-list-subheader>Menu</v-list-subheader>
 
@@ -175,7 +173,7 @@ export default defineComponent ({
       { 
         text: 'Modelos', 
         icon: 'mdi-database', 
-        route: '/main/admin/moedls/all'
+        route: '/main/admin/models/all'
       },
       { 
         text: 'Subir Modelo', 
