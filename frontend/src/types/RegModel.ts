@@ -1,7 +1,9 @@
-import Model from "./Model";
+import { Model, CreateModel } from "./Model";
 
-interface RegModel extends Model {
+export interface RegModel extends Model {
   rmse: number;
 }
 
-export default RegModel;
+export interface CreateRegModel extends CreateModel {
+  rmse: number;
+}

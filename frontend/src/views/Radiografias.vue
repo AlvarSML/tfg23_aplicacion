@@ -10,7 +10,7 @@
               label="Radiografia"
               variant="filled"
               prepend-icon="mdi-camera"
-              accept="image/png, image/jpeg "
+              accept="image/png, image/jpeg"
               @change="onFileChange"
             >
             </v-file-input>

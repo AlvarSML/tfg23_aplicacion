@@ -1,7 +1,9 @@
 import axios from "axios";
 import { apiUrl } from "@/env";
 import { IUserProfile, IUserProfileUpdate, IUserProfileCreate } from "./interfaces";
-import Model from "@/types/Model";
+import { RegModel, CreateRegModel } from "@/types/RegModel"
+import { SegModel, CreateSegModel } from "@/types/SegModel"
+import { Model } from "@/types/Model";
 
 function authHeaders(token: string) {
   return {
@@ -65,5 +67,29 @@ export const api = {
   },
   async getModels(token: string) {
     return axios.get<Model[]>(`${apiUrl}/api/v1/models/`, authHeaders(token));
+  },
+  async createRegModel(token: string, data: CreateRegModel) {
+    console.log(data)
+    const params = {
+      name: data.name,
+      short_desc: data.short_desc,
+      model_description: data.model_description,
+      rmse: data.rmse
+    }
+    const post = axios.post(
+      `${apiUrl}/api/v1/models/nuevo_modelo_reg`, 
+      { model_file: data.model_file },
+      { params: params, 
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+         },
+        data: { model_file: data.model_file}
+      });
+    console.log(post);
+    return post;
+  },  
+  async createSegModel(token: string, data: CreateSegModel) {
+    return axios.post(`${apiUrl}/api/v1/models/nuevo_modelo_seg`, data, authHeaders(token));
   }
 };

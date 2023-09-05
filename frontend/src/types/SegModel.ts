@@ -1,7 +1,10 @@
-import Model from "./Model";
+import { Model, CreateModel } from "./Model";
 
-interface SegModel extends Model {
+export interface SegModel extends Model {
   iou: number;
 }
 
-export default SegModel;
+export interface CreateSegModel extends CreateModel {
+  iou: number;
+}
+

@@ -23,7 +23,7 @@
 import { ref } from "vue";
 import { appName } from "@/env";
 import { defineComponent } from "vue";
-import RegModel from "@/types/RegModel";
+import { RegModel } from "@/types/RegModel";
 
 
 export default defineComponent ({

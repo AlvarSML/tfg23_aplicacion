@@ -124,7 +124,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: "main-admin-models-create",
                 component: () =>
                   import(
-                    /* webpackChunkName: "main-admin-users-create" */ "@/views/main/models/Models.vue"
+                    /* webpackChunkName: "main-admin-users-create" */ "@/views/main/models/CreateRegModel.vue"
                   )
               }
             ]
