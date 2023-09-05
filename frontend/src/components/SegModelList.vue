@@ -1,12 +1,8 @@
+
 <template>
   <div>
-    --
-    <RegModelList></RegModelList>
-    --
-    <SegModelList></SegModelList>
-    --
     <v-toolbar>
-      <v-toolbar-title> Gestion de Regresion </v-toolbar-title>
+      <v-toolbar-title> Modelos de Segmetnación </v-toolbar-title>
       <v-divider class="mx-4" inset vertical></v-divider>
 
       <v-spacer></v-spacer>
@@ -21,25 +17,16 @@
 
 
     </v-data-table>
-
   </div>
 </template>
 
 <script lang="ts">
 
-import { ref } from "vue";
-import { appName } from "@/env";
 import { defineComponent } from "vue";
-import { RegModel } from "@/types/RegModel";
-import RegModelList from "@/components/RegModelList.vue";
-import SegModelList from "@/components/SegModelList.vue";
+
 
 export default defineComponent({
-  name: "Models-list",
-  components: {
-    RegModelList,
-    SegModelList
-  },
+  name: "Models-reg-list",
   data() {
     return {
       headers: [
@@ -54,7 +41,13 @@ export default defineComponent({
           sortable: false,
           key: "short_desc",
           align: "left"
-        },       
+        },
+        {
+          title: "IOU",
+          sortable: true,
+          key: "iou",
+          align: "left"
+        },        
         {
           title: "Ubicacion",
           sortable: true,
@@ -69,7 +62,7 @@ export default defineComponent({
   },
   computed: {
     models() {
-      return this.$store.getters.getModels
+      return this.$store.getters.getSegModels
     }
   },
   methods: {
@@ -78,8 +71,7 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.$store.dispatch("getModels")
-    this.$store.dispatch("getState")
+    this.$store.dispatch("getSegModels")
   }
 })
 </script>

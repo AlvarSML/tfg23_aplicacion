@@ -3,6 +3,7 @@ import { apiUrl } from "@/env";
 import { IUserProfile, IUserProfileUpdate, IUserProfileCreate } from "./interfaces";
 import { RegModel, CreateRegModel } from "@/types/RegModel"
 import { SegModel, CreateSegModel } from "@/types/SegModel"
+import { State } from "@/types/States"
 import { Model } from "@/types/Model";
 
 function authHeaders(token: string) {
@@ -68,6 +69,15 @@ export const api = {
   async getModels(token: string) {
     return axios.get<Model[]>(`${apiUrl}/api/v1/models/`, authHeaders(token));
   },
+  async getRegModels(token: string) {
+    return axios.get<RegModel[]>(`${apiUrl}/api/v1/models/get_regression`, authHeaders(token));
+  },
+  async getSegModels(token: string) {
+    return axios.get<SegModel[]>(`${apiUrl}/api/v1/models/get_segmentation`, authHeaders(token));
+  },
+  async getState(token: string) {
+    return axios.get<State>(`${apiUrl}/api/v1/states`, authHeaders(token));
+  },
   async createRegModel(token: string, data: CreateRegModel) {
     const params = {
       name: data.name,
@@ -105,5 +115,12 @@ export const api = {
         data: { model_file: data.model_file}
       });
     return post;
+  },
+  async updateStateReg(token: string, data: number) {
+    return axios.post(`${apiUrl}/api/v1/states/change_reg`,data,authHeaders(token))
+
+  },
+  async updateStateSeg(token: string, data: number) {
+    return axios.post(`${apiUrl}/api/v1/states/change_seg`,data,authHeaders(token))
   }
 };

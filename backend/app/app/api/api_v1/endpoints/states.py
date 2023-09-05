@@ -78,4 +78,10 @@ async def change_one(
     state_in: int,
     current_user: models.User = Depends(deps.get_current_active_user)
 ):
-    pass
+    last_state = crud.state.get_last(db)
+    last_state.seg_model = crud.model.get_by_id(db,state_in)
+
+    new_state = crud.state.create_with_owner(db=db, obj_in=last_state, owner_id=current_user.id)
+    db.add(new_state)
+    db.commit()
+    return new_state

@@ -27,6 +27,14 @@ export const actions = {
     const response = await api.getModels(context.rootState.main.token);
     context.state.models = response.data
   },
+  async getRegModels(context: ModelContext) {
+    const response = await api.getRegModels(context.rootState.main.token);
+    context.state.reg_models = response.data
+  },
+  async getSegModels(context: ModelContext) {
+    const response = await api.getSegModels(context.rootState.main.token);
+    context.state.seg_models = response.data
+  },
   async uploadRegModel(context: ModelContext, data: CreateRegModel) {
     const response = await api.createRegModel(context.rootState.main.token, data)
     console.log(response)
@@ -35,4 +43,5 @@ export const actions = {
     const response = await api.createSegModel(context.rootState.main.token, data)
     console.log(response)
   },
+  
 };
