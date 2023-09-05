@@ -5,7 +5,7 @@ import { InjectionKey } from 'vue'
 import { mainModule } from "./main";
 import { adminModule } from "./admin";
 import { radiografias } from "./radiografias"
-
+import { models } from "./models"
 
 // define injection key
 export const key: InjectionKey<Store<State>> = Symbol()
@@ -15,7 +15,8 @@ export const store = createStore<State>({
   modules: {
     main: mainModule,
     admin: adminModule,
-    radiografias: radiografias
+    radiografias: radiografias,
+    models: models
   }
 })
 

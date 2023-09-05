@@ -14,7 +14,7 @@ const defaultState: ModelState = {
   seg_models: []
 };
 
-export const radiografias = {
+export const models = {
   state: defaultState,
   mutations: mutations,
   actions: actions,

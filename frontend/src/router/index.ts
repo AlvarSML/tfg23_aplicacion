@@ -30,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () =>
           import(/* webpackChunkName: "main" */ "@/views/main/Main.vue"),
         meta: {
-          requiresAuth: false
+          requiresAuth: true
         },
         children: [
           {
@@ -75,9 +75,6 @@ const routes: Array<RouteRecordRaw> = [
                 /* webpackChunkName: "main-admin" */ "@/views/main/admin/Admin.vue"
               ),
             redirect: "admin/users/all",
-            meta: {
-              requiresAdmin: true
-            },
             children: [
               {
                 path: "users",
@@ -107,8 +104,24 @@ const routes: Array<RouteRecordRaw> = [
                   )
               },
               {
+                path: "models",
+                name: "main-admin-models",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "main-admin-users-create" */ "@/views/main/models/Models.vue"
+                  )
+              },
+              {
                 path: "models/all",
                 name: "main-admin-models-all",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "main-admin-users-create" */ "@/views/main/models/Models.vue"
+                  )
+              },
+              {
+                path: "models/create",
+                name: "main-admin-models-create",
                 component: () =>
                   import(
                     /* webpackChunkName: "main-admin-users-create" */ "@/views/main/models/Models.vue"
@@ -138,22 +151,24 @@ const router = createRouter({
 })
 
 // Global navigation guard, sustituye a los anteriores
-console.log(store)
+console.log("loguado",!store.getters.isLoggedIn)
+/* se lo carga todo
 router.beforeEach((to, from, next) => {
   // Si necesita estar logueado
   if (to.meta.requiresAuth) {
     // Si no está logueado, redirige a login
-    if (store) {
+    if (!store.getters.isLoggedIn) {
       console.log("no logueado")
       next({ name: "login" });
     } else {
       // Si está logueado, continua con el ruteo
-      next();
+      console.log("logueado!")
+      next("/main");
     }
   } else {
     // Si no necesita estar logueado, continua con el ruteo
     next();
   }
 });
-
+*/
 export default router

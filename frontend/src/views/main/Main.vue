@@ -173,7 +173,7 @@ export default defineComponent ({
       { 
         text: 'Modelos', 
         icon: 'mdi-database', 
-        route: '/main/admin/models/all'
+        route: {path: '/main/admin/models/all'}
       },
       { 
         text: 'Subir Modelo', 
@@ -184,16 +184,25 @@ export default defineComponent ({
       ]
     }
   },
+  /*  
   beforeRouteEnter (to, from, next) {
     if (to.path === "/main") {
       next("/main/dashboard");
     } else {
       next();
     }
-  },
+  }, 
+  */
   computed: {
-    showDrawer() {
-      return !this.$store.getters.dashboardShowDrawer
+    showDrawer: {
+      get: function() {
+        return !this.$store.getters.dashboardShowDrawer
+      },
+      set: function() {
+        this.$store.commit(
+        "setDashboardShowDrawer",
+        !this.$store.getters.dashboardMiniDrawer)
+      }
     },
     miniDrawer() {
       return this.$store.getters.dashboardMiniDrawer
@@ -222,7 +231,8 @@ export default defineComponent ({
     },
 
     logout() {
-      this.$store.dispatch("actionUserLogOut")
+      this.$router.resolve({name:"main-admin-models-all"})
+      //this.$store.dispatch("actionUserLogOut")
       //await dispatchUserLogOut(this.$store);
     }
   } 

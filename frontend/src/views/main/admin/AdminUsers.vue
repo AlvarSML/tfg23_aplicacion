@@ -9,38 +9,38 @@ const users = computed(() => {
 
 const headers = [
   {
-    text: "Name",
+    title: "Name",
     sortable: true,
-    value: "full_name",
+    key: "full_name",
     align: "left"
   },
   {
-    text: "Email",
+    title: "Email",
     sortable: true,
-    value: "email",
+    key: "email",
     align: "left"
   },
   {
-    text: "Full Name",
+    title: "Full Name",
     sortable: true,
-    value: "full_name",
+    key: "full_name",
     align: "left"
   },
   {
-    text: "Is Active",
+    title: "Is Active",
     sortable: true,
-    value: "is_active",
+    key: "is_active",
     align: "left"
   },
   {
-    text: "Is Superuser",
+    title: "Is Superuser",
     sortable: true,
-    value: "is_superuser",
+    key: "is_superuser",
     align: "left"
   },
   {
-    text: "Actions",
-    value: "actions",
+    title: "Actions",
+    key: "actions",
     sortable: false
   }
 ];

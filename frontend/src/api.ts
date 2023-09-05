@@ -1,6 +1,7 @@
 import axios from "axios";
 import { apiUrl } from "@/env";
 import { IUserProfile, IUserProfileUpdate, IUserProfileCreate } from "./interfaces";
+import Model from "@/types/Model";
 
 function authHeaders(token: string) {
   return {
@@ -63,6 +64,6 @@ export const api = {
     return post;
   },
   async getModels(token: string) {
-    return axios.get<IUserProfile[]>(`${apiUrl}/api/v1/models/`, authHeaders(token));
+    return axios.get<Model[]>(`${apiUrl}/api/v1/models/`, authHeaders(token));
   }
 };

@@ -91,9 +91,9 @@ export const actions = {
     }
   },
   actionRouteLoggedIn() {
-    //console.log(router.currentRoute.value.path)
+    console.log(router)
     if (router.currentRoute.value.path === "/login" || router.currentRoute.value.path === "/") {
-      router.push("/main");
+      router.push("/main/dashboard");
     }
 
   },

@@ -30,6 +30,7 @@ export default defineComponent ({
   name: "Models-list",
   data() {
     return {
+      /*
       models: [
         {
           id: 1,
@@ -45,7 +46,7 @@ export default defineComponent ({
           model_description: "string|null",
           rmse: 0.56
         }
-      ],
+      ],*/
       headers: [
         {
           title: "Nombre",
@@ -61,6 +62,14 @@ export default defineComponent ({
         }
       ],
     }
+  },
+  computed: {
+    models() {
+      return this.$store.getters.getModels
+    }
+  },
+  mounted() {
+    this.$store.dispatch("getModels")
   }
 })
 </script>

@@ -15,8 +15,9 @@ export default defineComponent ({
       appName: appName
     }
   },
+  /*
   beforeRouteEnter (to, from, next) {
-    if (store.getters.hasAdminAccess) {
+    if (!store.getters.hasAdminAccess) {
       next("/main");
     } else {
       next();
@@ -29,6 +30,7 @@ export default defineComponent ({
       next();
     }
   },
+  */
 })
 
 </script>

@@ -16,13 +16,13 @@ import { ActionContext } from "vuex";
 import { State } from "../state";
 import {} from "./mutations";
 import { ModelState } from "./state";
-import { MainState } from "../main/state"
 import { api } from "@/api";
 
 type ModelContext = ActionContext<ModelState ,State>;
 
 export const actions = {
-  async getModels(context: MainState) {
-    await api.getModels(context.token);
+  async getModels(context: ModelContext) {
+    const response = await api.getModels(context.rootState.main.token);
+    context.state.models = response.data
   }
 };
