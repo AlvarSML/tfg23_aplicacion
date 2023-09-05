@@ -64,7 +64,7 @@ async def post_seg_model(
     current_user: models.User = Depends(deps.get_current_active_user),
     model_file: UploadFile
 ):
-     # Se escribe el archivo por partes y se obtiene su ubicacion
+    # Se escribe el archivo por partes y se obtiene su ubicacion
     timestr = time.strftime("%Y%m%d_%H%M%S")
     ubicacion = f"{dir_seg}{timestr}.onnx"
 
@@ -80,3 +80,30 @@ async def post_seg_model(
         owner_id=current_user
     )
     return model
+
+@router.get("/get_regression", response_model=List[schemas.RegModel])
+async def get_regression(
+    db: Session = Depends(deps.get_db),
+    skip: int = 0,
+    limit: int = 100,
+    current_user: models.User = Depends(deps.get_current_active_user)
+):
+    if crud.user.is_superuser(current_user):
+        models = crud.reg_model.get_all(db,owner_id=current_user,skip=skip,limit=limit)
+    else:
+        models = []
+    return models
+
+
+@router.get("/get_segmentation", response_model=List[schemas.SegModel])
+async def get_segmetation(
+    db: Session = Depends(deps.get_db),
+    skip: int = 0,
+    limit: int = 100,
+    current_user: models.User = Depends(deps.get_current_active_user),
+):
+    if crud.user.is_superuser(current_user):
+        models = crud.seg_model.get_all(db,owner_id=current_user,skip=skip,limit=limit)
+    else:
+        models = []
+    return models
