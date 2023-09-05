@@ -3,7 +3,7 @@
     <v-toolbar light>
       <v-toolbar-title> Gestion de modelos </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn color="primary" to="TODO">Nuevo Modelo</v-btn>
+      <v-btn color="primary" to="/main/admin/models/create">Nuevo Modelo</v-btn>
     </v-toolbar>
 
 
@@ -59,7 +59,14 @@ export default defineComponent ({
           sortable: true,
           key: "short_desc",
           align: "left"
+        },
+        {
+          title: "Ubicacion",
+          sortable: true,
+          key: "file_path",
+          align: "left"
         }
+
       ],
     }
   },

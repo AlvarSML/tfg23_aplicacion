@@ -6,6 +6,7 @@ class RegModelBase(ModelBase):
     rmse: float
 
 class RegModelCreate(RegModelBase):
+    file_path: str   # Establece el archivo especifico
     rmse: float
 
 class RegModelUpdate(RegModelBase):

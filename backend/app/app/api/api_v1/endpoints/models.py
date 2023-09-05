@@ -31,7 +31,7 @@ def get_models(
 async def post_reg_model(
     *,
     db: Session = Depends(deps.get_db),
-    reg_model_in: schemas.RegModelCreate = Depends(),
+    reg_model_in: schemas.RegModel= Depends(),
     current_user: models.User = Depends(deps.get_current_active_user),
     model_file: UploadFile  
 ):
@@ -41,11 +41,16 @@ async def post_reg_model(
 
     # Metodo asincrono de escritura de archivos
     await archivos.write_file(ubicacion, model_file)
-    reg_model_in.file_path = ubicacion
 
+    #reg_model_in.file_path = ubicacion
+    regin = schemas.RegModelCreate(
+        **dict(reg_model_in),
+        file_path=ubicacion
+    )
+    print(regin)
     model = crud.reg_model.create_with_owner(
         db=db,
-        obj_in=reg_model_in,
+        obj_in=regin,
         owner_id=current_user
     )
     return model

@@ -10,11 +10,10 @@ class ModelBase(BaseModel):
     name: str
     short_desc: str  # Descripcion corta para los menus
     model_description: Optional[str]  # Descripcion completa
-    file_path: str
+    #file_path: str
 
 
 # Datos para la creacion de un modelo, nunca se modifican
-# TODO: Subir archivo
 class ModelCreate(ModelBase):
     file_path: str   # Establece el archivo especifico
 
@@ -35,7 +34,7 @@ class ModelInDBBase(ModelBase):
 # Additional properties to return via API
 # TODO
 class Model(ModelInDBBase):
-    pass
+    file_path: str
 
 
 # Additional properties stored in DB
