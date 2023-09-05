@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.crud.base import CRUDBase
 from app.models.model import Model
+from app.models.regseg_model import RegressionModel, SegmentationModel
 from app.schemas.model import ModelCreate, ModelUpdate
 
 class CRUDModel(CRUDBase[Model, ModelCreate, ModelUpdate]):
@@ -35,9 +36,31 @@ class CRUDModel(CRUDBase[Model, ModelCreate, ModelUpdate]):
         .limit(limit)\
         .all()
 
-        print("*****Query",query)
         return (
             query
         )
 
+    def get_by_id(
+            self, 
+            db: Session, 
+            id: int
+            
+    ) -> Model:
+        return db.query(Model).get(id)
+
+    def get_seg_by_id(
+            self, 
+            db: Session, 
+            *, 
+            id: int
+    ) -> SegmentationModel:
+        return db.query(SegmentationModel).get(id)
+
+    def get_reg_by_id(
+            self, 
+            db: Session, 
+            *, 
+            id: int
+    ) -> RegressionModel:
+        return db.query(RegressionModel).get(id)
 model = CRUDModel(Model)

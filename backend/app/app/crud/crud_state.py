@@ -40,7 +40,6 @@ class CRUDState(CRUDBase[State, StateCreate, StateBase]):
         .limit(limit)\
         .all()
 
-        print("*****Query",query)
         return (
             query
         )

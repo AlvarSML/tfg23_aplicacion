@@ -55,3 +55,27 @@ def get_last(
     else:
         models = None
     return models
+
+@router.post("/change_reg", response_model=schemas.StateInDBBase)
+async def change_one(
+    *,
+    db: Session = Depends(deps.get_db),
+    state_in: int,
+    current_user: models.User = Depends(deps.get_current_active_user)
+):
+    last_state = crud.state.get_last(db)
+    last_state.reg_model = crud.model.get_by_id(db,   state_in)
+
+    new_state = crud.state.create_with_owner(db=db, obj_in=last_state, owner_id=current_user.id)
+    db.add(new_state)
+    db.commit()
+    return new_state
+
+@router.post("/change_seg", response_model=schemas.StateInDBBase)
+async def change_one(
+    *,
+    db: Session = Depends(deps.get_db),
+    state_in: int,
+    current_user: models.User = Depends(deps.get_current_active_user)
+):
+    pass

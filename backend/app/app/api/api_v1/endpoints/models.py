@@ -94,6 +94,18 @@ async def get_regression(
         models = []
     return models
 
+@router.get("/get_model_id", response_model=schemas.Model | None)
+async def get_model_id(
+    db: Session = Depends(deps.get_db),
+    id: int = 0,
+    current_user: models.User = Depends(deps.get_current_active_user)
+):
+    if crud.user.is_superuser(current_user):
+        models = crud.model.get_by_id(db,id)
+    else:
+        models = None
+    return models
+
 
 @router.get("/get_segmentation", response_model=List[schemas.SegModel])
 async def get_segmetation(
