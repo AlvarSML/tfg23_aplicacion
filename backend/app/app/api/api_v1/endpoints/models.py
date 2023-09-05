@@ -31,7 +31,7 @@ def get_models(
 async def post_reg_model(
     *,
     db: Session = Depends(deps.get_db),
-    reg_model_in: schemas.RegModel= Depends(),
+    reg_model_in: schemas.RegModelBase= Depends(),
     current_user: models.User = Depends(deps.get_current_active_user),
     model_file: UploadFile  
 ):
@@ -56,13 +56,13 @@ async def post_reg_model(
     return model
 
 
-@router.post("/nuevo_modelo_seg", response_model=schemas.Model)
+@router.post("/nuevo_modelo_seg", response_model=schemas.SegModel)
 async def post_seg_model(
     *,
     db: Session = Depends(deps.get_db),
-    seg_model_in: schemas.SegModelCreate,
+    seg_model_in: schemas.SegModelBase= Depends(),
     current_user: models.User = Depends(deps.get_current_active_user),
-    model_file: UploadFile = File(...)
+    model_file: UploadFile
 ):
      # Se escribe el archivo por partes y se obtiene su ubicacion
     timestr = time.strftime("%Y%m%d_%H%M%S")
@@ -70,11 +70,13 @@ async def post_seg_model(
 
     # Metodo asincrono de escritura de archivos
     await archivos.write_file(ubicacion, model_file)
-    seg_model_in.file_path = ubicacion
-
-    model = crud.reg_model.create_with_owner(
+    segin = schemas.SegModelCreate(
+        **dict(seg_model_in),
+        file_path=ubicacion
+    )
+    model = crud.seg_model.create_with_owner(
         db=db,
-        obj_in=seg_model_in,
+        obj_in=segin,
         owner_id=current_user
     )
     return model

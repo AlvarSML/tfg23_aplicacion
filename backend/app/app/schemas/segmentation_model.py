@@ -6,6 +6,7 @@ class SegModelBase(ModelBase):
     iou: float
 
 class SegModelCreate(SegModelBase):
+    file_path: str  
     iou: float
 
 class SegModelUpdate(SegModelBase):
