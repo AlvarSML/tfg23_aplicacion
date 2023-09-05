@@ -69,7 +69,6 @@ export const api = {
     return axios.get<Model[]>(`${apiUrl}/api/v1/models/`, authHeaders(token));
   },
   async createRegModel(token: string, data: CreateRegModel) {
-    console.log(data)
     const params = {
       name: data.name,
       short_desc: data.short_desc,
@@ -86,10 +85,25 @@ export const api = {
          },
         data: { model_file: data.model_file}
       });
-    console.log(post);
     return post;
   },  
   async createSegModel(token: string, data: CreateSegModel) {
-    return axios.post(`${apiUrl}/api/v1/models/nuevo_modelo_seg`, data, authHeaders(token));
+    const params = {
+      name: data.name,
+      short_desc: data.short_desc,
+      model_description: data.model_description,
+      iou: data.iou
+    }
+    const post = axios.post(
+      `${apiUrl}/api/v1/models/nuevo_modelo_seg`, 
+      { model_file: data.model_file },
+      { params: params, 
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+         },
+        data: { model_file: data.model_file}
+      });
+    return post;
   }
 };

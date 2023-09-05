@@ -134,7 +134,7 @@ export default defineComponent ({
           model_file: this.$store.getters.getUploadRegModel
         };
         console.log(seg_model)
-        await this.$store.dispatch("uploadRegModel", seg_model)
+        await this.$store.dispatch("uploadSegModel", seg_model)
       }
     }
   }

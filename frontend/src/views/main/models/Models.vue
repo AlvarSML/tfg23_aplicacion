@@ -1,18 +1,20 @@
 <template>
   <div>
-    <v-toolbar light>
+    <v-toolbar>
       <v-toolbar-title> Gestion de modelos </v-toolbar-title>
+      <v-divider class="mx-4" inset vertical></v-divider>
+
       <v-spacer></v-spacer>
       <v-btn color="primary" to="/main/admin/models/create">Nuevo Modelo</v-btn>
     </v-toolbar>
+    <v-data-table :headers="headers" :items="models" item-value="name" item-key="id">
+      <template v-slot:[`item.actions`]="{ item }">
+        <v-btn class="mx-2" fab dark small color="indigo-lighten-2" @click="selectModel(item)">
+          Activar
+        </v-btn>
+      </template>
 
 
-    <v-data-table 
-      :headers="headers" 
-      :items="models"
-      item-value="name"
-      item-key="id"
-      >
     </v-data-table>
 
   </div>
@@ -26,27 +28,10 @@ import { defineComponent } from "vue";
 import { RegModel } from "@/types/RegModel";
 
 
-export default defineComponent ({
+export default defineComponent({
   name: "Models-list",
   data() {
     return {
-      /*
-      models: [
-        {
-          id: 1,
-          name: "Modelo1",
-          short_desc: "Loren ipsum",
-          model_description: "string|null",
-          rmse: 0.56
-        },
-        {
-          id: 2,
-          name: "Modelo1",
-          short_desc: "Loren ipsum",
-          model_description: "string|null",
-          rmse: 0.56
-        }
-      ],*/
       headers: [
         {
           title: "Nombre",
@@ -65,14 +50,21 @@ export default defineComponent ({
           sortable: true,
           key: "file_path",
           align: "left"
-        }
+        },
+        { title: 'Actions', key: 'actions', sortable: false }
 
       ],
+      msg: ""
     }
   },
   computed: {
     models() {
       return this.$store.getters.getModels
+    }
+  },
+  methods: {
+    selectModel(item:any){
+      console.log(item.raw.id)
     }
   },
   mounted() {
