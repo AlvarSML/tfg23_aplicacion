@@ -28,7 +28,6 @@ export const actions = {
     context.state.models = response.data
   },
   async uploadRegModel(context: ModelContext, data: CreateRegModel) {
-    console.log(data)
     const response = await api.createRegModel(context.rootState.main.token, data)
     console.log(response)
   },
