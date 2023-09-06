@@ -15,7 +15,8 @@ type MainContext = ActionContext<MainState, State>;
 export const actions = {
   async actionGetUserProfile(context: MainContext) {
     try {
-      const response = await api.getMe(context.state.token);
+      //const response = await api.getMe(context.state.token);
+      const response = await api.getMe(localStorage.getItem("token"));
       if (response.data) {
         await context.commit("setUserProfile", response.data);
       }
@@ -69,6 +70,7 @@ export const actions = {
   async actionRemoveLogIn(context: MainContext) {
     removeLocalToken();
     context.commit("setToken", "");
+    localStorage.removeItem('token');
     context.commit("setLoggedIn", false);
   },
   async actionLogOut(context: MainContext) {
@@ -166,6 +168,7 @@ export const actions = {
         await context.commit("setToken", token);
         await context.commit("setLoggedIn", true);
         await context.commit("setLogInError", false);
+        context.dispatch("actionSaveToken", token);
         context.dispatch("actionGetUserProfile");
         context.dispatch("actionRouteLoggedIn");
         await context.commit("addNotification", { content: "Logged in", color: "success" });
@@ -178,6 +181,12 @@ export const actions = {
       await context.dispatch("actionLogOut")
 
     }
+  },
+  async actionSaveToken(
+    context: MainContext,
+    payload: string
+  ){
+    localStorage.setItem('token', payload);
   }
 };
 

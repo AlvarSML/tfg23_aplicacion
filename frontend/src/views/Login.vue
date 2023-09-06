@@ -78,6 +78,12 @@ export default defineComponent ({
       //dispatchLogIn(this.$store, { username: this.email, password: this.password });
       this.$store.dispatch("actionLogIn",{ username: this.email, password: this.password })
     }
+  },
+  async mounted() {
+    await this.$store.dispatch("actionCheckLoggedIn");
+    if (this.$store.getters.isLoggedIn) {
+      this.$router.push("/main/dashboard")
+    }
   }
 })
 </script>

@@ -7,7 +7,8 @@ export const getters = {
   dashboardShowDrawer: (state: MainState) => state.dashboardShowDrawer,
   dashboardMiniDrawer: (state: MainState) => state.dashboardMiniDrawer,
   userProfile: (state: MainState) => state.userProfile,
-  token: (state: MainState) => state.token,
+  //token: (state: MainState) => state.token,
+  token: (state: MainState) => localStorage.getItem('token'),
   isLoggedIn: (state: MainState) => state.isLoggedIn,
   firstNotification: (state: MainState) => state.notifications?.[0]
 };

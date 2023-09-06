@@ -1,10 +1,11 @@
 <template>
   <div>
-    --
-    <RegModelList></RegModelList>
-    --
-    <SegModelList></SegModelList>
-    --
+    <v-container>
+      <RegModelList></RegModelList>
+
+      <SegModelList></SegModelList>
+    </v-container>
+    <!--
     <v-toolbar>
       <v-toolbar-title> Gestion de Regresion </v-toolbar-title>
       <v-divider class="mx-4" inset vertical></v-divider>
@@ -20,7 +21,7 @@
       </template>
 
 
-    </v-data-table>
+    </v-data-table>-->
 
   </div>
 </template>

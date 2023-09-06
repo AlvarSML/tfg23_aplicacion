@@ -5,6 +5,7 @@ import { State } from "../state";
 export const mutations = {
   setToken(state: MainState, payload: string): void {
     state.token = payload;
+    localStorage.setItem('token', payload);
   },
   setLoggedIn(state: MainState, payload: boolean): void {
     state.isLoggedIn = payload;

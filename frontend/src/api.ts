@@ -6,7 +6,7 @@ import { SegModel, CreateSegModel } from "@/types/SegModel"
 import { State } from "@/types/States"
 import { Model } from "@/types/Model";
 
-function authHeaders(token: string) {
+function authHeaders(token: string|null) {
   return {
     headers: {
       Authorization: `Bearer ${token}`
@@ -22,7 +22,7 @@ export const api = {
 
     return axios.post(`${apiUrl}/api/v1/login/access-token`, params);
   },
-  async getMe(token: string) {
+  async getMe(token: string|null) {
     return axios.get<IUserProfile>(`${apiUrl}/api/v1/users/me`, authHeaders(token));
   },
   async updateMe(token: string, data: IUserProfileUpdate) {

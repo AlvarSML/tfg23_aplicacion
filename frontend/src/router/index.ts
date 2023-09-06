@@ -151,24 +151,10 @@ const router = createRouter({
 })
 
 // Global navigation guard, sustituye a los anteriores
-console.log("loguado",!store.getters.isLoggedIn)
-/* se lo carga todo
-router.beforeEach((to, from, next) => {
-  // Si necesita estar logueado
-  if (to.meta.requiresAuth) {
-    // Si no está logueado, redirige a login
-    if (!store.getters.isLoggedIn) {
-      console.log("no logueado")
-      next({ name: "login" });
-    } else {
-      // Si está logueado, continua con el ruteo
-      console.log("logueado!")
-      next("/main");
-    }
-  } else {
-    // Si no necesita estar logueado, continua con el ruteo
-    next();
-  }
-});
-*/
+console.log("loguado", store.getters.isLoggedIn)
+
+router.beforeEach(async (to, from) => {
+  await store.dispatch("actionCheckLoggedIn");
+})
+
 export default router
