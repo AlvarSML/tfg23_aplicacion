@@ -21,6 +21,7 @@ class SegModelInDBBase(SegModelBase):
 # Additional properties to return via API
 # TODO
 class SegModel(SegModelInDBBase):
+    file_path: str  
     pass
 
 

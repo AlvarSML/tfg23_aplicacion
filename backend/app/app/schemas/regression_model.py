@@ -21,6 +21,7 @@ class RegModelInDBBase(RegModelBase):
 # Additional properties to return via API
 # TODO
 class RegModel(RegModelInDBBase):
+    file_path: str  
     pass
 
 

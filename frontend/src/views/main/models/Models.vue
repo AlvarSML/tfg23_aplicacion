@@ -28,10 +28,7 @@
 
 <script lang="ts">
 
-import { ref } from "vue";
-import { appName } from "@/env";
 import { defineComponent } from "vue";
-import { RegModel } from "@/types/RegModel";
 import RegModelList from "@/components/RegModelList.vue";
 import SegModelList from "@/components/SegModelList.vue";
 

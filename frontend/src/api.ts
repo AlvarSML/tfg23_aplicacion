@@ -117,10 +117,10 @@ export const api = {
     return post;
   },
   async updateStateReg(token: string, data: number) {
-    return axios.post(`${apiUrl}/api/v1/states/change_reg`,data,authHeaders(token))
+    return axios.post(`${apiUrl}/api/v1/states/change_reg`,{"state_in":data},authHeaders(token))
 
   },
   async updateStateSeg(token: string, data: number) {
-    return axios.post(`${apiUrl}/api/v1/states/change_seg`,data,authHeaders(token))
-  }
+    return axios.post(`${apiUrl}/api/v1/states/change_seg`,{"state_in":data},authHeaders(token))
+  },
 };

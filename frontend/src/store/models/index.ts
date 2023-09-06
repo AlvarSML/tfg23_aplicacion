@@ -11,7 +11,9 @@ import { ModelState } from "./state";
 const defaultState: ModelState = {
   models: [],
   reg_models: [],
-  seg_models: []
+  seg_models: [],
+  active_reg: 0,
+  active_seg: 0
 };
 
 export const models = {

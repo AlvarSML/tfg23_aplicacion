@@ -43,5 +43,18 @@ export const actions = {
     const response = await api.createSegModel(context.rootState.main.token, data)
     console.log(response)
   },
+  async getState(context: ModelContext) {
+    const response = await api.getState(context.rootState.main.token)
+    context.state.active_reg = response.data.reg_model.id;
+    context.state.active_seg = response.data.seg_model.id;
+  },
+  async updateStateReg(context: ModelContext, data:number) {
+    const response = await api.updateStateReg(context.rootState.main.token, data)
+    context.dispatch("getState")
+  },
+  async updateStateSeg(context: ModelContext, data:number) {
+    const response = await api.updateStateSeg(context.rootState.main.token, data)
+    context.dispatch("getState")
+  }
   
 };

@@ -10,8 +10,19 @@
     </v-toolbar>
     <v-data-table :headers="headers" :items="models" item-value="name" item-key="id">
       <template v-slot:[`item.actions`]="{ item }">
-        <v-btn class="mx-2" fab dark small color="indigo-lighten-2" @click="selectModel(item)">
+        <v-btn v-if="displayIf(item)" class="mx-2" fab dark small color="indigo-lighten-2" @click="selectModel(item)">
           Activar
+        </v-btn>
+        <v-btn
+          v-if="!displayIf(item)"
+          disabled
+          class="mx-2" 
+          fab 
+          dark 
+          small 
+          color="pink" 
+          @click="selectModel(item)">
+          Activo
         </v-btn>
       </template>
 
@@ -63,11 +74,17 @@ export default defineComponent({
   computed: {
     models() {
       return this.$store.getters.getRegModels
+    },
+    active() {
+      return this.$store.getters.getRegActive
     }
   },
   methods: {
     selectModel(item:any){
-      console.log(item.raw.id)
+      this.$store.dispatch("updateStateReg",item.raw.id)
+    },
+    displayIf(item:any){      
+      return item.raw.id != this.$store.getters.getRegActive
     }
   },
   mounted() {

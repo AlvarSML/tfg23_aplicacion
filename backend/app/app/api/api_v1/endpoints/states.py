@@ -1,6 +1,6 @@
 from typing import Any, List
 
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Body
 from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
@@ -60,7 +60,7 @@ def get_last(
 async def change_one(
     *,
     db: Session = Depends(deps.get_db),
-    state_in: int,
+    state_in: int = Body(embed=True),
     current_user: models.User = Depends(deps.get_current_active_user)
 ):
     last_state = crud.state.get_last(db)
@@ -75,7 +75,7 @@ async def change_one(
 async def change_one(
     *,
     db: Session = Depends(deps.get_db),
-    state_in: int,
+    state_in: int = Body(embed=True),
     current_user: models.User = Depends(deps.get_current_active_user)
 ):
     last_state = crud.state.get_last(db)

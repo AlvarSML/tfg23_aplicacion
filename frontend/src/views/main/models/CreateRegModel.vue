@@ -72,11 +72,10 @@
 
 <script lang="ts">
 
-import { IUserProfileCreate } from "@/interfaces";
 import { defineComponent } from "vue";
 import { appName } from "@/env";
-import { RegModel, CreateRegModel } from "@/types/RegModel";
-import { SegModel, CreateSegModel } from "@/types/SegModel";
+import { CreateRegModel } from "@/types/RegModel";
+import { CreateSegModel } from "@/types/SegModel";
 
 export default defineComponent ({
   name: "Create-RegModel",

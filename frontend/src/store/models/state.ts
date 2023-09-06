@@ -12,4 +12,6 @@ export interface ModelState {
   seg_models?: SegModel[];
   upload_reg_model?: File;
   upload_seg_model?: File;
+  active_seg: number;
+  active_reg: number;
 }

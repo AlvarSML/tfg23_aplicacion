@@ -11,5 +11,7 @@ export const getters = {
   getSegModels: (state: ModelState) => state.seg_models,
   getUploadRegModel: (state: ModelState) => state.upload_reg_model,
   getUploadSegModel: (state: ModelState) => state.upload_seg_model,
+  getRegActive: (state: ModelState) => state.active_reg,
+  getSegActive: (state: ModelState) => state.active_seg,
 };
 
