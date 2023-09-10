@@ -69,7 +69,19 @@ def get_last(
         raise HTTPException(status_code=403, detail="Not enough permissions")
     return models
 
-@router.post("/change_reg", response_model=schemas.StateInDBBase, responses={404: {"model": schemas.Msg}})
+
+@router.post("/change_reg",
+            response_model=schemas.StateInDBBase, 
+             responses={
+                404: {
+                    "model": schemas.Msg, 
+                    "description": "No se encuentra el modelo que se quiere sustituir"
+                },
+                403: {
+                    "model": schemas.Msg, 
+                    "description": "El usuario no tiene permisos suficientes para modificar el estado"
+                }
+                })
 async def change_reg(
     *,
     db: Session = Depends(deps.get_db),
@@ -77,31 +89,40 @@ async def change_reg(
     current_user: models.User = Depends(deps.get_current_active_user)
 ):
     """ Modifica el modelo de regresion del estado
-    
-    last_state = crud.state.get_last(db)
-    last_state.reg_model = crud.model.get_by_id(db,   state_in)
-
-    new_state = crud.state.create_with_owner(db=db, obj_in=last_state, owner_id=current_user.id)
-    db.add(new_state)
-    db.commit()
     """
+    if not crud.user.is_superuser(current_user):
+        return JSONResponse(status_code=403, content={"message": "El usuario no tiene permisos para modificar el estado"})
+    
     resp = StatesService.change_reg(db,state_in,current_user)
-    print(resp)
     if resp:
         return resp
-    return JSONResponse(status_code=404, content={"message": "Item not found"})
+    return JSONResponse(status_code=404, content={"message": "Modelo de regresion no encontrado"})
 
-@router.post("/change_seg", response_model=schemas.StateInDBBase)
+
+@router.post("/change_seg",
+              response_model=schemas.StateInDBBase,
+                responses={
+                    404: {
+                        "model": schemas.Msg, 
+                        "description": "No se encuentra el modelo que se quiere sustituir"
+                    },
+                    403: {
+                        "model": schemas.Msg, 
+                        "description": "El usuario no tiene permisos suficientes para modificar el estado"
+                    }                    
+                  })
 async def change_seg(
     *,
     db: Session = Depends(deps.get_db),
     state_in: int = Body(embed=True),
     current_user: models.User = Depends(deps.get_current_active_user)
 ):
-    last_state = crud.state.get_last(db)
-    last_state.seg_model = crud.model.get_by_id(db,state_in)
+    """ Modifica el modelo de segmentacion del estado
+    """
+    if not crud.user.is_superuser(current_user):
+        return JSONResponse(status_code=403, content={"message": "El usuario no tiene permisos para modificar el estado"})
 
-    new_state = crud.state.create_with_owner(db=db, obj_in=last_state, owner_id=current_user.id)
-    db.add(new_state)
-    db.commit()
-    return new_state
+    resp = StatesService.change_seg(db,state_in,current_user)
+    if resp:
+        return resp
+    return JSONResponse(status_code=404, content={"message": "Modelo de segmentacion no encontrado"})

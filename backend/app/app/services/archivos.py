@@ -1,5 +1,5 @@
 import aiofiles
-from fastapi import UploadFile, File
+from fastapi import UploadFile, File, HTTPException
 # Tiempo para los archivos
 import time
 
@@ -14,6 +14,6 @@ class archivos:
                 while content := await upload_file.read(1024 * 1000):  # lee por bloques de 1MB para evitar colapsar con archivos grandes
                     await out_file.write(content)  # async write chunk
         except:
-            return False
+            raise HTTPException(status_code=507, detail="Error de escritura del modelo")
         else:
             return path
