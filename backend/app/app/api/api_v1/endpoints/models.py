@@ -65,6 +65,7 @@ async def post_seg_model(
     model_file: UploadFile
 ):
     # Se escribe el archivo por partes y se obtiene su ubicacion
+    # TODO: Convertir en servicio
     timestr = time.strftime("%Y%m%d_%H%M%S")
     ubicacion = f"{dir_seg}{timestr}.onnx"
 
