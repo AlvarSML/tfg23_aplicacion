@@ -109,7 +109,7 @@ services:
     image: rabbitmq:3-management
     #
     # You also have to change the flower command
-  
+
   flower:
     image: mher/flower
     networks:
@@ -139,7 +139,7 @@ services:
         - traefik.http.routers.${STACK_NAME?Variable not set}-flower-https.tls=true
         - traefik.http.routers.${STACK_NAME?Variable not set}-flower-https.tls.certresolver=le
         - traefik.http.services.${STACK_NAME?Variable not set}-flower.loadbalancer.server.port=5555
-  
+
   backend:
     image: '${DOCKER_IMAGE_BACKEND?Variable not set}:${TAG-latest}'
     depends_on:
@@ -179,7 +179,7 @@ services:
       dockerfile: celeryworker.dockerfile
       args:
         INSTALL_DEV: ${INSTALL_DEV-false}
-  
+
   frontend:
     image: '${DOCKER_IMAGE_FRONTEND?Variable not set}:${TAG-latest}'
     build:
@@ -195,6 +195,7 @@ services:
 
 volumes:
   app-db-data:
+
 
 networks:
   traefik-public:

@@ -14,13 +14,13 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Watch } from "vue-property-decorator";
-import { AppNotification } from "@/store/main/state";
-import { commitRemoveNotification } from "@/store/main/mutations";
-import { readFirstNotification } from "@/store/main/getters";
-import { dispatchRemoveNotification } from "@/store/main/actions";
 
-@Component
+import { AppNotification } from "@/store/main/state";
+//import { commitRemoveNotification } from "@/store/main/mutations";
+//import { readFirstNotification } from "@/store/main/getters";
+//import { dispatchRemoveNotification } from "@/store/main/actions";
+
+
 export default class NotificationsManager extends Vue {
   public show = false;
   public text = "";
