@@ -79,22 +79,22 @@ async def post_reg_model(
 
 
 @router.post(
-        "/nuevo_modelo_seg",
-        response_model=schemas.SegModel,
-        responses={
-                403: {
-                    "model": schemas.Msg,
-                    "description": "El usuario no tiene permisos suficientes para leer los modelos"
-                },
-                500: {
-                    "model": schemas.Msg,
-                    "description": "Error desconocido del servidor"
-                },
-                507: {
-                    "model": schemas.Msg,
-                    "description": "Error de escritura del archivo"
-                }
-            })
+    "/nuevo_modelo_seg",
+    response_model=schemas.SegModel,
+    responses={
+        403: {
+            "model": schemas.Msg,
+            "description": "El usuario no tiene permisos suficientes para leer los modelos"
+        },
+        500: {
+            "model": schemas.Msg,
+            "description": "Error desconocido del servidor"
+        },
+        507: {
+            "model": schemas.Msg,
+            "description": "Error de escritura del archivo"
+        }
+    })
 async def post_seg_model(
     *,
     db: Session = Depends(deps.get_db),
@@ -118,44 +118,80 @@ async def post_seg_model(
         return JSONResponse(status_code=500, content={"message": "Error desconocido"})
 
 
-@router.get("/get_regression", response_model=List[schemas.RegModel])
+@router.get(
+    "/get_regression",
+    response_model=List[schemas.RegModel],
+    responses={
+        403: {
+            "model": schemas.Msg,
+            "description": "El usuario no tiene permisos suficientes para leer los modelos"
+        },
+        404: {
+            "model": schemas.Msg,
+            "description": "No existe ningun modelo de regresion"
+        }
+    })
 async def get_regression(
     db: Session = Depends(deps.get_db),
     skip: int = 0,
     limit: int = 100,
     current_user: models.User = Depends(deps.get_current_active_user)
 ):
-    if crud.user.is_superuser(current_user):
-        models = crud.reg_model.get_all(
-            db, owner_id=current_user, skip=skip, limit=limit)
-    else:
-        models = []
-    return models
+    if not crud.user.is_superuser(current_user):
+        return JSONResponse(status_code=403, content={"message": "El usuario no tiene permisos para consultar los modelos"})
+
+    model = crud.reg_model.get_all(
+        db, owner_id=current_user, skip=skip, limit=limit)
+    return model or JSONResponse(status_code=403, content={"message": "El usuario no tiene permisos para consultar los modelos"})
 
 
-@router.get("/get_model_id", response_model=schemas.Model | None)
+@router.get(
+    "/get_model_id",
+    response_model=schemas.Model,
+    responses={
+        403: {
+            "model": schemas.Msg,
+            "description": "El usuario no tiene permisos suficientes para leer los modelos"
+        },
+        404: {
+            "model": schemas.Msg,
+            "description": "No existe ningun modelo con ese identificador"
+        }
+    })
 async def get_model_id(
     db: Session = Depends(deps.get_db),
     id: int = 0,
     current_user: models.User = Depends(deps.get_current_active_user)
 ):
-    if crud.user.is_superuser(current_user):
-        models = crud.model.get_by_id(db, id)
-    else:
-        models = None
-    return models
+    if not crud.user.is_superuser(current_user):
+        return JSONResponse(status_code=403, content={"message": "El usuario no tiene permisos para consultar los modelos"})
+
+    model = crud.model.get_by_id(db, id)
+    return model or JSONResponse(status_code=404, content={"message": f"No existe ningun modelo con ese identificado: {id}"})
 
 
-@router.get("/get_segmentation", response_model=List[schemas.SegModel])
+@router.get(
+    "/get_segmentation",
+    response_model=List[schemas.SegModel],
+    responses={
+        403: {
+            "model": schemas.Msg,
+            "description": "El usuario no tiene permisos suficientes para leer los modelos"
+        },
+        404: {
+            "model": schemas.Msg,
+            "description": "No existe ningun modelo de segmentacion"
+        }
+    })
 async def get_segmetation(
     db: Session = Depends(deps.get_db),
     skip: int = 0,
     limit: int = 100,
     current_user: models.User = Depends(deps.get_current_active_user),
 ):
-    if crud.user.is_superuser(current_user):
-        models = crud.seg_model.get_all(
-            db, owner_id=current_user, skip=skip, limit=limit)
-    else:
-        models = []
-    return models
+    if not crud.user.is_superuser(current_user):
+        return JSONResponse(status_code=403, content={"message": "El usuario no tiene permisos para consultar los modelos"})
+
+    models = crud.seg_model.get_all(
+        db, owner_id=current_user, skip=skip, limit=limit)
+    return models  or JSONResponse(status_code=404, content={"message": f"No existen modelos de segementación"})
