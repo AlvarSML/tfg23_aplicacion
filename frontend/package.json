@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:dev": "vue-cli-service build --mode development --target app --module --dashboard",
     "lint": "vue-cli-service lint",
     "vite": "node ./bin/vite"
   },

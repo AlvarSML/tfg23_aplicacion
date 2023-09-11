@@ -18,7 +18,7 @@ ENV VUE_APP_ENV=${FRONTEND_ENV}
 
 #RUN npm run test:unit
 
-RUN npm run build
+RUN npm run build:dev
 #RUN npm run serve
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
