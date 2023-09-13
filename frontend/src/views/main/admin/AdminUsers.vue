@@ -1,10 +1,17 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useStore } from "vuex";
+import { IUserProfile } from "@/interfaces"
+
 const store = useStore();
 
+onMounted(() => {
+  store.dispatch("actionGetUsers")
+})
+
 const users = computed(() => {
-  return [store.getters.readAdminUsers];
+  console.log(store.getters.adminUsers);
+  return store.getters.adminUsers;
 });
 
 const headers = [
@@ -55,16 +62,9 @@ const headers = [
     </v-toolbar>
 
     <v-data-table :headers="headers" :items="users">
-      <!-- eslint-disable-next-line vue/valid-v-slot -->
-      <template #item.is_active="{ item }">
+      <template #[`item.actions`]="{ item }">
         <v-icon v-if="item.is_active">mdi-check</v-icon>
-      </template>
-      <!-- eslint-disable-next-line vue/valid-v-slot -->
-      <template #item.is_superuser="{ item }">
         <v-icon v-if="item.is_superuser">mdi-check</v-icon>
-      </template>
-      <!-- eslint-disable-next-line vue/valid-v-slot -->
-      <template #item.actions="{ item }">
         <v-btn
           icon
           :to="{ name: 'main-admin-users-edit', params: { id: item.id } }"

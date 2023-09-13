@@ -82,8 +82,7 @@ export const actions = {
     await context.commit("addNotification", { content: "Logged out", color: "success" });
   },
   actionRouteLogOut() {
-    console.log("TODO")
-    
+    router.push("/login");    
   },
   async actionCheckApiError(context: MainContext, payload: any) {
     if (axios.isAxiosError(payload)) {

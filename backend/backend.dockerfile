@@ -44,4 +44,4 @@ RUN chmod +x /start-reload.sh
 COPY ./app /app
 ENV PYTHONPATH=/app
 
-CMD ["/start.sh"]
+CMD ["/start-reload.sh"]
