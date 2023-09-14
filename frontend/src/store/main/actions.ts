@@ -80,6 +80,8 @@ export const actions = {
   async actionUserLogOut(context: MainContext) {
     await context.dispatch("actionLogOut");
     await context.commit("addNotification", { content: "Logged out", color: "success" });
+    await context.dispatch("actionRouteLogOut");
+    //this.actionRouteLogOut()
   },
   actionRouteLogOut() {
     router.push("/login");    

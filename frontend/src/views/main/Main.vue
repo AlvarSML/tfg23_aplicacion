@@ -231,8 +231,8 @@ export default defineComponent ({
     },
 
     logout() {
-      this.$router.resolve({name:"main-admin-models-all"})
-      //this.$store.dispatch("actionUserLogOut")
+      //this.$router.resolve({name:"main-admin-models-all"})
+      this.$store.dispatch("actionUserLogOut")
       //await dispatchUserLogOut(this.$store);
     }
   } 

@@ -14,13 +14,9 @@ export const actions = {
     try {
       const response = await api.getUsers(context.rootState.main.token);
       if (response) {
-        //commitSetUsers(context, response.data);
-        context.commit("setUser", response.data);
-
-      }
+        context.commit("setUsers", response.data);      }
     } catch (error) {
       await context.dispatch("checkApiError",error); 
-      //dispatchCheckApiError(context, error);
     }
   },
   async actionUpdateUser(

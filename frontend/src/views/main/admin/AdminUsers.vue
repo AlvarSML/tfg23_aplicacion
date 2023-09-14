@@ -2,6 +2,7 @@
 import { computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import { IUserProfile } from "@/interfaces"
+import router from "@/router";
 
 const store = useStore();
 
@@ -10,7 +11,6 @@ onMounted(() => {
 })
 
 const users = computed(() => {
-  console.log(store.getters.adminUsers);
   return store.getters.adminUsers;
 });
 
@@ -51,6 +51,11 @@ const headers = [
     sortable: false
   }
 ];
+
+function navigate(item:any){
+  console.log("item",item)
+  router.push({ name: 'main-admin-users-edit', params: { id: item.raw.id } })
+}
 </script>
 
 <template>
@@ -67,7 +72,7 @@ const headers = [
         <v-icon v-if="item.is_superuser">mdi-check</v-icon>
         <v-btn
           icon
-          :to="{ name: 'main-admin-users-edit', params: { id: item.id } }"
+          @click='navigate(item)'
         >
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
