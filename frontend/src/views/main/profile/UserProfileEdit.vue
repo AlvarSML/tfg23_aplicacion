@@ -1,28 +1,22 @@
 <template>
   <v-container fluid>
-      <form @submit.prevent="onSubmit" @reset.prevent="onReset">
-        <v-card class="ma-3 pa-3">
-          <v-card-title primary-title>
-            <div class="headline primary--text">Edit User Profile</div>
-          </v-card-title>
-          <v-card-text>
-            <v-text-field v-model="fullName" label="Full Name" required></v-text-field>
-              <v-text-field
-                v-model="email"
-                label="E-mail"
-                type="email"
-                :error-messages="errors"
-                required
-              ></v-text-field>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn @click="cancel">Cancel</v-btn>
-            <v-btn type="reset">Reset</v-btn>
-            <v-btn type="submit"> Save </v-btn>
-          </v-card-actions>
-        </v-card>
-      </form>
+    <form @submit.prevent="onSubmit" @reset.prevent="onReset">
+      <v-card class="ma-3 pa-3">
+        <v-card-title primary-title>
+          <div class="headline primary--text">Edit User Profile</div>
+        </v-card-title>
+        <v-card-text>
+          <v-text-field v-model="fullName" label="Full Name" required></v-text-field>
+          <v-text-field v-model="email" label="E-mail" type="email" :error-messages="errors" required></v-text-field>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="cancel">Cancel</v-btn>
+          <v-btn type="reset">Reset</v-btn>
+          <v-btn type="submit"> Save </v-btn>
+        </v-card-actions>
+      </v-card>
+    </form>
   </v-container>
 </template>
 
@@ -30,10 +24,9 @@
 
 import { IUserProfileUpdate } from "@/interfaces";
 
-import { appName } from "@/env";
 import { defineComponent } from "vue";
 
-export default defineComponent ({
+export default defineComponent({
   name: "Profile-Edit",
   components: {},
   data() {
@@ -50,16 +43,12 @@ export default defineComponent ({
     }
   },
   methods: {
-    created() {
+    onReset() {
       const userProfile = this.$store.getters.userProfile;
       if (userProfile) {
         this.fullName = userProfile.full_name;
         this.email = userProfile.email;
       }
-    },
-    onReset() {
-      this.fullName = "",
-      this.email = ""
     },
     cancel() {
       this.$router.back();
@@ -77,9 +66,12 @@ export default defineComponent ({
       if (this.email) {
         updatedProfile.email = this.email;
       }
-      await this.$store.dispatch("actionUpdateUserProfile",updatedProfile)
+      await this.$store.dispatch("actionUpdateUserProfile", updatedProfile)
       this.$router.push("/main/profile");
     }
+  },
+  created() {
+    this.onReset()
   }
 })
 

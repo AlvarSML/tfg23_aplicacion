@@ -52,7 +52,7 @@ const headers = [
   }
 ];
 
-function navigate(item:any){
+function navigate(item:any ){
   console.log("item",item)
   router.push({ name: 'main-admin-users-edit', params: { id: item.raw.id } })
 }

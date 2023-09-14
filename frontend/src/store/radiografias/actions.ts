@@ -14,7 +14,6 @@ import axios from "axios";
 
 import { ActionContext } from "vuex";
 import { State } from "../state";
-import {} from "./mutations";
 import { RadiografiasState } from "./state";
 import { api } from "@/api";
 
@@ -28,19 +27,11 @@ export const actions = {
 
     try {
       const response = await api.getInference(payload.image).then((response)=>{
-        //context.state.imageUrl = URL.createObjectURL(blob);
-        console.log("Response",response.data)
-        context.state.imageUrl = URL.createObjectURL(response.data);
-        context.state.imageProcessed = response.data
-    })
-      
-      console.log(context.state.imageUrl)
+        context.commit("setImageProcessed",response.data)
+        console.log("response", response.data)
+      });
     } catch (err) {
       console.error(err)
-    } finally {
-
-    }
-
-    
+    }    
   },
 };

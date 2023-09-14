@@ -63,7 +63,7 @@ export const api = {
       ,{ headers: { 'Content-Type': 'multipart/form-data' }, responseType: "blob" }
 
     );
-    console.log(post);
+    console.log("post",post);
     return post;
   },
   async getModels(token: string) {

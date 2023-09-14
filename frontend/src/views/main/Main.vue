@@ -43,7 +43,7 @@
         </v-list-item>
       </v-list>
 
-      <v-list nav density="compact">
+      <v-list v-if="isAdmin" nav density="compact">
         <v-list-subheader>Administrador</v-list-subheader>
 
         <v-list-item
@@ -184,15 +184,6 @@ export default defineComponent ({
       ]
     }
   },
-  /*  
-  beforeRouteEnter (to, from, next) {
-    if (to.path === "/main") {
-      next("/main/dashboard");
-    } else {
-      next();
-    }
-  }, 
-  */
   computed: {
     showDrawer: {
       get: function() {
@@ -206,6 +197,9 @@ export default defineComponent ({
     },
     miniDrawer() {
       return this.$store.getters.dashboardMiniDrawer
+    },
+    isAdmin() {
+      return this.$store.getters.hasAdminAccess
     }
   },
   methods: {    
