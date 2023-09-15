@@ -43,7 +43,7 @@
         </v-list-item>
       </v-list>
 
-      <v-list nav density="compact">
+      <v-list v-if="isAdmin" nav density="compact">
         <v-list-subheader>Administrador</v-list-subheader>
 
         <v-list-item
@@ -125,6 +125,7 @@
 import { defineComponent } from "vue";
 import { appName } from "@/env";
 
+
 export default defineComponent ({
   name: "Main-app",
   data() {
@@ -184,15 +185,6 @@ export default defineComponent ({
       ]
     }
   },
-  /*  
-  beforeRouteEnter (to, from, next) {
-    if (to.path === "/main") {
-      next("/main/dashboard");
-    } else {
-      next();
-    }
-  }, 
-  */
   computed: {
     showDrawer: {
       get: function() {
@@ -206,6 +198,9 @@ export default defineComponent ({
     },
     miniDrawer() {
       return this.$store.getters.dashboardMiniDrawer
+    },
+    isAdmin() {
+      return this.$store.getters.hasAdminAccess
     }
   },
   methods: {    
@@ -231,8 +226,8 @@ export default defineComponent ({
     },
 
     logout() {
-      this.$router.resolve({name:"main-admin-models-all"})
-      //this.$store.dispatch("actionUserLogOut")
+      //this.$router.resolve({name:"main-admin-models-all"})
+      this.$store.dispatch("actionUserLogOut")
       //await dispatchUserLogOut(this.$store);
     }
   } 

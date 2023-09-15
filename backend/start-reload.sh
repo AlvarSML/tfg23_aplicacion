@@ -2,6 +2,12 @@
 # From https://github.com/tiangolo/uvicorn-gunicorn-docker/blob/master/docker-images/start-reload.sh
 set -e
 
+# Probar pytorch
+#pip3 install --no-cache-dir --default-timeout=900 torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+#
+pip3 install --no-cache-dir --default-timeout=900 torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+
 if [ -f /app/app/main.py ]; then
     DEFAULT_MODULE_NAME=app.main
 elif [ -f /app/main.py ]; then

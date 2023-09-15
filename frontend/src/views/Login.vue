@@ -1,5 +1,5 @@
 <template>
-  <v-main>
+  <v-main>    
     <v-container fluid fill-height>
       <v-row align="center" justify="center">
         <v-col cols="12" sm="8" md="6" l="5" xl="4">
@@ -56,9 +56,10 @@ import { appName } from "@/env";
 import { defineComponent } from "vue";
 
 
+
 export default defineComponent ({
   name: "Login-app",
-  components: {},
+
   data() {
     return {
       // Estados locales

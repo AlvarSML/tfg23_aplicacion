@@ -1,6 +1,7 @@
 
 <template>
   <div>
+
     <v-toolbar>
       <v-toolbar-title> Modelos de Regresión </v-toolbar-title>
       <v-divider class="mx-4" inset vertical></v-divider>
@@ -24,6 +25,18 @@
           @click="selectModel(item)">
           Activo
         </v-btn>
+        <v-btn
+          
+          class="mx-2" 
+          fab 
+          dark 
+          small 
+          color="red-lighten-1" 
+          density="comfortable"
+          @click="deleteModel(item)"
+          icon="mdi-delete-forever">
+          
+        </v-btn>
       </template>
 
 
@@ -35,9 +48,10 @@
 
 import { defineComponent } from "vue";
 
-
 export default defineComponent({
   name: "Models-reg-list",
+  components: {
+  },
   data() {
     return {
       headers: [
@@ -82,6 +96,10 @@ export default defineComponent({
   methods: {
     selectModel(item:any){
       this.$store.dispatch("updateStateReg",item.raw.id)
+    },
+    deleteModel(item:any){
+      this.$store.dispatch("deleteModel",item.raw.id)
+      this.$store.dispatch("getRegModels")
     },
     displayIf(item:any){      
       return item.raw.id != this.$store.getters.getRegActive

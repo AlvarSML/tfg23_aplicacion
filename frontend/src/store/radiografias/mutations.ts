@@ -11,6 +11,9 @@ const mutations = {
   setImagePreview(state: RadiografiasState, payload: File) {
     state.imagePreview = payload
   },
+  setImageProcessed(state: RadiografiasState, payload: File) {
+    state.imageProcessed = payload
+  },
 };
 
 export default mutations

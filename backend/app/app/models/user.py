@@ -18,4 +18,5 @@ class User(Base):
     hashed_password: str = Column(String, nullable=False)
     is_active: bool = Column(Boolean(), default=True)
     is_superuser: bool = Column(Boolean(), default=False)
+    
     items: Mapped[List["Item"]] = relationship(back_populates="owner")

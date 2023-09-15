@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-main>
+      <NotificationsManager></NotificationsManager>
       <router-view/>
     </v-main>
   </v-app>
@@ -8,10 +9,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import NotificationsManager from "@/components/NotificationsManager.vue";
+
 
 export default defineComponent({
   name: 'App',
-
+  components: {
+    NotificationsManager
+  },
   data () {
     return {
       //

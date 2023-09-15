@@ -31,6 +31,16 @@ def init_db(db: Session) -> None:
             is_superuser=True,
         )
         user = crud.user.create(db, obj_in=user_in)  # noqa: F841
+
+    regular = crud.user.get_by_email(db, email="reg@tfg.com")
+    if not regular:
+        user_in = schemas.UserCreate(
+            email="reg@tfg.com",
+            password="reg",
+            is_superuser=False,
+        )
+        regular = crud.user.create(db, obj_in=user_in)  # noqa: F841
+
     
     # Eliminar en orden
     db.query(ModelSelection).delete()

@@ -7,14 +7,17 @@ from app.db.base_class import Base
 
 from app.models.model import Model
 
+if TYPE_CHECKING:
+    from .state import ModelSelection  # noqa: F401
 
 class RegressionModel(Model):
-    id = Column(Integer, ForeignKey("model.id") ,primary_key=True)
+    id = Column(Integer, ForeignKey("model.id",  ondelete='cascade') ,primary_key=True)
     __tablename__="regressionmodel"
     rmse: float = Column(Float) 
-    states = relationship(
+    states: Mapped[List["ModelSelection"]] = relationship(
         "ModelSelection",
-       back_populates="reg_model"
+       back_populates="reg_model",
+       cascade="all, delete"
     )
     __mapper_args__ = {
         "polymorphic_identity": "regressionmodel"
@@ -31,12 +34,13 @@ class RegressionModel(Model):
 
 class SegmentationModel(Model):
     __tablename__="segmentationmodel"
-    id = Column(Integer, ForeignKey("model.id") ,primary_key=True)
+    id = Column(Integer, ForeignKey("model.id",  ondelete='cascade') ,primary_key=True)
     iou: float = Column(Float) # Precision de la segmentacion
     
     states: Mapped[List["ModelSelection"]] = relationship(
         "ModelSelection",
-        back_populates="seg_model"
+        back_populates="seg_model",
+        cascade="all, delete"
     )
     __mapper_args__ = {
         "polymorphic_identity": "segmentationmodel"

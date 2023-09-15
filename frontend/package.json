@@ -1,22 +1,27 @@
 {
-  "name": "tfg-frontend-vuetify",
+  "name": "tfg23_aplicacion",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build:dev": "vue-cli-service build --mode development --target app --module --dashboard",
+    "lint": "vue-cli-service lint",
+    "vite": "node ./bin/vite"
   },
   "dependencies": {
     "@mdi/font": "^5.9.55",
     "axios": "^1.5.0",
     "core-js": "^3.8.3",
     "roboto-fontface": "*",
+    "v-image-magnifier": "^1.1.1",
     "vue": "^3.2.13",
+    "vue-image-zoomer": "^2.2.3",
     "vue-router": "^4.0.3",
     "vuetify": "^3.0.0-beta.0",
     "vuex": "^4.0.0",
-    "webfontloader": "^1.0.0"
+    "webfontloader": "^1.0.0",
+    "webpack": "^5.88.2"
   },
   "devDependencies": {
     "@types/webfontloader": "^1.0.0",
@@ -33,6 +38,7 @@
     "eslint-plugin-vue": "^8.0.3",
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0",
-    "typescript": "~4.5.5"
+    "typescript": "^5.2.2",
+    "vue-cli-plugin-vite": "~1.5.0"
   }
 }

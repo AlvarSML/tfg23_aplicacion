@@ -22,6 +22,8 @@ WORKDIR /app/
 ARG INSTALL_DEV=false
 RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi"
 
+RUN echo npm list
+
 # Dependencias de OPENCV
 RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
 
@@ -42,4 +44,4 @@ RUN chmod +x /start-reload.sh
 COPY ./app /app
 ENV PYTHONPATH=/app
 
-CMD ["/start.sh"]
+CMD ["/start-reload.sh"]

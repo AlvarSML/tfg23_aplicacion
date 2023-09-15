@@ -10,7 +10,7 @@ import { RadiografiasState } from "./state";
 import { State } from "../state";
 
 export const getters = {
-  imageUrl: (state: RadiografiasState) => state.imageUrl,
+  imageProcessed: (state: RadiografiasState) => state.imageProcessed,
   imagePreview: (state: RadiografiasState) => state.imagePreview,
 };
 

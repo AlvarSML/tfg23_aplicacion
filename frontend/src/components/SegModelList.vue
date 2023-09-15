@@ -24,6 +24,18 @@
           @click="selectModel(item)">
           Activo
         </v-btn>
+        <v-btn
+          v-if="displayIf(item)"
+          class="mx-2" 
+          fab 
+          dark 
+          small 
+          color="red-lighten-1" 
+          density="comfortable"
+          @click="deleteModel(item)"
+          icon="mdi-delete-forever">
+          
+        </v-btn>
       </template>
 
 
@@ -79,6 +91,10 @@ export default defineComponent({
   methods: {
     selectModel(item:any){
       this.$store.dispatch("updateStateSeg",item.raw.id)
+    },
+    deleteModel(item:any){
+      this.$store.dispatch("deleteModel",item.raw.id)
+      this.$store.dispatch("getSegModels")
     },
     displayIf(item:any){      
       return item.raw.id != this.$store.getters.getSegActive

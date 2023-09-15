@@ -1,10 +1,17 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useStore } from "vuex";
+import { IUserProfile } from "@/interfaces"
+import router from "@/router";
+
 const store = useStore();
 
+onMounted(() => {
+  store.dispatch("actionGetUsers")
+})
+
 const users = computed(() => {
-  return [store.getters.readAdminUsers];
+  return store.getters.adminUsers;
 });
 
 const headers = [
@@ -44,6 +51,11 @@ const headers = [
     sortable: false
   }
 ];
+
+function navigate(item:any ){
+  console.log("item",item)
+  router.push({ name: 'main-admin-users-edit', params: { id: item.raw.id } })
+}
 </script>
 
 <template>
@@ -55,19 +67,12 @@ const headers = [
     </v-toolbar>
 
     <v-data-table :headers="headers" :items="users">
-      <!-- eslint-disable-next-line vue/valid-v-slot -->
-      <template #item.is_active="{ item }">
+      <template #[`item.actions`]="{ item }">
         <v-icon v-if="item.is_active">mdi-check</v-icon>
-      </template>
-      <!-- eslint-disable-next-line vue/valid-v-slot -->
-      <template #item.is_superuser="{ item }">
         <v-icon v-if="item.is_superuser">mdi-check</v-icon>
-      </template>
-      <!-- eslint-disable-next-line vue/valid-v-slot -->
-      <template #item.actions="{ item }">
         <v-btn
           icon
-          :to="{ name: 'main-admin-users-edit', params: { id: item.id } }"
+          @click='navigate(item)'
         >
           <v-icon>mdi-pencil</v-icon>
         </v-btn>

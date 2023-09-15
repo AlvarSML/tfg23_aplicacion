@@ -1,44 +1,47 @@
 <template>
-  <div>
-    <v-snackbar v-model="show" auto-height :color="currentNotificationColor">
-      <v-progress-circular
-        v-show="showProgress"
-        class="ma-2"
-        indeterminate
-      ></v-progress-circular
-      >{{ currentNotificationContent }}
-      <template action="{ attrs }">
-        <v-btn v-bind="$attrs"  @click.native="close">Close</v-btn>
-      </template>
+    <v-snackbar v-model="show" auto-height :color="currentNotificationColor" class="d-flex mb-6">
+      <v-btn @click="close" icon="mdi-close" density="comfortable" color="white" class="ma-2 pa-2"></v-btn>
+      <v-progress-circular v-show="showProgress" class="ma-2" indeterminate></v-progress-circular>
+      {{ currentNotificationContent }}
+      
     </v-snackbar>
-  </div>
 </template>
+
 <script lang="ts">
 
 import { AppNotification } from "@/store/main/state";
-import { appName } from "@/env";
 import { defineComponent } from "vue";
 
-export default defineComponent ({
+export default defineComponent({
   name: "Notification-Manager",
   data() {
-    return{
+    return {
       show: false,
       text: "",
-      showProgress: false
+      showProgress: false,
+      curr: null as AppNotification | null
     }
   },
   computed: {
-    currentNotification():AppNotification {
-      return this.$store.getters.currentNotification;
+    currentNotification: {
+      get: function () {
+        return this.curr;
+      },
+      set: function (val) {
+        this.curr = val
+      }
     },
-    firstNotification():AppNotification {
+    firstNotification(): AppNotification {
       return this.$store.getters.firstNotification;
     },
-    currentNotificationContent():string {
-      return (this.currentNotification.content) || "";
+    currentNotificationContent(): string {
+      if (this.currentNotification != null) {
+        return this.currentNotification.content
+      } else {
+        return ""
+      }
     },
-    currentNotificationColor():string {
+    currentNotificationColor(): string {
       return (this.currentNotification && this.currentNotification.color) || "info";
     }
   },
@@ -65,12 +68,13 @@ export default defineComponent ({
         this.showProgress = notification.showProgress || false;
         this.show = true;
       } else {
-        //this.currentNotification = false;
+        this.currentNotification = null;
       }
     }
   },
   watch: {
-    async onNotificationChange(newNotification: AppNotification | false) {
+    async firstNotification(newNotification: AppNotification | false) {
+      console.log("NOTIFICACION")
       if (newNotification !== this.currentNotification) {
         await this.setNotification(newNotification);
         if (newNotification) {
@@ -84,3 +88,4 @@ export default defineComponent ({
   }
 })
 
+</script>

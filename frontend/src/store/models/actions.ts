@@ -2,14 +2,7 @@
 /*
   ?
   Operaciones asicronas que aplican la mutacion de un estado
-  se recomienda el uso de dispatch
   ! Para llamdas al modulo de API
-*/
-/*
-import { api } from "@/api";
-import router from "@/router";
-import { getLocalToken, removeLocalToken, saveLocalToken } from "@/utils";
-import axios from "axios";
 */
 
 import { ActionContext } from "vuex";
@@ -55,6 +48,9 @@ export const actions = {
   async updateStateSeg(context: ModelContext, data:number) {
     const response = await api.updateStateSeg(context.rootState.main.token, data)
     context.dispatch("getState")
+  },
+  async deleteModel(context: ModelContext, data:number) {
+    return await api.deleteModel(context.rootState.main.token, data)
   }
   
 };
