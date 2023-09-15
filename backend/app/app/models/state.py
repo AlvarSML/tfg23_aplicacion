@@ -18,8 +18,8 @@ class ModelSelection(Base):
     
     changed_by: Mapped["User"] = mapped_column(ForeignKey("user.id"))
 
-    reg_id: Mapped["RegressionModel"] = mapped_column(ForeignKey("regressionmodel.id", ondelete="CASCADE"))
-    seg_id: Mapped["SegmentationModel"] = mapped_column(ForeignKey("segmentationmodel.id", ondelete="CASCADE"))
+    reg_id: Mapped["RegressionModel"] = mapped_column(ForeignKey("regressionmodel.id",  ondelete='cascade'))
+    seg_id: Mapped["SegmentationModel"] = mapped_column(ForeignKey("segmentationmodel.id",  ondelete='cascade'))
 
     reg_model: Mapped["RegressionModel"] = relationship(
         "RegressionModel", 

@@ -2,13 +2,14 @@
 Clase que modela un archivo onnx de un modelo de YOLO o pytorch
 """
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Mapped
 from sqlalchemy.sql import func
 
 from app.db.base_class import Base
+
 
 class Model(Base):
     """ Representa cualquier modelo almacenado

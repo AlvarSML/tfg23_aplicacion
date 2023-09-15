@@ -81,11 +81,13 @@ class ModelsService:
         id: int,
         user: models.User
     ) -> schemas.Model:
-        model = crud.model.get(db=db,id=id)
-
-        if not model:
-            raise HTTPException(status_code=404, detail="El modelo a eliminar no existe")
+        #model = crud.model.get(db=db,id=id)
+        currstate = crud.state.get_last(db=db)
+        print("CURR", currstate)
         
-        elim = crud.model.remove(db=db,id=id)
-        print("--> Elim: ",elim)
+        if id == currstate.reg_model.id or id == currstate.seg_model.id:
+            raise HTTPException(status_code=403, detail="El modelo se encuentra activo")
+        else:
+            model = crud.model.remove(db=db,id=id)
+        
         return model
