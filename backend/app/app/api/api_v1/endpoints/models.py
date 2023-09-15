@@ -195,3 +195,31 @@ async def get_segmetation(
     models = crud.seg_model.get_all(
         db, owner_id=current_user, skip=skip, limit=limit)
     return models  or JSONResponse(status_code=404, content={"message": f"No existen modelos de segementación"})
+
+@router.delete(
+    "delete/{model_id}",
+    response_model=schemas.Model,
+    responses={
+        404: {
+            "model": schemas.Msg,
+            "description": "No existe ningun modelo con ese identificador"
+        },
+        507: {
+            "model": schemas.Msg,
+            "description": "Error de eliminacion"
+        }
+    }
+)
+async def del_model(
+    db: Session = Depends(deps.get_db),
+    *,
+    model_id: int,
+    current_user: models.User = Depends(deps.get_current_active_user),
+):
+    deleted:schemas.Model = await ModelsService.delete_model(
+        db=db,
+        id=model_id,
+        user=current_user
+    )
+    print("->Deleted",deleted)
+    return deleted

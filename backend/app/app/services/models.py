@@ -74,3 +74,18 @@ class ModelsService:
         )
 
         return model
+
+    @staticmethod
+    async def delete_model(
+        db: Session,
+        id: int,
+        user: models.User
+    ) -> schemas.Model:
+        model = crud.model.get(db=db,id=id)
+
+        if not model:
+            raise HTTPException(status_code=404, detail="El modelo a eliminar no existe")
+        
+        elim = crud.model.remove(db=db,id=id)
+        print("--> Elim: ",elim)
+        return model
