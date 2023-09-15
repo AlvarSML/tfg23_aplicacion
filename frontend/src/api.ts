@@ -5,6 +5,7 @@ import { RegModel, CreateRegModel } from "@/types/RegModel"
 import { SegModel, CreateSegModel } from "@/types/SegModel"
 import { State } from "@/types/States"
 import { Model } from "@/types/Model";
+import { store } from "@/store";
 
 function authHeaders(token: string|null) {
   return {
@@ -124,6 +125,11 @@ export const api = {
     return axios.post(`${apiUrl}/api/v1/states/change_seg`,{"state_in":data},authHeaders(token))
   },
   async deleteModel(token: string, data: number) {
-    return axios.delete(`${apiUrl}/api/v1/models/delete/${data}`,authHeaders(token))
+    
+    return axios.delete(`${apiUrl}/api/v1/models/delete/${data}`,authHeaders(token)).catch((err)=>{
+      //const store = useStore();
+      console.log("aviso",store)
+      store.commit("addNotification", { content: "No se puede eliminar", color: "error" });
+    })
   }
 };
