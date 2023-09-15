@@ -1,9 +1,7 @@
 
 <template>
   <div>
-    <NotificationsManager>
-      
-    </NotificationsManager>
+
     <v-toolbar>
       <v-toolbar-title> Modelos de Regresión </v-toolbar-title>
       <v-divider class="mx-4" inset vertical></v-divider>
@@ -49,12 +47,10 @@
 <script lang="ts">
 
 import { defineComponent } from "vue";
-import NotificationsManager from "@/components/NotificationsManager.vue";
 
 export default defineComponent({
   name: "Models-reg-list",
   components: {
-    NotificationsManager
   },
   data() {
     return {

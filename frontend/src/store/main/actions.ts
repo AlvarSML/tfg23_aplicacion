@@ -79,7 +79,7 @@ export const actions = {
   },
   async actionUserLogOut(context: MainContext) {
     await context.dispatch("actionLogOut");
-    await context.commit("addNotification", { content: "Logged out", color: "success" });
+    await context.commit("addNotification", { content: "Hasta pronto!", color: "success" });
     await context.dispatch("actionRouteLogOut");
     //this.actionRouteLogOut()
   },
@@ -172,7 +172,7 @@ export const actions = {
         context.dispatch("actionSaveToken", token);
         context.dispatch("actionGetUserProfile");
         context.dispatch("actionRouteLoggedIn");
-        await context.commit("addNotification", { content: "Logged in", color: "success" });
+        await context.commit("addNotification", { content: "Bienvenido!", color: "success" });
       } else {
         await context.dispatch("actionLogOut");
       }
