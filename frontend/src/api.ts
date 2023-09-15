@@ -123,4 +123,7 @@ export const api = {
   async updateStateSeg(token: string, data: number) {
     return axios.post(`${apiUrl}/api/v1/states/change_seg`,{"state_in":data},authHeaders(token))
   },
+  async deleteModel(token: string, data: number) {
+    return axios.delete(`${apiUrl}/api/v1/models/delete/${data}`,authHeaders(token))
+  }
 };
