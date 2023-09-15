@@ -197,7 +197,7 @@ async def get_segmetation(
     return models  or JSONResponse(status_code=404, content={"message": f"No existen modelos de segementación"})
 
 @router.delete(
-    "delete/{model_id}",
+    "/delete/{model_id}",
     response_model=schemas.Model,
     responses={
         404: {
