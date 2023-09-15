@@ -7,6 +7,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     component: () => import(/* webpackChunkName: "start" */ "@/views/main/Start.vue"),
+    redirect: { name: 'login' },
     children: [
       {
         path: "login",
