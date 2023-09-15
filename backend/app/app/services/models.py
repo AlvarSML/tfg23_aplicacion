@@ -89,5 +89,6 @@ class ModelsService:
             raise HTTPException(status_code=403, detail="El modelo se encuentra activo")
         else:
             model = crud.model.remove(db=db,id=id)
+            await archivos.del_file(model.file_path)
         
         return model
