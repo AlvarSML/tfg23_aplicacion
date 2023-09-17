@@ -26,7 +26,7 @@
           Activo
         </v-btn>
         <v-btn
-          
+          v-if="displayIf(item)"
           class="mx-2" 
           fab 
           dark 

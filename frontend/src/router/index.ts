@@ -83,6 +83,7 @@ const routes: Array<RouteRecordRaw> = [
               },
               {
                 path: "users/all",
+                name: "all_users",
                 component: () =>
                   import(
                     /* webpackChunkName: "main-admin-users" */ "@/views/main/admin/AdminUsers.vue"

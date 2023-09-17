@@ -1,8 +1,7 @@
 <template>
   <v-main>
     <v-container fluid>
-      <v-row dense>
-        <v-col cols="card.flex">
+
           <v-form @keyup.enter="onSubmit">
             <v-card-text>Radiografia Endodoncia</v-card-text>
             <v-file-input clearable label="Radiografia" variant="filled" prepend-icon="mdi-camera"
@@ -22,8 +21,7 @@
             <v-btn @click.prevent="onSubmit">Medir</v-btn>
             <v-btn @click="dum">Dummy</v-btn>
           </v-card-actions>
-        </v-col>
-      </v-row>
+
     </v-container>
   </v-main>
 </template>

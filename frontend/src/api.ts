@@ -40,6 +40,7 @@ export const api = {
     return axios.put(`${apiUrl}/api/v1/users/${userId}`, data, authHeaders(token));
   },
   async createUser(token: string, data: IUserProfileCreate) {
+    
     return axios.post(`${apiUrl}/api/v1/users/`, data, authHeaders(token));
   },
   async passwordRecovery(email: string) {

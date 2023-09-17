@@ -233,7 +233,8 @@ class YOLOSeg:
             mask_alpha
             )
 
-        # Dibujado de las BB        
+        # Dibujado de las BB
+        alturas = [] # Comprueba las alturas de los textos   
         for box, score, class_id, measure in zip(self.boxes, self.scores, self.class_ids, self.measures):
             color = self.colors[class_id]
 
@@ -255,15 +256,22 @@ class YOLOSeg:
 
 
             if measure != -1:
-                caption += f' {float(measure[0]):10.4f}mm'
+                caption += f' | {float(measure[0]):2.2f}mm'
 
             (tw, th), _ = cv2.getTextSize(text=caption, fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                                         fontScale=size, thickness=text_thickness)
             th = int(th * 1.2)
 
-            cv2.rectangle(mask_img, (x1, y1),
-                        (x1 + tw, y1 - th), color, -1)
 
+            if len(alturas) > 0 and measure != -1:
+                while  any(abs(x - y1) < 30 for x in alturas):
+                    y1 += 30
+            alturas.append(y1)
+
+            cv2.rectangle(mask_img, (x1, y1),
+                        (x1 + tw, y1 - th), color, -1)          
+
+            
             cv2.putText(mask_img, caption, (x1, y1),
                         cv2.FONT_HERSHEY_SIMPLEX, size, (255, 255, 255), text_thickness, cv2.LINE_AA)
 
