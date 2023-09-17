@@ -223,6 +223,7 @@ class YOLOSeg:
         """
         img_height, img_width = image.shape[:2]
         size = min([img_height, img_width]) * 0.0006
+        size = 1.2
 
         text_thickness = int(min([img_height, img_width]) * 0.001)
 
@@ -238,10 +239,17 @@ class YOLOSeg:
 
             x1, y1, x2, y2 = box.astype(int)
 
+            if y2 < (50):
+                y2 = y2 + 50
+
+            if y1 < (50):
+                y1 = y1 + 50
+
             # BB
+            print("Rectangulo: ",y1,y2,"Real: ",img_height)
             cv2.rectangle(mask_img, (x1, y1), (x2, y2), color, 2)
 
-            # Descripcion de cada deteccion TODO: Añadir mediciones?
+            # Descripcion de cada deteccion
             label = class_names[class_id]
             caption = f'{label} {int(score * 100)}%'
 
