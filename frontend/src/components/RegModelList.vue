@@ -119,7 +119,7 @@ export default defineComponent({
     },
     deleteModel(item:any){
       this.$store.dispatch("deleteModel",item.raw.id)
-      this.$store.dispatch("getRegModels")
+      
     },
     displayIf(item:any){      
       return item.raw.id != this.$store.getters.getRegActive

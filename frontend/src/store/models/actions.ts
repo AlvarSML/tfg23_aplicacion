@@ -60,10 +60,10 @@ export const actions = {
     context.dispatch("getState")
   },
   async deleteModel(context: ModelContext, data:number) {
-    return await api.deleteModel(context.rootState.main.token, data).then(()=>{
+    await api.deleteModel(context.rootState.main.token, data).then(()=>{
       context.commit("addNotification",{ content: "Modelo eliminado", color: "success" });
     })
-    
+    context.dispatch("getRegModels")    
   }
   
 };
