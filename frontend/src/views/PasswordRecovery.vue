@@ -7,11 +7,11 @@
             <form @submit.prevent="onSubmit">
               <v-card class="elevation-12">
                 <v-toolbar dark color="primary">
-                  <v-toolbar-title>{{ appName }} - Password Recovery</v-toolbar-title>
+                  <v-toolbar-title>{{ appName }} - Recuperacion de contraseña</v-toolbar-title>
                 </v-toolbar>
                 <v-card-text>
                   <p class="subheading">
-                    A password recovery email will be sent to the registered account
+                    Se enviara un email de recuperacion de contraseña a su correo
                   </p>
 
                     <v-text-field
@@ -27,8 +27,8 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn @click="cancel">Cancel</v-btn>
-                  <v-btn type="submit" > Recover Password </v-btn>
+                  <v-btn @click="cancel">Cancelar</v-btn>
+                  <v-btn type="submit" > Recuperar </v-btn>
                 </v-card-actions>
               </v-card>
             </form>

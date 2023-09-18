@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-container>
-      <RegModelList></RegModelList>
-
+    <v-container class="d-flex flex-column justify-space-evenly">
+      <RegModelList class="my-4"></RegModelList>
+      <v-spacer></v-spacer>
       <SegModelList></SegModelList>
     </v-container>
     <!--

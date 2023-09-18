@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main>
+    <v-main >
       <NotificationsManager></NotificationsManager>
       <router-view/>
     </v-main>

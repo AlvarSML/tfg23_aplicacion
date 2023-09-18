@@ -9,7 +9,7 @@
             </v-file-input>
 
             <div class="d-flex flex-column justify-start align-center">
-              <v-slider v-model="width" class="align-self-stretch" min="300" max="2000" step="1"></v-slider>
+              <v-slider v-model="width" class="align-self-stretch" min="300" :max="maxw" step="1"></v-slider>
               <v-img v-if="mostrarPrev" :width="width" :src="imagenSubir" />
               <v-img v-if="mostrarProcesada" :width="width" :src="imagenProcesada" />
               <v-progress-circular v-if="mostrarCarga" indeterminate  :size="76" :width="6"></v-progress-circular>
@@ -19,7 +19,6 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn @click.prevent="onSubmit">Medir</v-btn>
-            <v-btn @click="dum">Dummy</v-btn>
           </v-card-actions>
 
     </v-container>
@@ -42,6 +41,9 @@ export default defineComponent({
     }
   },
   computed: {
+    maxw(): number {
+      return window.innerWidth
+    },
     imagenSubir(): string {
       if (this.$store.getters.imagePreview)
         return URL.createObjectURL(this.$store.getters.imagePreview);

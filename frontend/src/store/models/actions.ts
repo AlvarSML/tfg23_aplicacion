@@ -4,7 +4,7 @@
   Operaciones asicronas que aplican la mutacion de un estado
   ! Para llamdas al modulo de API
 */
-
+import router from "@/router";
 import { ActionContext } from "vuex";
 import { State } from "../state";
 import {} from "./mutations";
@@ -29,12 +29,22 @@ export const actions = {
     context.state.seg_models = response.data
   },
   async uploadRegModel(context: ModelContext, data: CreateRegModel) {
-    const response = await api.createRegModel(context.rootState.main.token, data)
-    console.log(response)
+    const loadingNotification = { content: "saving", showProgress: true };
+    context.commit("addNotification",loadingNotification);
+    const response = await api.createRegModel(context.rootState.main.token, data).then(()=>{
+      context.commit("removeNotification",loadingNotification)
+    })
+    router.push({name:"main-admin-models-all"})
+    return response
   },
   async uploadSegModel(context: ModelContext, data: CreateSegModel) {
-    const response = await api.createSegModel(context.rootState.main.token, data)
-    console.log(response)
+    const loadingNotification = { content: "saving", showProgress: true };
+    context.commit("addNotification",loadingNotification);
+    const response = await api.createSegModel(context.rootState.main.token, data).then(()=>{
+      context.commit("removeNotification",loadingNotification)
+    })
+    router.push({name:"main-admin-models-all"})
+    return response
   },
   async getState(context: ModelContext) {
     const response = await api.getState(context.rootState.main.token)
@@ -50,7 +60,10 @@ export const actions = {
     context.dispatch("getState")
   },
   async deleteModel(context: ModelContext, data:number) {
-    return await api.deleteModel(context.rootState.main.token, data)
+    return await api.deleteModel(context.rootState.main.token, data).then(()=>{
+      context.commit("addNotification",{ content: "Modelo eliminado", color: "success" });
+    })
+    
   }
   
 };

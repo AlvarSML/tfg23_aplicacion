@@ -30,7 +30,7 @@
               </v-form>
               <div v-if="loginError">
                 <v-alert :value="loginError" transition="fade-transition" type="error">
-                  Incorrect email or password
+                  Email o contraseña incorrecta
                 </v-alert>
               </div>
               <v-col class="caption text-xs-right"

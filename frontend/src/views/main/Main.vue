@@ -2,10 +2,7 @@
   <div>
     <v-navigation-drawer
       v-model="showDrawer"
-      persistent
-      :mini-variant="miniDrawer"
-      fixed
-      app
+      temporary
     >        
       <v-list nav density="compact">
         <v-list-subheader>Menu</v-list-subheader>
