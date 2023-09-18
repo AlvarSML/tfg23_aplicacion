@@ -57,6 +57,7 @@ export const actions = {
     }
   },
   async actionCreateUser(context: MainContext, payload: IUserProfileCreate) {
+    console.log("createuser", payload)
     try {
       const loadingNotification = { content: "saving", showProgress: true };
       context.commit("addNotification",loadingNotification);

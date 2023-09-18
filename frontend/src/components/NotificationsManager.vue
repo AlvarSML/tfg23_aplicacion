@@ -1,6 +1,6 @@
 <template>
     <v-snackbar v-model="show" auto-height :color="currentNotificationColor" class="d-flex mb-6">
-      <v-btn @click="close" icon="mdi-close" density="comfortable" color="white" class="ma-2 pa-2"></v-btn>
+      <v-btn @click="close" icon="mdi-close" density="comfortable" color="white" class="ma-2 pa-2" v-if="!showProgress"></v-btn>
       <v-progress-circular v-show="showProgress" class="ma-2" indeterminate></v-progress-circular>
       {{ currentNotificationContent }}
       

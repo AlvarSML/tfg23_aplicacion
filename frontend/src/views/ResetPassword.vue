@@ -7,10 +7,10 @@
             <form @submit.prevent="onSubmit" @reset.prevent="onReset">
               <v-card class="elevation-12">
                 <v-toolbar dark color="primary">
-                  <v-toolbar-title>{{ appName }} - Reset Password</v-toolbar-title>
+                  <v-toolbar-title>{{ appName }} - Reset de contraseña</v-toolbar-title>
                 </v-toolbar>
                 <v-card-text>
-                  <p class="subheading">Enter your new password below</p>
+                  <p class="subheading">Introduzaca su nueva contraseña</p>
                   <validation-provider
                     v-slot="{ errors }"
                     :debounce="100"
@@ -44,9 +44,9 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn @click="cancel">Cancel</v-btn>
-                  <v-btn type="reset">Clear</v-btn>
-                  <v-btn type="submit" :disabled="invalid">Save</v-btn>
+                  <v-btn @click="cancel">Cancelar</v-btn>
+                  <v-btn type="reset">Limpiar</v-btn>
+                  <v-btn type="submit" :disabled="invalid">Guardar</v-btn>
                 </v-card-actions>
               </v-card>
             </form>

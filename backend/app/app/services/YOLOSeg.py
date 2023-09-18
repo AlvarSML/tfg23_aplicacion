@@ -223,6 +223,7 @@ class YOLOSeg:
         """
         img_height, img_width = image.shape[:2]
         size = min([img_height, img_width]) * 0.0006
+        size = 1.2
 
         text_thickness = int(min([img_height, img_width]) * 0.001)
 
@@ -232,30 +233,45 @@ class YOLOSeg:
             mask_alpha
             )
 
-        # Dibujado de las BB        
+        # Dibujado de las BB
+        alturas = [] # Comprueba las alturas de los textos   
         for box, score, class_id, measure in zip(self.boxes, self.scores, self.class_ids, self.measures):
             color = self.colors[class_id]
 
             x1, y1, x2, y2 = box.astype(int)
 
+            if y2 < (50):
+                y2 = y2 + 50
+
+            if y1 < (50):
+                y1 = y1 + 50
+
             # BB
+            print("Rectangulo: ",y1,y2,"Real: ",img_height)
             cv2.rectangle(mask_img, (x1, y1), (x2, y2), color, 2)
 
-            # Descripcion de cada deteccion TODO: Añadir mediciones?
+            # Descripcion de cada deteccion
             label = class_names[class_id]
             caption = f'{label} {int(score * 100)}%'
 
 
             if measure != -1:
-                caption += f' {float(measure[0]):10.4f}mm'
+                caption += f' | {float(measure[0]):2.2f}mm'
 
             (tw, th), _ = cv2.getTextSize(text=caption, fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                                         fontScale=size, thickness=text_thickness)
             th = int(th * 1.2)
 
-            cv2.rectangle(mask_img, (x1, y1),
-                        (x1 + tw, y1 - th), color, -1)
 
+            if len(alturas) > 0 and measure != -1:
+                while  any(abs(x - y1) < 30 for x in alturas):
+                    y1 += 30
+            alturas.append(y1)
+
+            cv2.rectangle(mask_img, (x1, y1),
+                        (x1 + tw, y1 - th), color, -1)          
+
+            
             cv2.putText(mask_img, caption, (x1, y1),
                         cv2.FONT_HERSHEY_SIMPLEX, size, (255, 255, 255), text_thickness, cv2.LINE_AA)
 

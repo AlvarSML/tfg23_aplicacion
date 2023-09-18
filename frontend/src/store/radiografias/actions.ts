@@ -26,11 +26,15 @@ export const actions = {
   ) {
 
     try {
+      const loadingNotification = { content: "Procesando", showProgress: true };
+      context.commit("addNotification",loadingNotification);
       const response = await api.getInference(payload.image).then((response)=>{
         context.commit("setImageProcessed",response.data)
-        console.log("response", response.data)
+        //console.log("response", response.data)
+        context.commit("removeNotification",loadingNotification)
       });
     } catch (err) {
+      
       console.error(err)
     }    
   },

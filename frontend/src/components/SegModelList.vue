@@ -8,7 +8,14 @@
       <v-spacer></v-spacer>
       <v-btn color="primary" to="/main/admin/models/create">Nuevo Modelo</v-btn>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="models" item-value="name" item-key="id">
+    <v-data-table 
+      v-model:expanded="expanded" 
+      :headers="headers" 
+      :items="models" 
+      item-value="id"
+      :single-expand="false"      
+      show-expand
+      class="elevation-1">
       <template v-slot:[`item.actions`]="{ item }">
         <v-btn v-if="displayIf(item)" class="mx-2" fab dark small color="indigo-lighten-2" @click="selectModel(item)">
           Activar
@@ -24,6 +31,9 @@
           @click="selectModel(item)">
           Activo
         </v-btn>
+      </template>
+      
+      <template v-slot:[`item.delete_button`]="{ item }">
         <v-btn
           v-if="displayIf(item)"
           class="mx-2" 
@@ -33,11 +43,17 @@
           color="red-lighten-1" 
           density="comfortable"
           @click="deleteModel(item)"
-          icon="mdi-delete-forever">
-          
+          icon="mdi-delete-forever">          
         </v-btn>
       </template>
 
+      <template v-slot:expanded-row="{ columns, item}">
+        <tr>
+        <td :colspan="columns.length">
+          {{ item.raw.model_description || "Este modelo no tiene descripción" }}
+        </td>
+        </tr>
+      </template>
 
     </v-data-table>
   </div>
@@ -52,6 +68,7 @@ export default defineComponent({
   name: "Models-reg-list",
   data() {
     return {
+      expanded: [],
       headers: [
         {
           title: "Nombre",
@@ -66,7 +83,7 @@ export default defineComponent({
           align: "left"
         },
         {
-          title: "IOU",
+          title: "IOU (%)",
           sortable: true,
           key: "iou",
           align: "left"
@@ -77,7 +94,9 @@ export default defineComponent({
           key: "file_path",
           align: "left"
         },
-        { title: ' ', key: 'actions', sortable: false }
+        { title: 'Activar', key: 'actions', sortable: false },
+        { title: 'Eliminar', key: 'delete_button', sortable: false },
+        { text: '', key: 'data-table-expand' }
 
       ],
       msg: ""
