@@ -2,11 +2,11 @@
   <v-container fluid>
     <v-card class="ma-3 pa-3">
       <v-card-title primary-title>
-        <div class="headline primary--text">User Profile</div>
+        <div class="headline primary--text">Perfil de usuario</div>
       </v-card-title>
       <v-card-text>
         <div class="my-4">
-          <div class="subheading secondary--text text--lighten-3">Full Name</div>
+          <div class="subheading secondary--text text--lighten-3">Nombre completo</div>
           <div
             v-if="userProfile && userProfile.full_name"
             class="title primary--text text--darken-2"
@@ -27,8 +27,8 @@
         </div>
       </v-card-text>
       <v-card-actions>
-        <v-btn to="/main/profile/edit">Edit</v-btn>
-        <v-btn to="/main/profile/password">Change password</v-btn>
+        <v-btn to="/main/profile/edit">Editar</v-btn>
+        <v-btn to="/main/profile/password">Cambio de contraseña</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>

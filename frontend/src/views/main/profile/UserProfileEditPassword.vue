@@ -3,11 +3,11 @@
       <form @submit.prevent="onSubmit" @reset.prevent="onReset">
         <v-card class="ma-3 pa-3">
           <v-card-title primary-title>
-            <div class="headline primary--text">Set Password</div>
+            <div class="headline primary--text">Establecer contraseña</div>
           </v-card-title>
           <v-card-text>
             <div class="my-3">
-              <div class="subheading secondary--text text--lighten-2">User</div>
+              <div class="subheading secondary--text text--lighten-2">Usuario</div>
               <div
                 v-if="userProfile.full_name"
                 class="title primary--text text--darken-2"
@@ -21,23 +21,23 @@
               <v-text-field
                 v-model="password1"
                 type="password"
-                label="Password"
+                label="Contraseña"
                 :error-messages="errors"
               >
               </v-text-field>
               <v-text-field
                 v-model="password2"
                 type="password"
-                label="Confirm Password"
+                label="Repita la contraseña"
                 :error-messages="errors"
               >
               </v-text-field>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn @click="cancel">Cancel</v-btn>
+            <v-btn @click="cancel">Cancelar</v-btn>
             <v-btn type="reset">Reset</v-btn>
-            <v-btn type="submit" :disabled="invalid">Save</v-btn>
+            <v-btn type="submit" :disabled="invalid">Guardar</v-btn>
           </v-card-actions>
         </v-card>
       </form>

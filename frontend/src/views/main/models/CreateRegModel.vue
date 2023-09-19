@@ -60,9 +60,9 @@
           ></v-file-input>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn @click="cancel">Cancel</v-btn>
+            <v-btn @click="cancel">Cancelar</v-btn>
             <v-btn type="reset">Reset</v-btn>
-            <v-btn type="submit"> Save </v-btn>
+            <v-btn type="submit">Guardar</v-btn>
           </v-card-actions>
         </v-card>
       </form>
@@ -103,7 +103,7 @@ export default defineComponent ({
       this.model_description = "";
       this.rmse = 0;
       this.iou = 0;
-      this.$store.commit("setUploadRegModel",null)
+      this.$store.commit("setUploadRegModel",null);
     },
     cancel() {
       this.$router.back();
