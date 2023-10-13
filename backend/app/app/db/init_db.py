@@ -43,12 +43,12 @@ def init_db(db: Session) -> None:
 
     
     # Eliminar para reset de la BDD
-    """
+    
     db.query(ModelSelection).delete()
     db.query(RegressionModel).delete()
     db.query(SegmentationModel).delete()
     db.query(Model).delete()
-    """
+    
 
     model_in1 = schemas.RegModelCreate(
         name="Resnet18",
