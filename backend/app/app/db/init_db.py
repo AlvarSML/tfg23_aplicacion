@@ -51,7 +51,7 @@ def init_db(db: Session) -> None:
     """
 
     model_in1 = schemas.RegModelCreate(
-        name="Resnet18_init",
+        name="Resnet18",
         short_desc="Modelo de regresion",
         description="Modelo de regresion basado en resnet con 18 capas",
         file_path="./modelos_regresion/resnet34.onnx",
@@ -63,8 +63,8 @@ def init_db(db: Session) -> None:
 
     model_in1 = schemas.SegModelCreate(
         name="Yolo",
-        short_desc="Modelo de regresion",
-        description="Modelo de regresion basado en resnet con 18 capas",
+        short_desc="Modelo de segmentación YOLO",
+        description="Modelo de regresion basado en YOLOv8",
         file_path="./modelos_onnx/segmentacino_15.onnx",
         iou=.8
     )
