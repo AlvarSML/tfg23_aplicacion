@@ -9,6 +9,7 @@ from app.services.utils import *
 """ TODO: Implementar ONNX_service
 """
 
+
 class YOLOSeg:
     """ Clase que gestiona las operaciones sobre una imagen
     """
@@ -251,7 +252,7 @@ class YOLOSeg:
             cv2.rectangle(mask_img, (x1, y1), (x2, y2), color, 2)
 
             # Descripcion de cada deteccion
-            label = class_names[class_id]
+            label = self.class_names[class_id]
             caption = f'{label} {int(score * 100)}%'
 
 

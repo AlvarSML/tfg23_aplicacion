@@ -42,49 +42,36 @@ def init_db(db: Session) -> None:
         regular = crud.user.create(db, obj_in=user_in)  # noqa: F841
 
     
-    # Eliminar en orden
+    # Eliminar para reset de la BDD
+    
     db.query(ModelSelection).delete()
     db.query(RegressionModel).delete()
     db.query(SegmentationModel).delete()
     db.query(Model).delete()
+    
 
     model_in1 = schemas.RegModelCreate(
-        name="Resnet18_init",
+        name="Resnet18",
         short_desc="Modelo de regresion",
         description="Modelo de regresion basado en resnet con 18 capas",
         file_path="./modelos_regresion/resnet34.onnx",
         rmse=12.0
     )
-
-    model_in2 = schemas.RegModelCreate(
-        name="Resnet18_init2",
-        short_desc="Modelo de regresion2",
-        description="Modelo de regresion basado en resnet con 18 capas",
-        file_path="./modelos_regresion/resnet34.onnx",
-        rmse=15.0
-    )
     
     modelr1 = reg_model.create_with_owner(db=db, obj_in=model_in1, owner_id=user)
-    modelr2 = reg_model.create_with_owner(db=db, obj_in=model_in2, owner_id=user)
+    #modelr2 = reg_model.create_with_owner(db=db, obj_in=model_in2, owner_id=user)
 
     model_in1 = schemas.SegModelCreate(
         name="Yolo",
-        short_desc="Modelo de regresion",
-        description="Modelo de regresion basado en resnet con 18 capas",
+        short_desc="Modelo de segmentación YOLO",
+        description="Modelo de regresion basado en YOLOv8",
         file_path="./modelos_onnx/segmentacino_15.onnx",
         iou=.8
     )
 
-    model_in2 = schemas.SegModelCreate(
-        name="Detectron",
-        short_desc="Modelo de regresion2",
-        description="Modelo de regresion basado en resnet con 18 capas",
-        file_path="./modelos_onnx/segmentacino_15.onnx",
-        iou=.9
-    )    
 
     models1 = seg_model.create_with_owner(db=db, obj_in=model_in1, owner_id=user)
-    models2 = seg_model.create_with_owner(db=db, obj_in=model_in2, owner_id=user)
+    #models2 = seg_model.create_with_owner(db=db, obj_in=model_in2, owner_id=user)
 
     
 

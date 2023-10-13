@@ -16,7 +16,7 @@ const users = computed(() => {
 
 const headers = [
   {
-    title: "Name",
+    title: "Nombre",
     sortable: true,
     key: "full_name",
     align: "left"
@@ -28,27 +28,22 @@ const headers = [
     align: "left"
   },
   {
-    title: "Full Name",
-    sortable: true,
-    key: "full_name",
-    align: "left"
-  },
-  {
-    title: "Is Active",
+    title: "Está activo",
     sortable: true,
     key: "is_active",
     align: "left"
   },
   {
-    title: "Is Superuser",
+    title: "Es administrador",
     sortable: true,
     key: "is_superuser",
     align: "left"
   },
   {
-    title: "Actions",
+    title: "Editar",
     key: "actions",
-    sortable: false
+    sortable: false,
+    align: "right"
   }
 ];
 
@@ -61,20 +56,26 @@ function navigate(item:any ){
 <template>
   <div>
     <v-toolbar light>
-      <v-toolbar-title> Manage Users </v-toolbar-title>
+      <v-toolbar-title> Gestion de usuarios </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn color="primary" to="/main/admin/users/create">Create User</v-btn>
+      <v-btn color="primary" to="/main/admin/users/create">Crear usuario</v-btn>
     </v-toolbar>
 
     <v-data-table :headers="headers" :items="users">
-      <template #[`item.actions`]="{ item }">
-        <v-icon v-if="item.is_active">mdi-check</v-icon>
-        <v-icon v-if="item.is_superuser">mdi-check</v-icon>
+      <template v-slot:[`item.is_active`]="{ item }">
+        <v-icon v-if="item.raw.is_active">mdi-check</v-icon>
+      </template>
+
+      <template v-slot:[`item.is_superuser`]="{ item }">
+        <v-icon v-if="item.raw.is_superuser">mdi-check</v-icon>
+      </template>
+
+      <template v-slot:[`item.actions`]="{ item }">   
+        
         <v-btn
-          icon
+          icon="mdi-pencil"
           @click='navigate(item)'
         >
-          <v-icon>mdi-pencil</v-icon>
         </v-btn>
       </template>
     </v-data-table>

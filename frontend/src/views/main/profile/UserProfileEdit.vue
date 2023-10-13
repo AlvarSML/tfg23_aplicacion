@@ -3,17 +3,17 @@
     <form @submit.prevent="onSubmit" @reset.prevent="onReset">
       <v-card class="ma-3 pa-3">
         <v-card-title primary-title>
-          <div class="headline primary--text">Edit User Profile</div>
+          <div class="headline primary--text">Editar perfil</div>
         </v-card-title>
         <v-card-text>
-          <v-text-field v-model="fullName" label="Full Name" required></v-text-field>
+          <v-text-field v-model="fullName" label="Nombre Completo" required></v-text-field>
           <v-text-field v-model="email" label="E-mail" type="email" :error-messages="errors" required></v-text-field>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="cancel">Cancel</v-btn>
+          <v-btn @click="cancel">Cancelar</v-btn>
           <v-btn type="reset">Reset</v-btn>
-          <v-btn type="submit"> Save </v-btn>
+          <v-btn type="submit"> Guardar </v-btn>
         </v-card-actions>
       </v-card>
     </form>
